@@ -1,0 +1,8 @@
+.idea
+__pycache__
+*.pyc
+.DS_Store
+anim/
+temp/
+.vscode/
+*.code-workspace
