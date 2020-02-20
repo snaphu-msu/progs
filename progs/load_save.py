@@ -16,11 +16,13 @@ def load_prog(mass, series, verbose=True):
     verbose : bool
     """
     conf = config.load_config(series, verbose)
-    cols = config.get_column_list(conf)
-
     raw = load_raw(mass, series, verbose=verbose)
+    prog = pd.DataFrame()
 
-    return raw
+    for key, idx in conf['columns'].items():
+        prog[key] = raw[idx]
+
+    return prog
 
 
 def load_raw(mass, series, verbose=True):
