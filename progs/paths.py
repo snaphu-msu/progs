@@ -1,6 +1,6 @@
 import os
 
-path = '~/projects/data/progenitors'
+path = '/Users/zac/projects/data/progenitors'
 
 aliases = {
     's16': 'sukhbold_2016',
@@ -31,7 +31,6 @@ def prog_filename(mass, series):
         raise ValueError('Progenitor series not defined')
 
 
-
 def prog_filepath(mass, series):
     """Return filepath to progenitor model
 
@@ -40,8 +39,9 @@ def prog_filepath(mass, series):
     mass : float/int
     series : str
     """
+    s_path = series_path(series)
     filename = prog_filename(mass, series=series)
-    # filepath = os.path.join(
+    return os.path.join(s_path, filename)
 
 
 def series_path(series):
