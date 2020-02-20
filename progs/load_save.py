@@ -6,16 +6,17 @@ from . import paths
 from . import configuration
 
 
-def load_prog(mass, series, verbose=True):
+def load_prog(mass, series, config=None, verbose=True):
     """Load progenitor model from file
 
     parameters
     ----------
     mass : float/int
     series : str
+    config : dict
     verbose : bool
     """
-    config = configuration.load_config(series, verbose)
+    config = configuration.check_config(config, series=series, verbose=verbose)
     raw = load_raw(mass, series, config=config, verbose=verbose)
     prog = pd.DataFrame()
 
