@@ -1,7 +1,5 @@
 import os
 
-path = '/Users/zac/projects/data/progenitors'
-
 aliases = {
     's16': 'sukhbold_2016',
     's18': 'sukhbold_2018',
@@ -15,12 +13,24 @@ def repo_path():
     """Return path to progs repo
     """
     try:
-        progs_path = os.environ['PROGS']
+        path = os.environ['PROGS']
     except KeyError:
         raise EnvironmentError('Environment variable PROGS not set. '
                                'Set path to progs repo directory, e.g., '
                                "'export PROGS=${HOME}/codes/progs'")
-    return progs_path
+    return path
+
+
+def progs_path():
+    """Return path to top-level directory of progenitors
+    """
+    try:
+        path = os.environ['PROGENITORS']
+    except KeyError:
+        raise EnvironmentError('Environment variable PROGENITORS not set. '
+                               'Set path to progenitors top-level directory, e.g., '
+                               "'export PROGENITORS=${HOME}/data/progenitors'")
+    return path
 
 
 def config_filepath(series):
@@ -30,11 +40,14 @@ def config_filepath(series):
     ----------
     series : str
     """
-    rpath = repo_path()
+    path = repo_path()
     series = check_alias(series)
-    return os.path.join(rpath, 'progs', 'config', f'{series}.ini')
+    return os.path.join(path, 'progs', 'config', f'{series}.ini')
 
 
+# ===============================================================
+#                      Progs
+# ===============================================================
 def prog_filename(mass, series):
     """Return filename of progenitor
 
@@ -78,10 +91,14 @@ def series_path(series):
     ----------
     series : str
     """
+    path = progs_path()
     series = check_alias(series)
     return os.path.join(path, series)
 
 
+# ===============================================================
+#                      Misc.
+# ===============================================================
 def check_alias(series):
     """Return full name of series if alias used
 
