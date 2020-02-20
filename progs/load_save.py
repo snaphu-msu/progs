@@ -39,9 +39,11 @@ def load_raw(mass, series, config=None, verbose=True):
     config = configuration.check_config(config, series=series, verbose=verbose)
     filepath = paths.prog_filepath(mass, series)
 
-    raw = pd.read_csv(filepath, delim_whitespace=config['load']['delim_whitespace'],
-                      skiprows=config['load']['skiprows'], header=None)
+    delim_whitespace = config['load']['delim_whitespace']
+    skiprows = config['load']['skiprows']
 
+    raw = pd.read_csv(filepath, delim_whitespace=delim_whitespace, skiprows=skiprows,
+                      header=None)
     return raw
 
 
