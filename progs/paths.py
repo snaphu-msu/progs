@@ -8,7 +8,7 @@ aliases = {
 }
 
 
-def get_prog_filename(mass, series):
+def prog_filename(mass, series):
     """Return filename of progenitor
 
     parameters
@@ -16,7 +16,43 @@ def get_prog_filename(mass, series):
     mass : float/int
     series : str
     """
-    pass
+    def s16(mass):
+        return f's{mass}_presn'
+
+    filenames = {
+        'sukhbold_2016': s16,
+    }
+
+    series = check_alias(series)
+
+    if series in filenames:
+        return filenames[series](mass)
+    else:
+        raise ValueError('Progenitor series not defined')
+
+
+
+def prog_filepath(mass, series):
+    """Return filepath to progenitor model
+
+    parameters
+    ----------
+    mass : float/int
+    series : str
+    """
+    filename = prog_filename(mass, series=series)
+    # filepath = os.path.join(
+
+
+def series_path(series):
+    """Return path to progenitor series directory
+
+    parameters
+    ----------
+    series : str
+    """
+    series = check_alias(series)
+    return os.path.join(path, series)
 
 
 def check_alias(series):
