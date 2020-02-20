@@ -1,12 +1,11 @@
-import numpy as np
-import pandas as pd
-
 # progs
 from . import paths
+from . import load_save
+from . import configuration
 
 
 class Prog:
-    def __init__(self, mass, series):
+    def __init__(self, mass, series, verbose=True):
         """Object representing a single progenitor model
 
         parameters
@@ -22,6 +21,13 @@ class Prog:
         """
         self.mass = mass
         self.series = paths.check_alias(series)
+        self.verbose = verbose
 
         self.filename = paths.prog_filename(mass, series=series)
         self.filepath = paths.prog_filepath(mass, series=series)
+
+        self.config = configuration.load_config(series, verbose)
+        self.table = load_save.load_prog(mass, series, config=self.config,
+                                         verbose=verbose)
+
+        self.composition = self.table[self.config['network']['species']]
