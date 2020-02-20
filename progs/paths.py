@@ -3,8 +3,8 @@ import os
 path = '~/projects/data/progenitors'
 
 aliases = {
-    's16': 'sukhbol_2016',
-    's18': 'sukhbol_2018',
+    's16': 'sukhbold_2016',
+    's18': 'sukhbold_2018',
 }
 
 
@@ -26,4 +26,7 @@ def check_alias(series):
     ----------
     series : str
     """
-    pass
+    if series in aliases:
+        return aliases[series]
+    else:
+        return series
