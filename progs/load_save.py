@@ -3,7 +3,7 @@ import pandas as pd
 
 # progs
 from . import paths
-from . import config
+from . import configuration
 
 
 def load_prog(mass, series, verbose=True):
@@ -15,29 +15,32 @@ def load_prog(mass, series, verbose=True):
     series : str
     verbose : bool
     """
-    conf = config.load_config(series, verbose)
-    raw = load_raw(mass, series, verbose=verbose)
+    config = configuration.load_config(series, verbose)
+    raw = load_raw(mass, series, config=config, verbose=verbose)
     prog = pd.DataFrame()
 
-    for key, idx in conf['columns'].items():
+    for key, idx in config['columns'].items():
         prog[key] = raw[idx]
 
     return prog
 
 
-def load_raw(mass, series, verbose=True):
+def load_raw(mass, series, config=None, verbose=True):
     """Load raw progenitor model from file
 
     parameters
     ----------
     mass : float/int
     series : str
+    config : dict
     verbose : bool
     """
-    conf = config.load_config(series, verbose)
+    conf = configuration.check_config(config, series=series, verbose=verbose)
     filepath = paths.prog_filepath(mass, series)
 
     raw = pd.read_csv(filepath, delim_whitespace=conf['load']['delim_whitespace'],
                       skiprows=conf['load']['skiprows'], header=None)
 
     return raw
+
+

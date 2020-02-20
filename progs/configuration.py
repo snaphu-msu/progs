@@ -40,7 +40,11 @@ def load_config(series, verbose=True):
 def check_config(config, series, verbose=True):
     """Check if config provided, load if not
 
+    parameters
+    ----------
     config : dict or None
+    series : str
+    verbose : bool
     """
     if config is None:
         config = load_config(series, verbose)
