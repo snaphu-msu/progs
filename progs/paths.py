@@ -1,9 +1,7 @@
 import os
 
-aliases = {
-    's16': 'sukhbold_2016',
-    's18': 'sukhbold_2018',
-}
+# progs
+from .strings import check_alias
 
 
 # ===============================================================
@@ -56,8 +54,8 @@ def prog_filename(mass, series):
     mass : float/int
     series : str
     """
-    def s16(mass):
-        return f's{mass}_presn'
+    def s16(mass_):
+        return f's{mass_}_presn'
 
     filenames = {
         'sukhbold_2016': s16,
@@ -94,19 +92,3 @@ def series_path(series):
     path = progs_path()
     series = check_alias(series)
     return os.path.join(path, series)
-
-
-# ===============================================================
-#                      Misc.
-# ===============================================================
-def check_alias(series):
-    """Return full name of series if alias used
-
-    parameters
-    ----------
-    series : str
-    """
-    if series in aliases:
-        return aliases[series]
-    else:
-        return series
