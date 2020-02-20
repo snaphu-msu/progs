@@ -5,6 +5,9 @@ import pandas as pd
 from . import paths
 from . import configuration
 
+# TODO:
+#     - convert Lagrangian to Eulerian coordinates
+
 
 def load_prog(mass, series, config=None, verbose=True):
     """Load progenitor model from file
