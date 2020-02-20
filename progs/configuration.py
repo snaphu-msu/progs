@@ -35,3 +35,14 @@ def load_config(series, verbose=True):
             config[section][option] = ast.literal_eval(ini.get(section, option))
 
     return config
+
+
+def check_config(config, series, verbose=True):
+    """Check if config provided, load if not
+
+    config : dict or None
+    """
+    if config is None:
+        config = load_config(series, verbose)
+
+    return config
