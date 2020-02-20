@@ -35,16 +35,3 @@ def load_config(series, verbose=True):
             config[section][option] = ast.literal_eval(ini.get(section, option))
 
     return config
-
-
-def get_column_list(config):
-    """Return list of column names from a given config
-
-    parameters
-    ----------
-    config : dict
-    """
-    params = list(config['param_columns'].keys())
-    network = list(config['network_columns'].keys())
-
-    return params + network
