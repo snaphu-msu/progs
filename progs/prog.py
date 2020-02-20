@@ -35,6 +35,8 @@ class Prog:
             Path to raw progenitor file
         config : dict
             Progenitor-specific parameters loaded from 'config/[series].ini'
+        network : [str]
+            list of network species provided
         table : pd.DataFrame
             Main table of radial profile parameters, including composition
         composition : pd.DataFrame
@@ -48,6 +50,8 @@ class Prog:
         self.filepath = paths.prog_filepath(mass, series=series)
 
         self.config = configuration.load_config(series, verbose)
+        self.network = self.config['network']['species']
+
         self.table = load_save.load_prog(mass, series, config=self.config,
                                          verbose=verbose)
 
