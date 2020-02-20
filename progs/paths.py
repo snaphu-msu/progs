@@ -8,6 +8,33 @@ aliases = {
 }
 
 
+# ===============================================================
+#                      Repo/meta
+# ===============================================================
+def repo_path():
+    """Return path to progs repo
+    """
+    try:
+        progs_path = os.environ['PROGS']
+    except KeyError:
+        raise EnvironmentError('Environment variable PROGS not set. '
+                               'Set path to progs repo directory, e.g., '
+                               "'export PROGS=${HOME}/codes/progs'")
+    return progs_path
+
+
+def config_filepath(series):
+    """Return path to config file
+
+    parameters
+    ----------
+    series : str
+    """
+    rpath = repo_path()
+    series = check_alias(series)
+    return os.path.join(rpath, 'progs', 'config', f'{series}.ini')
+
+
 def prog_filename(mass, series):
     """Return filename of progenitor
 
