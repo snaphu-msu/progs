@@ -28,3 +28,23 @@ def setup_subplots(n_sub, max_cols=2, sub_figsize=(6, 5), **kwargs):
     figsize = (n_cols*sub_figsize[0], n_rows*sub_figsize[1])
 
     return plt.subplots(n_rows, n_cols, figsize=figsize, **kwargs)
+
+
+def check_ax(ax, figsize):
+    """Setup fig, ax if ax is not provided
+
+    parameters
+    ----------
+    ax : Axes
+    figsize : [width, height]
+    """
+    fig = None
+
+    if ax is None:
+        fig, ax = plt.subplots(figsize=figsize)
+
+    return fig, ax
+
+
+# TODO:
+#   - Migrating others from flashbang.Simulation
