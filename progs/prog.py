@@ -50,10 +50,9 @@ class Prog:
         self.filepath = paths.prog_filepath(mass, series=series)
         self.config = configuration.load_config(series, verbose)
 
-        network_name = self.config['network']['name']
-        self.network = network.load_net(network_name)
-
         self.table = load_save.load_prog(mass, series, config=self.config,
                                          verbose=verbose)
 
+        network_name = self.config['network']['name']
+        self.network = network.load_network(network_name)
         self.composition = self.table[self.network.isotope]

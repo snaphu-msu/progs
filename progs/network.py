@@ -9,7 +9,7 @@ Functions for handling nuclear network information
 """
 
 
-def load_net(network_name):
+def load_network(network_name):
     """Load network table from file
 
     parameters
