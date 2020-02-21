@@ -92,3 +92,16 @@ def series_path(series):
     path = progs_path()
     series = check_alias(series)
     return os.path.join(path, series)
+
+
+# ===============================================================
+#                      Network
+# ===============================================================
+def network_filename(network):
+    """Return filename of table for given network
+
+    parameters
+    ----------
+    network : str
+    """
+    return f'{network}.txt'
