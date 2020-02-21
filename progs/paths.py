@@ -105,3 +105,15 @@ def network_filename(network):
     network : str
     """
     return f'{network}.txt'
+
+
+def network_filepath(network):
+    """Return path to table of given network
+
+    parameters
+    ----------
+    network : str
+    """
+    path = repo_path()
+    filename = network_filename(network)
+    return os.path.join(path, 'networks', filename)
