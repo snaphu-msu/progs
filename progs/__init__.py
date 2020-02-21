@@ -5,6 +5,7 @@ from . import configuration
 from . import strings
 from . import analysis
 from . import network
+from . import tools
 
 __all__ = ['prog',
            'paths',
@@ -13,4 +14,5 @@ __all__ = ['prog',
            'strings',
            'analysis',
            'network',
+           'tools',
            ]
