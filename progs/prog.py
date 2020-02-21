@@ -41,6 +41,8 @@ class Prog:
             Main table of radial profile parameters, including composition
         composition : pd.DataFrame
             subset of table containing only network species abundances (mass fraction)
+        sums : dict
+            summed composition quantities (e.g. sumx, sumy, ye)
         """
         self.mass = mass
         self.series = paths.check_alias(series)
@@ -56,3 +58,4 @@ class Prog:
         network_name = self.config['network']['name']
         self.network = network.load_network(network_name)
         self.composition = self.table[self.network.isotope]
+        self.sums = network.get_sums(self.composition, self.network)
