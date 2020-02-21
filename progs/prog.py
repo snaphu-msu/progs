@@ -2,7 +2,7 @@
 from . import paths
 from . import load_save
 from . import configuration
-
+from . import network
 """
 Class for handling a given progenitor model
 """
@@ -36,7 +36,7 @@ class Prog:
         config : dict
             Progenitor-specific parameters loaded from 'config/[series].ini'
         network : [str]
-            list of network species provided
+            table of network isotopes used
         table : pd.DataFrame
             Main table of radial profile parameters, including composition
         composition : pd.DataFrame
@@ -48,11 +48,12 @@ class Prog:
 
         self.filename = paths.prog_filename(mass, series=series)
         self.filepath = paths.prog_filepath(mass, series=series)
-
         self.config = configuration.load_config(series, verbose)
-        self.network = self.config['network']['species']
+
+        network_name = self.config['network']['name']
+        self.network = network.load_net(network_name)
 
         self.table = load_save.load_prog(mass, series, config=self.config,
                                          verbose=verbose)
 
-        self.composition = self.table[self.config['network']['species']]
+        self.composition = self.table[self.network.isotope]
