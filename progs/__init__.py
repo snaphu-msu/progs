@@ -6,6 +6,7 @@ from . import strings
 from . import analysis
 from . import network
 from . import tools
+from . import plotting
 
 __all__ = ['prog',
            'paths',
@@ -15,4 +16,5 @@ __all__ = ['prog',
            'analysis',
            'network',
            'tools',
+           'plotting',
            ]
