@@ -116,4 +116,4 @@ def network_filepath(network):
     """
     path = repo_path()
     filename = network_filename(network)
-    return os.path.join(path, 'progs', 'networks', filename)
+    return os.path.join(path, 'networks', filename)
