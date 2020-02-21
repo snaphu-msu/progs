@@ -4,6 +4,7 @@ from . import load_save
 from . import configuration
 from . import strings
 from . import analysis
+from . import network
 
 __all__ = ['prog',
            'paths',
@@ -11,4 +12,5 @@ __all__ = ['prog',
            'configuration',
            'strings',
            'analysis',
+           'network',
            ]
