@@ -127,11 +127,23 @@ class Prog:
         fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
-        plotting.set_ax_title(ax=ax, string=self.filename, title=title)
         plotting.set_ax_legend(ax=ax, legend=legend)
+        self._set_ax_title(ax=ax, title=title)
         # self._plot_trans_line(x_var, y=y, ax=ax, chk=i, trans=trans)
 
         ax.plot(self.table[x_var], self.table[y_var], ls=linestyle,
                 marker=marker, label=label)
 
         return fig
+
+    def _set_ax_title(self, ax, title):
+        """Add title to axis if title==True
+
+        parameters
+        ----------
+        ax : Axis
+        title : bool
+        """
+        if title:
+            string = f'{self.series}: {self.filename}'
+            plotting.set_ax_title(ax=ax, string=string, title=title)
