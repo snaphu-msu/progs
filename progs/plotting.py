@@ -67,7 +67,7 @@ def set_ax_scales(ax, y_var=None, x_var=None, y_scale=None, x_scale=None):
         ax.set_yscale(y_scale)
 
 
-def _set_ax_title(ax, string, title):
+def set_ax_title(ax, string, title):
     """Set axis title
 
     parameters
