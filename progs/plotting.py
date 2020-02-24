@@ -67,18 +67,17 @@ def set_ax_scales(ax, y_var=None, x_var=None, y_scale=None, x_scale=None):
         ax.set_yscale(y_scale)
 
 
-# def _set_ax_title(ax, chk, title):
-#     """Set axis title
-#
-#     parameters
-#     ----------
-#     ax : Axes
-#     chk : int
-#     title : bool
-#     """
-#     if title:
-#         timestep = dt * chk - self.bounce_time
-#         ax.set_title(f't = {timestep:.3f} s')
+def _set_ax_title(ax, string, title):
+    """Set axis title
+
+    parameters
+    ----------
+    ax : Axes
+    string : str
+    title : bool
+    """
+    if title:
+        ax.set_title(string)
 
 
 def set_ax_lims(ax, xlims=None, ylims=None):
