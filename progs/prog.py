@@ -99,41 +99,39 @@ class Prog:
     #                           legend=legend if i == 0 else False)
     #     return fig
     #
-    # def plot(self, y_var, x_var='r', y_scale=None, x_scale=None,
-    #          ax=None, legend=False, trans=True, title=True,
-    #          ylims=None, xlims=None, figsize=(8, 6), label=None,
-    #          linestyle='-', marker=''):
-    #     """Plot given profile variable
-    #
-    #     parameters
-    #     ----------
-    #     y_var : str
-    #         variable to plot on y-axis (from Simulation.profile)
-    #     x_var : str
-    #         variable to plot on x-axis
-    #     y_scale : {'log', 'linear'}
-    #     x_scale : {'log', 'linear'}
-    #     ax : Axes
-    #     legend : bool
-    #     trans : bool
-    #     title : bool
-    #     ylims : [min, max]
-    #     xlims : [min, max]
-    #     figsize : [width, height]
-    #     label : str
-    #     linestyle : str
-    #     marker : str
-    #     """
-    #     fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
-    #
-    #     for i in chk:
-    #         profile = self.profiles.sel(chk=i)
-    #         y = profile[y_var]
-    #
-    #         ax.plot(profile[x_var], y, ls=linestyle, marker=marker, label=label)
-    #         self._plot_trans_line(x_var, y=y, ax=ax, chk=i, trans=trans)
-    #
-    #     if legend:
-    #         ax.legend()
-    #
-    #     return fig
+    def plot(self, y_var, x_var='radius', y_scale=None, x_scale=None,
+             ax=None, legend=False, trans=True, title=True,
+             ylims=None, xlims=None, figsize=(8, 6), label=None,
+             linestyle='-', marker=''):
+        """Plot given profile variable
+
+        parameters
+        ----------
+        y_var : str
+            variable to plot on y-axis (from Simulation.profile)
+        x_var : str
+            variable to plot on x-axis
+        y_scale : {'log', 'linear'}
+        x_scale : {'log', 'linear'}
+        ax : Axes
+        legend : bool
+        trans : bool
+        title : bool
+        ylims : [min, max]
+        xlims : [min, max]
+        figsize : [width, height]
+        label : str
+        linestyle : str
+        marker : str
+        """
+        fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
+        plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
+        plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
+        plotting.set_ax_title(ax=ax, string=self.filename, title=title)
+        plotting.set_ax_legend(ax=ax, legend=legend)
+        # self._plot_trans_line(x_var, y=y, ax=ax, chk=i, trans=trans)
+
+        ax.plot(self.table[x_var], self.table[y_var], ls=linestyle,
+                marker=marker, label=label)
+
+        return fig
