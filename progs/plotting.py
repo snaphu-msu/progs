@@ -45,24 +45,26 @@ def check_ax(ax, figsize):
     return fig, ax
 
 
-# def set_ax_scales(ax, y_var, x_var, y_scale, x_scale):
-#     """Set axis scales (linear, log)
-#
-#     parameters
-#     ----------
-#     ax : Axes
-#     y_var : str
-#     x_var : str
-#     y_scale : {'log', 'linear'}
-#     x_scale : {'log', 'linear'}
-#     """
-#     if x_scale is None:
-#         x_scale = self.config['plotting']['ax_scales'].get(x_var, 'log')
-#     if y_scale is None:
-#         y_scale = self.config['plotting']['ax_scales'].get(y_var, 'log')
-#
-#     ax.set_xscale(x_scale)
-#     ax.set_yscale(y_scale)
+def set_ax_scales(ax, y_var=None, x_var=None, y_scale=None, x_scale=None):
+    """Set axis scales (linear, log)
+
+    parameters
+    ----------
+    ax : Axes
+    y_var : str
+    x_var : str
+    y_scale : one of ('log', 'linear')
+    x_scale : one of ('log', 'linear')
+    """
+    # if x_scale is None:
+    #     x_scale = self.config['plotting']['ax_scales'].get(x_var, 'log')
+    # if y_scale is None:
+    #     y_scale = self.config['plotting']['ax_scales'].get(y_var, 'log')
+
+    if x_scale is not None:
+        ax.set_xscale(x_scale)
+    if y_scale is not None:
+        ax.set_yscale(y_scale)
 
 
 # def _set_ax_title(ax, chk, title):
