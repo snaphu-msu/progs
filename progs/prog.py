@@ -100,7 +100,7 @@ class Prog:
     #     return fig
     #
     def plot(self, y_var, x_var='radius', y_scale=None, x_scale=None,
-             ax=None, legend=False, trans=True, title=True,
+             ax=None, legend=False, title=True,
              ylims=None, xlims=None, figsize=(8, 6), label=None,
              linestyle='-', marker=''):
         """Plot given profile variable
@@ -115,7 +115,6 @@ class Prog:
         x_scale : {'log', 'linear'}
         ax : Axes
         legend : bool
-        trans : bool
         title : bool
         ylims : [min, max]
         xlims : [min, max]
@@ -129,7 +128,6 @@ class Prog:
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
         plotting.set_ax_legend(ax=ax, legend=legend)
         self._set_ax_title(ax=ax, title=title)
-        # self._plot_trans_line(x_var, y=y, ax=ax, chk=i, trans=trans)
 
         ax.plot(self.table[x_var], self.table[y_var], ls=linestyle,
                 marker=marker, label=label)
