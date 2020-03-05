@@ -14,9 +14,31 @@ Class for handling a given progenitor model
 
 
 class Prog:
-    def __init__(self, mass, series, verbose=True):
-        """Object representing a single progenitor model
+    """Prog
+    An object representing a particular core-collapse progenitor model
 
+    attributes
+    ----------
+    mass : int or float
+    series : str
+    verbose : bool
+    filename : str
+    filepath : str
+        Path to raw progenitor file
+    config : dict
+        Progenitor-specific parameters loaded from 'config/[series].ini'
+    network : [str]
+        table of network isotopes used
+    table : pd.DataFrame
+        Main table of radial profile parameters, including composition
+    composition : pd.DataFrame
+        subset of table containing only network species abundances (mass fraction)
+    sums : dict
+        summed composition quantities (e.g. sumx, sumy, ye)
+    """
+
+    def __init__(self, mass, series, verbose=True):
+        """
         parameters
         ----------
         mass : float/int
@@ -28,26 +50,6 @@ class Prog:
             Name of progenitor series/set, e.g. 'sukhbold_2016'.
             Shorthand aliases may be defined, e.g. 's16' for 'sukhbold_2016'.
         verbose : bool
-
-
-        attributes
-        ----------
-        mass : int or float
-        series : str
-        verbose : bool
-        filename : str
-        filepath : str
-            Path to raw progenitor file
-        config : dict
-            Progenitor-specific parameters loaded from 'config/[series].ini'
-        network : [str]
-            table of network isotopes used
-        table : pd.DataFrame
-            Main table of radial profile parameters, including composition
-        composition : pd.DataFrame
-            subset of table containing only network species abundances (mass fraction)
-        sums : dict
-            summed composition quantities (e.g. sumx, sumy, ye)
         """
         self.mass = mass
         self.series = paths.check_alias(series)
