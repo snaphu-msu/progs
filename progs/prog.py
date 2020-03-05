@@ -19,22 +19,26 @@ class Prog:
 
     attributes
     ----------
-    mass : int or float
-    series : str
-    verbose : bool
-    filename : str
-    filepath : str
-        Path to raw progenitor file
-    config : dict
-        Progenitor-specific parameters loaded from 'config/[series].ini'
-    network : [str]
-        table of network isotopes used
-    table : pd.DataFrame
-        Main table of radial profile parameters, including composition
     composition : pd.DataFrame
         subset of table containing only network species abundances (mass fraction)
+    config : dict
+        Progenitor-specific parameters loaded from 'config/[series].ini'
+    filename : str
+        Name of raw progenitor file
+    filepath : str
+        Path to raw progenitor file
+    mass : int or float
+        Stellar mass (in Msun) of progenitor model.
+    network : [str]
+        table of network isotopes used
+    series : str
+        Name of progenitor series/set, e.g. 'sukhbold_2016'.
     sums : dict
         summed composition quantities (e.g. sumx, sumy, ye)
+    table : pd.DataFrame
+        Main table of radial profile parameters, including composition
+    verbose : bool
+        Print output or not
     """
 
     def __init__(self, mass, series, verbose=True):
