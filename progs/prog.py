@@ -8,6 +8,8 @@ from . import network
 from . import plotting
 from . import tools
 
+from astropy import constants as const
+
 """
 Class for handling a given progenitor model
 """
@@ -70,6 +72,27 @@ class Prog:
         self.network = network.load_network(network_name)
         self.composition = self.table[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
+
+
+    # =======================================================
+    #                      Quantities
+    # =======================================================    
+
+    def get_compactness(self, mass=2.5):
+        """
+        Compute the compactness xi = (M/Msun) / (R(M) / 1000km)
+
+        parameters:
+        -----------
+        mass : float"""
+
+        # just make sure the units are right.
+        if (mass > 1000.0 ):
+            mass /= const.M_sun.cgs.value
+
+        ind = np.max( np.where( self.table['mass']/const.M_sun.cgs.value <= mass) )
+        r = self.table['radius'][ind]
+        return mass /  (r / 1e8) 
 
     # =======================================================
     #                      Plotting
