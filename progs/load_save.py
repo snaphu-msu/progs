@@ -44,9 +44,10 @@ def load_raw(mass, series, config=None, verbose=True):
 
     delim_whitespace = config['load']['delim_whitespace']
     skiprows = config['load']['skiprows']
+    missing_char = config['load']['missing_char']
 
     raw = pd.read_csv(filepath, delim_whitespace=delim_whitespace, skiprows=skiprows,
                       header=None)
-    return raw
+    return raw.replace(missing_char, 0.0)
 
 
