@@ -24,7 +24,7 @@ def load_prog(mass, series, config=None, verbose=True):
     prog = pd.DataFrame()
 
     for key, idx in config['columns'].items():
-        prog[key] = raw[idx]
+        prog[key] = pd.to_numeric(raw[idx], errors='ignore')
 
     return prog
 
