@@ -94,6 +94,15 @@ class Prog:
         r = self.table['radius'][ind]
         return mass /  (r / 1e8) 
 
+    def get_luminosity(self):
+        """
+        Return 4piR^2 \sigma_sb T^4
+        """
+        sb = const.sigma_sb.cgs.value
+        n = len(self.table['radius'])
+        return 4.0 * np.pi * self.table['radius'][n-1]**2 * sb * self.table['temperature'][n-1]**4
+
+
     # =======================================================
     #                      Plotting
     # =======================================================
