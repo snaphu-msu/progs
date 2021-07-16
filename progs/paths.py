@@ -56,9 +56,12 @@ def prog_filename(mass, series):
     """
     def s16(mass_):
         return f's{mass_}_presn'
+    def wh02(mass_):
+        return f"s{mass_}_presn"
 
     filenames = {
         'sukhbold_2016': s16,
+        "wh_02": wh02,
     }
 
     series = check_alias(series)

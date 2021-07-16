@@ -40,7 +40,7 @@ def get_sums(composition, network):
         sums[key] = np.zeros(n_zones)
 
     for row in network.itertuples():
-        x_i = np.array(composition[row.isotope])
+        x_i = np.array(composition[row.isotope], dtype=float)
 
         sums['sumx'] += x_i
         sums['sumy'] += x_i / row.A

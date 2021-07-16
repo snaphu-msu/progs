@@ -25,6 +25,8 @@ def check_alias(series):
     aliases = {
         's16': 'sukhbold_2016',
         's18': 'sukhbold_2018',
+        'WH02': 'wh_02',
+        'WH_02': "wh_02"
     }
 
     if series in aliases:
