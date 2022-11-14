@@ -103,8 +103,13 @@ class Prog:
         Return 4piR^2 \sigma_sb T^4
         """
         sb = const.sigma_sb.cgs.value
-        n = len(self.table['radius'])
-        return 4.0 * np.pi * self.table['radius'][n-1]**2 * sb * self.table['temperature'][n-1]**4
+
+        radius = self.table['radius'].iloc[-1]
+        temperature = self.table['temperature'].iloc[-1]
+
+        lum = 4.0 * np.pi * radius**2 * sb * temperature**4
+
+        return lum
 
 
     # =======================================================
