@@ -9,6 +9,9 @@ from . import plotting
 from . import tools
 
 from astropy import constants as const
+from astropy import units
+
+msun_to_g = units.M_sun.to(units.g)
 
 """
 Class for handling a given progenitor model
@@ -83,24 +86,24 @@ class Prog:
     #                      Quantities
     # =======================================================    
     def get_compactness(self, mass=2.5):
+        """Compute the compactness xi = (M/Msun) / (R(M) / 1000km)
+
+        parameters
+        ----------
+        mass : float
+            mass parameter [Msun], typically 1.75 or 2.5
         """
-        Compute the compactness xi = (M/Msun) / (R(M) / 1000km)
+        cm_to_1k_km = units.cm.to(1000 * u.km)
 
-        parameters:
-        -----------
-        mass : float"""
+        idx = tools.find_nearest_idx(self.table['mass'], mass * msun_to_g)
+        radius = self.table['radius'][idx]
 
-        # just make sure the units are right.
-        if mass > 1000.0:
-            mass /= const.M_sun.cgs.value
+        xi = mass / (radius * cm_to_1k_km)
 
-        ind = np.max( np.where( self.table['mass']/const.M_sun.cgs.value <= mass) )
-        r = self.table['radius'][ind]
-        return mass /  (r / 1e8) 
+        return xi
 
     def get_luminosity(self):
-        """
-        Return 4piR^2 \sigma_sb T^4
+        """Return 4piR^2 \sigma_sb T^4
         """
         sb = const.sigma_sb.cgs.value
 
