@@ -6,7 +6,10 @@ General functions for plotting
 """
 
 
-def setup_subplots(n_sub, max_cols=2, sub_figsize=(6, 5), **kwargs):
+def setup_subplots(n_sub,
+                   max_cols=2,
+                   sub_figsize=(6, 5),
+                   **kwargs):
     """Constructs fig for given number of subplots
 
     returns : fig, ax
@@ -45,7 +48,11 @@ def check_ax(ax, figsize):
     return fig, ax
 
 
-def set_ax_scales(ax, y_var=None, x_var=None, y_scale=None, x_scale=None):
+def set_ax_scales(ax,
+                  y_var=None,
+                  x_var=None,
+                  y_scale=None,
+                  x_scale=None):
     """Set axis scales (linear, log)
 
     parameters

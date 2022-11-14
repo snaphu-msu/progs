@@ -9,7 +9,10 @@ from . import configuration
 #     - convert Lagrangian to Eulerian coordinates
 
 
-def load_prog(mass, series, config=None, verbose=True):
+def load_prog(mass,
+              series,
+              config=None,
+              verbose=True):
     """Load progenitor model from file
 
     parameters
@@ -29,7 +32,10 @@ def load_prog(mass, series, config=None, verbose=True):
     return prog
 
 
-def load_raw(mass, series, config=None, verbose=True):
+def load_raw(mass,
+             series,
+             config=None,
+             verbose=True):
     """Load raw progenitor model from file
 
     parameters
@@ -46,8 +52,11 @@ def load_raw(mass, series, config=None, verbose=True):
     skiprows = config['load']['skiprows']
     missing_char = config['load']['missing_char']
 
-    raw = pd.read_csv(filepath, delim_whitespace=delim_whitespace, skiprows=skiprows,
+    raw = pd.read_csv(filepath,
+                      delim_whitespace=delim_whitespace,
+                      skiprows=skiprows,
                       header=None)
+
     return raw.replace(missing_char, 0.0)
 
 

@@ -43,7 +43,10 @@ class Prog:
         Print output or not
     """
 
-    def __init__(self, mass, series, verbose=True):
+    def __init__(self,
+                 mass,
+                 series,
+                 verbose=True):
         """
         parameters
         ----------
@@ -65,7 +68,9 @@ class Prog:
         self.filepath = paths.prog_filepath(mass, series=series)
         self.config = configuration.load_config(series, verbose)
 
-        self.table = load_save.load_prog(mass, series, config=self.config,
+        self.table = load_save.load_prog(mass,
+                                         series,
+                                         config=self.config,
                                          verbose=verbose)
 
         network_name = self.config['network']['name']
@@ -77,7 +82,6 @@ class Prog:
     # =======================================================
     #                      Quantities
     # =======================================================    
-
     def get_compactness(self, mass=2.5):
         """
         Compute the compactness xi = (M/Msun) / (R(M) / 1000km)
@@ -87,7 +91,7 @@ class Prog:
         mass : float"""
 
         # just make sure the units are right.
-        if (mass > 1000.0 ):
+        if mass > 1000.0:
             mass /= const.M_sun.cgs.value
 
         ind = np.max( np.where( self.table['mass']/const.M_sun.cgs.value <= mass) )
@@ -106,8 +110,14 @@ class Prog:
     # =======================================================
     #                      Plotting
     # =======================================================
-    def plot_multi(self, y_vars, x_var='radius', y_scale=None, x_scale=None,
-                   max_cols=1, sub_figsize=(8, 6), legend=False):
+    def plot_multi(self,
+                   y_vars,
+                   x_var='radius',
+                   y_scale=None,
+                   x_scale=None,
+                   max_cols=1,
+                   sub_figsize=(8, 6),
+                   legend=False):
         """Plot one or more profile variables
 
         parameters
@@ -124,22 +134,37 @@ class Prog:
         """
         y_vars = tools.ensure_sequence(y_vars)
         n_var = len(y_vars)
-        fig, ax = plotting.setup_subplots(n_var, max_cols=max_cols,
-                                          sub_figsize=sub_figsize, squeeze=False)
+        fig, ax = plotting.setup_subplots(n_var,
+                                          max_cols=max_cols,
+                                          sub_figsize=sub_figsize,
+                                          squeeze=False)
 
         for i, y_var in enumerate(y_vars):
             row = int(np.floor(i / max_cols))
             col = i % max_cols
 
-            self.plot(y_var=y_var, x_var=x_var, y_scale=y_scale,
-                      x_scale=x_scale, ax=ax[row, col],
+            self.plot(y_var=y_var,
+                      x_var=x_var,
+                      y_scale=y_scale,
+                      x_scale=x_scale,
+                      ax=ax[row, col],
                       legend=legend if i == 0 else False)
         return fig
 
-    def plot(self, y_var, x_var='radius', y_scale=None, x_scale=None,
-             ax=None, legend=False, title=True,
-             ylims=None, xlims=None, figsize=(8, 6), label=None,
-             linestyle='-', marker=''):
+    def plot(self,
+             y_var,
+             x_var='radius',
+             y_scale=None,
+             x_scale=None,
+             ax=None,
+             legend=False,
+             title=True,
+             ylims=None,
+             xlims=None,
+             figsize=(8, 6),
+             label=None,
+             linestyle='-',
+             marker=''):
         """Plot given profile variable
 
         parameters
@@ -166,8 +191,11 @@ class Prog:
         plotting.set_ax_legend(ax=ax, legend=legend)
         self._set_ax_title(ax=ax, title=title)
 
-        ax.plot(self.table[x_var], self.table[y_var], ls=linestyle,
-                marker=marker, label=label)
+        ax.plot(self.table[x_var],
+                self.table[y_var],
+                ls=linestyle,
+                marker=marker,
+                label=label)
 
         return fig
 
