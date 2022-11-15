@@ -4,7 +4,7 @@ from astropy import units
 
 # progs
 from . import paths
-from . import load_save
+from . import io
 from . import configuration
 from . import network
 from . import plotting
@@ -70,16 +70,15 @@ class Prog:
         self.filepath = paths.prog_filepath(mass, series=series)
         self.config = configuration.load_config(series, verbose)
 
-        self.table = load_save.load_prog(mass,
-                                         series,
-                                         config=self.config,
-                                         verbose=verbose)
+        self.table = io.load_prog(mass,
+                                  series,
+                                  config=self.config,
+                                  verbose=verbose)
 
         network_name = self.config['network']['name']
         self.network = network.load_network(network_name)
         self.composition = self.table[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
-
 
     # =======================================================
     #                      Quantities
@@ -92,7 +91,7 @@ class Prog:
         mass : float
             mass parameter [Msun], typically 1.75 or 2.5
         """
-        cm_to_1k_km = units.cm.to(1000 * u.km)
+        cm_to_1k_km = units.cm.to(1000 * units.km)
 
         idx = tools.find_nearest_idx(self.table['mass'], mass * msun_to_g)
         radius = self.table['radius'][idx]
@@ -102,7 +101,7 @@ class Prog:
         return xi
 
     def get_luminosity(self):
-        """Return 4piR^2 \sigma_sb T^4
+        """Return 4piR^2 sigma_sb T^4
         """
         sb = const.sigma_sb.cgs.value
 
@@ -112,7 +111,6 @@ class Prog:
         lum = 4.0 * np.pi * radius**2 * sb * temperature**4
 
         return lum
-
 
     # =======================================================
     #                      Plotting
