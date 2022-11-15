@@ -1,0 +1,9 @@
+name: progs
+dependencies:
+  - python=3.8
+  - astropy=5.1
+  - ipython=8.6
+  - matplotlib=3.5
+  - numpy=1.23
+  - pandas=1.4
+  - xarray=0.20
