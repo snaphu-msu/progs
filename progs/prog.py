@@ -1,4 +1,6 @@
 import numpy as np
+from astropy import constants as const
+from astropy import units
 
 # progs
 from . import paths
@@ -7,9 +9,6 @@ from . import configuration
 from . import network
 from . import plotting
 from . import tools
-
-from astropy import constants as const
-from astropy import units
 
 msun_to_g = units.M_sun.to(units.g)
 
