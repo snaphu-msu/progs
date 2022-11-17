@@ -11,13 +11,6 @@ def top_path():
     return path
 
 
-def progenitor_sets_path():
-    """Return path to top-level directory of progenitors
-    """
-    path = os.path.join(top_path(), 'progenitor_sets')
-    return path
-
-
 def config_filepath(series):
     """Return path to config file
 
@@ -96,7 +89,7 @@ def series_path(series):
     series : str
     """
     series = check_alias(series)
-    series_dir = os.path.join(progenitor_sets_path(), series)
+    series_dir = os.path.join(top_path(), 'progenitor_sets', series)
 
     return series_dir
 
