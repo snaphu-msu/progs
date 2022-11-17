@@ -34,18 +34,18 @@ def get_sums(composition, network):
     """
     sums = {}
     n_zones = len(composition)
-    keys = ['sumx', 'sumy', 'ye']
 
-    for key in keys:
+    for key in ['sumx', 'sumy', 'ye']:
         sums[key] = np.zeros(n_zones)
 
-    for row in network.itertuples():
-        x_i = np.array(composition[row.isotope], dtype=float)
+    for _, isotope in network.iterrows():
+        x = np.array(composition[isotope['isotope']], dtype=float)
 
-        sums['sumx'] += x_i
-        sums['sumy'] += x_i / row.A
-        sums['ye'] += x_i * (row.Z / row.A)
+        sums['sumx'] += x
+        sums['sumy'] += x / isotope['A']
+        sums['ye'] += x * (isotope['Z'] / isotope['A'])
 
     sums['abar'] = 1 / sums['sumy']
-
-    return pd.DataFrame(sums)
+    table = pd.DataFrame(sums)
+    
+    return table
