@@ -51,7 +51,7 @@ def network_filepath(network):
     """
     path = repo_path()
     filename = f'{network}.txt'
-    filepath = os.path.join(path, 'networks', filename)
+    filepath = os.path.join(path, 'progs', 'networks', filename)
 
     return filepath
 
