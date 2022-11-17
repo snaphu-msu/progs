@@ -16,12 +16,7 @@ def repo_path():
 def progs_path():
     """Return path to top-level directory of progenitors
     """
-    try:
-        path = os.environ['PROGENITORS']
-    except KeyError:
-        raise EnvironmentError('Environment variable PROGENITORS not set. '
-                               'Set path to progenitors top-level directory, e.g., '
-                               "'export PROGENITORS=${HOME}/data/progenitors'")
+    path = os.path.join(repo_path(), 'progenitor_sets')
     return path
 
 
