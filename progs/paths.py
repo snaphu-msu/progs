@@ -4,8 +4,8 @@ import os
 # ===============================================================
 #                      Repo/meta
 # ===============================================================
-def repo_path():
-    """Return path to progs repo
+def top_path():
+    """Return path to top-level repo directory
     """
     path = os.path.join(os.path.dirname(__file__), '..')
     return path
@@ -14,7 +14,7 @@ def repo_path():
 def progenitor_sets_path():
     """Return path to top-level directory of progenitors
     """
-    path = os.path.join(repo_path(), 'progenitor_sets')
+    path = os.path.join(top_path(), 'progenitor_sets')
     return path
 
 
@@ -26,7 +26,7 @@ def config_filepath(series):
     series : str
     """
     series = check_alias(series)
-    filepath = os.path.join(repo_path(), 'progs', 'config', f'{series}.ini')
+    filepath = os.path.join(top_path(), 'progs', 'config', f'{series}.ini')
 
     return filepath
 
@@ -39,7 +39,7 @@ def network_filepath(network):
     network : str
     """
     filename = f'{network}.txt'
-    filepath = os.path.join(repo_path(), 'progs', 'networks', filename)
+    filepath = os.path.join(top_path(), 'progs', 'networks', filename)
 
     return filepath
 
