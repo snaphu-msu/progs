@@ -4,14 +4,10 @@ import pandas as pd
 from . import paths
 from . import configuration
 
-# TODO:
-#     - convert Lagrangian to Eulerian coordinates
-
 
 def load_prog(mass,
               series,
-              config=None,
-              verbose=True):
+              config=None):
     """Load progenitor model from file
 
     parameters
@@ -19,10 +15,9 @@ def load_prog(mass,
     mass : float/int
     series : str
     config : dict
-    verbose : bool
     """
-    config = configuration.check_config(config, series=series, verbose=verbose)
-    raw = load_raw(mass, series, config=config, verbose=verbose)
+    config = configuration.check_config(config, series=series)
+    raw = load_raw(mass, series, config=config)
     prog = pd.DataFrame()
 
     for key, idx in config['columns'].items():
@@ -33,8 +28,7 @@ def load_prog(mass,
 
 def load_raw(mass,
              series,
-             config=None,
-             verbose=True):
+             config=None):
     """Load raw progenitor model from file
 
     parameters
@@ -42,9 +36,8 @@ def load_raw(mass,
     mass : float/int
     series : str
     config : dict
-    verbose : bool
     """
-    config = configuration.check_config(config, series=series, verbose=verbose)
+    config = configuration.check_config(config, series=series)
     filepath = paths.prog_filepath(mass, series)
 
     delim_whitespace = config['load']['delim_whitespace']

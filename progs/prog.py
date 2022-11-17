@@ -41,14 +41,11 @@ class Prog:
         summed composition quantities (e.g. sumx, sumy, ye)
     table : pd.DataFrame
         Main table of radial profile parameters, including composition
-    verbose : bool
-        Print output or not
     """
 
     def __init__(self,
                  mass,
-                 series,
-                 verbose=True):
+                 series):
         """
         parameters
         ----------
@@ -60,20 +57,15 @@ class Prog:
         series : str
             Name of progenitor series/set, e.g. 'sukhbold_2016'.
             Shorthand aliases may be defined, e.g. 's16' for 'sukhbold_2016'.
-        verbose : bool
         """
         self.mass = mass
         self.series = paths.check_alias(series)
-        self.verbose = verbose
 
         self.filename = paths.prog_filename(mass, series=series)
         self.filepath = paths.prog_filepath(mass, series=series)
-        self.config = configuration.load_config(series, verbose)
+        self.config = configuration.load_config(series)
 
-        self.table = io.load_prog(mass,
-                                  series,
-                                  config=self.config,
-                                  verbose=verbose)
+        self.table = io.load_prog(mass, series, config=self.config)
 
         network_name = self.config['network']['name']
         self.network = network.load_network(network_name)

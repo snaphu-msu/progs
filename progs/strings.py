@@ -3,18 +3,6 @@ Module for formatting/printing strings
 """
 
 
-def printv(string, verbose, **kwargs):
-    """Print string if verbose is True
-
-    parameters
-    ----------
-    string : str
-    verbose : bool
-    """
-    if verbose:
-        print(string, **kwargs)
-
-
 def check_alias(series):
     """Return full name of series if alias used
 
