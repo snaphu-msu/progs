@@ -7,10 +7,8 @@ import os
 def repo_path():
     """Return path to progs repo
     """
-    path = os.path.dirname(__file__)
-    top_path = os.path.join(path, '..')
-
-    return top_path
+    path = os.path.join(os.path.dirname(__file__), '..')
+    return path
 
 
 def progenitor_sets_path():
@@ -27,9 +25,8 @@ def config_filepath(series):
     ----------
     series : str
     """
-    path = repo_path()
     series = check_alias(series)
-    filepath = os.path.join(path, 'progs', 'config', f'{series}.ini')
+    filepath = os.path.join(repo_path(), 'progs', 'config', f'{series}.ini')
 
     return filepath
 
@@ -41,9 +38,8 @@ def network_filepath(network):
     ----------
     network : str
     """
-    path = repo_path()
     filename = f'{network}.txt'
-    filepath = os.path.join(path, 'progs', 'networks', filename)
+    filepath = os.path.join(repo_path(), 'progs', 'networks', filename)
 
     return filepath
 
@@ -86,9 +82,8 @@ def prog_filepath(mass, series):
     mass : float/int
     series : str
     """
-    s_path = series_path(series)
     filename = prog_filename(mass, series=series)
-    filepath = os.path.join(s_path, filename)
+    filepath = os.path.join(series_path(series), filename)
 
     return filepath
 
@@ -100,9 +95,8 @@ def series_path(series):
     ----------
     series : str
     """
-    path = progenitor_sets_path()
     series = check_alias(series)
-    series_dir = os.path.join(path, series)
+    series_dir = os.path.join(progenitor_sets_path(), series)
 
     return series_dir
 
