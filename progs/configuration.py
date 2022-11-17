@@ -20,7 +20,7 @@ def load_config(series, verbose=True):
     verbose : bool
     """
     filepath = paths.config_filepath(series)
-    printv(f'Loading config: {filepath}', verbose)
+    printv(f'Loading config: {os.path.abspath(filepath)}', verbose)
 
     if not os.path.exists(filepath):
         raise FileNotFoundError(f'Config file not found: {filepath}')

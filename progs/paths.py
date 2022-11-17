@@ -10,13 +10,10 @@ from .strings import check_alias
 def repo_path():
     """Return path to progs repo
     """
-    try:
-        path = os.environ['PROGS']
-    except KeyError:
-        raise EnvironmentError('Environment variable PROGS not set. '
-                               'Set path to progs repo directory, e.g., '
-                               "'export PROGS=${HOME}/codes/progs'")
-    return path
+    path = os.path.dirname(__file__)
+    top_path = os.path.join(path, '..')
+
+    return top_path
 
 
 def progs_path():
@@ -45,8 +42,22 @@ def config_filepath(series):
     return filepath
 
 
+def network_filepath(network):
+    """Return path to table of given network
+
+    parameters
+    ----------
+    network : str
+    """
+    path = repo_path()
+    filename = f'{network}.txt'
+    filepath = os.path.join(path, 'networks', filename)
+
+    return filepath
+
+
 # ===============================================================
-#                      Progs
+#                      Progenitors
 # ===============================================================
 def prog_filename(mass, series):
     """Return filename of progenitor
@@ -58,7 +69,7 @@ def prog_filename(mass, series):
     """
     def s16(mass_):
         return f's{mass_}_presn'
-    
+
     def wh02(mass_):
         return f"s{mass_}_presn"
 
@@ -103,16 +114,3 @@ def series_path(series):
 
     return series_dir
 
-
-def network_filepath(network):
-    """Return path to table of given network
-
-    parameters
-    ----------
-    network : str
-    """
-    path = repo_path()
-    filename = f'{network}.txt'
-    filepath = os.path.join(path, 'networks', filename)
-
-    return filepath
