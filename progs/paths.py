@@ -40,7 +40,9 @@ def config_filepath(series):
     """
     path = repo_path()
     series = check_alias(series)
-    return os.path.join(path, 'progs', 'config', f'{series}.ini')
+    filepath = os.path.join(path, 'progs', 'config', f'{series}.ini')
+
+    return filepath
 
 
 # ===============================================================
@@ -56,6 +58,7 @@ def prog_filename(mass, series):
     """
     def s16(mass_):
         return f's{mass_}_presn'
+    
     def wh02(mass_):
         return f"s{mass_}_presn"
 
@@ -82,7 +85,9 @@ def prog_filepath(mass, series):
     """
     s_path = series_path(series)
     filename = prog_filename(mass, series=series)
-    return os.path.join(s_path, filename)
+    filepath = os.path.join(s_path, filename)
+
+    return filepath
 
 
 def series_path(series):
@@ -94,20 +99,9 @@ def series_path(series):
     """
     path = progs_path()
     series = check_alias(series)
-    return os.path.join(path, series)
+    series_dir = os.path.join(path, series)
 
-
-# ===============================================================
-#                      Network
-# ===============================================================
-def network_filename(network):
-    """Return filename of table for given network
-
-    parameters
-    ----------
-    network : str
-    """
-    return f'{network}.txt'
+    return series_dir
 
 
 def network_filepath(network):
@@ -118,5 +112,7 @@ def network_filepath(network):
     network : str
     """
     path = repo_path()
-    filename = network_filename(network)
-    return os.path.join(path, 'networks', filename)
+    filename = f'{network}.txt'
+    filepath = os.path.join(path, 'networks', filename)
+
+    return filepath
