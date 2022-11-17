@@ -48,23 +48,18 @@ def prog_filename(mass, series):
     mass : float/int
     series : str
     """
-    def s16(mass_):
-        return f's{mass_}_presn'
-
-    def wh02(mass_):
-        return f"s{mass_}_presn"
-
     filenames = {
-        'sukhbold_2016': s16,
-        "wh_02": wh02,
+        'sukhbold_2016': f's{mass}_presn',
+        'wh_02': f's{mass}_presn',
     }
 
     series = check_alias(series)
+    filename = filenames.get(series)
 
-    if series in filenames:
-        return filenames[series](mass)
-    else:
+    if filename is None:
         raise ValueError('Progenitor series not defined')
+
+    return filename
 
 
 def prog_filepath(mass, series):
