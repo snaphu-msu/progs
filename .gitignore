@@ -1,8 +1,12 @@
+# progs
+temp/
+progenitor_sets/
+!progenitor_sets/.keep
+
+# misc.
+*.code-workspace
+.vscode/
+.DS_Store
 .idea
 __pycache__
 *.pyc
-.DS_Store
-anim/
-temp/
-.vscode/
-*.code-workspace
