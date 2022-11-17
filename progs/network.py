@@ -47,5 +47,5 @@ def get_sums(composition, network):
 
     sums['abar'] = 1 / sums['sumy']
     table = pd.DataFrame(sums)
-    
+
     return table
