@@ -13,7 +13,7 @@ def repo_path():
     return top_path
 
 
-def progs_path():
+def progenitor_sets_path():
     """Return path to top-level directory of progenitors
     """
     path = os.path.join(repo_path(), 'progenitor_sets')
@@ -100,7 +100,7 @@ def series_path(series):
     ----------
     series : str
     """
-    path = progs_path()
+    path = progenitor_sets_path()
     series = check_alias(series)
     series_dir = os.path.join(path, series)
 
