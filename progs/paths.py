@@ -18,7 +18,6 @@ def config_filepath(series):
     ----------
     series : str
     """
-    series = check_alias(series)
     filepath = os.path.join(top_path(), 'progs', 'config', f'{series}.ini')
 
     return filepath
@@ -53,7 +52,6 @@ def prog_filename(mass, series):
         'wh_02': f's{mass}_presn',
     }
 
-    series = check_alias(series)
     filename = filenames.get(series)
 
     if filename is None:
@@ -83,27 +81,6 @@ def series_path(series):
     ----------
     series : str
     """
-    series = check_alias(series)
     series_dir = os.path.join(top_path(), 'progenitor_sets', series)
 
     return series_dir
-
-
-def check_alias(series):
-    """Return full name of series if alias used
-
-    parameters
-    ----------
-    series : str
-    """
-    aliases = {
-        's16': 'sukhbold_2016',
-        's18': 'sukhbold_2018',
-        'WH02': 'wh_02',
-        'WH_02': "wh_02"
-    }
-
-    if series in aliases:
-        return aliases[series]
-    else:
-        return series

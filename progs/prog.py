@@ -55,11 +55,10 @@ class Prog:
                 e.g. mass=12.1 for 's12.1_presn',
                      mass=60 for 's60_presn'
         series : str
-            Name of progenitor series/set, e.g. 'sukhbold_2016'.
-            Shorthand aliases may be defined, e.g. 's16' for 'sukhbold_2016'.
+            Name of progenitor series/set, e.g. 'sukhbold_2016'
         """
         self.mass = mass
-        self.series = paths.check_alias(series)
+        self.series = series
 
         self.filename = paths.prog_filename(mass, series=series)
         self.filepath = paths.prog_filepath(mass, series=series)
