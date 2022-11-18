@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 # progs
@@ -52,3 +54,23 @@ def load_raw(mass,
     return raw.replace(missing_char, 0.0)
 
 
+def find_progs(series,
+               config=None):
+    """Find all available progenitor models in a set
+
+    parameters
+    ----------
+    series : str
+    config : dict
+    """
+    config = configuration.check_config(config=config, series=series)
+    path = paths.series_path(series)
+
+    progs = []
+    filelist = os.listdir(path)
+
+    for file in filelist:
+        if config['load']['match_str'] in file:
+            progs += [file]
+
+    return progs
