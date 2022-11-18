@@ -58,6 +58,9 @@ def find_progs(series,
                config=None):
     """Find all available progenitor models in a set
 
+    Returns : [str]
+        list of masses
+
     parameters
     ----------
     series : str
@@ -69,8 +72,11 @@ def find_progs(series,
     progs = []
     filelist = os.listdir(path)
 
-    for file in filelist:
-        if config['load']['match_str'] in file:
-            progs += [file]
+    for filename in filelist:
+        if config['load']['match_str'] in filename:
+            mass = filename.strip(config['load']['strip'])
+            progs += [mass]
+
+    progs = sorted(progs, key=float)
 
     return progs
