@@ -10,7 +10,7 @@ Functions for handling nuclear network information
 
 
 def load_network(network_name):
-    """Load network table from file
+    """Load network profile from file
 
     parameters
     ----------
@@ -27,9 +27,9 @@ def get_sums(composition, network):
     parameters
     ----------
     composition : pd.DataFrame
-        table of isotope mass fractions
+        profile of isotope mass fractions
     network : pd.DataFrame
-        table of isotopes to sum over, as returned by load_net().
+        profile of isotopes to sum over, as returned by load_net().
         isotope labels must match the column names in `composition`
     """
     sums = {}

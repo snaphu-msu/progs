@@ -24,7 +24,7 @@ def config_filepath(set_name):
 
 
 def network_filepath(network):
-    """Return path to table of given network
+    """Return path to profile of given network
 
     parameters
     ----------

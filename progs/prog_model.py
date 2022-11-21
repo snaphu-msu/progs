@@ -24,7 +24,7 @@ class ProgModel:
     attributes
     ----------
     composition : pd.DataFrame
-        subset of table containing only network species abundances (mass fraction)
+        subset of profile containing only network species abundances (mass fraction)
     config : dict
         Progenitor-specific parameters loaded from 'config/<set_name>.ini'
     filename : str
@@ -39,8 +39,8 @@ class ProgModel:
         Name of progenitor set, e.g. 'sukhbold_2016'.
     sums : dict
         summed composition quantities (e.g. sumx, sumy, ye)
-    table : pd.DataFrame
-        Main table of radial profile parameters, including composition
+    profile : pd.DataFrame
+        Table of all radial profile quantities, including composition
     """
 
     def __init__(self,
@@ -64,11 +64,11 @@ class ProgModel:
         self.filepath = paths.prog_filepath(mass, set_name=set_name)
         self.config = configuration.load_config(set_name)
 
-        self.table = io.load_prog(mass, set_name, config=self.config)
+        self.profile = io.load_prog(mass, set_name, config=self.config)
 
         network_name = self.config['network']['name']
         self.network = network.load_network(network_name)
-        self.composition = self.table[self.network.isotope]
+        self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 
     # =======================================================
@@ -84,8 +84,8 @@ class ProgModel:
         """
         cm_to_1k_km = units.cm.to(1000 * units.km)
 
-        idx = tools.find_nearest_idx(self.table['mass'], mass * msun_to_g)
-        radius = self.table['radius'][idx]
+        idx = tools.find_nearest_idx(self.profile['mass'], mass * msun_to_g)
+        radius = self.profile['radius'][idx]
 
         xi = mass / (radius * cm_to_1k_km)
 
@@ -96,8 +96,8 @@ class ProgModel:
         """
         sb = const.sigma_sb.cgs.value
 
-        radius = self.table['radius'].iloc[-1]
-        temperature = self.table['temperature'].iloc[-1]
+        radius = self.profile['radius'].iloc[-1]
+        temperature = self.profile['temperature'].iloc[-1]
 
         lum = 4.0 * np.pi * radius**2 * sb * temperature**4
 
@@ -119,7 +119,7 @@ class ProgModel:
         parameters
         ----------
         y_vars : str or [str]
-            column(s) from self.table to plot on y-axis
+            column(s) from self.profile to plot on y-axis
         x_var : str
             variable to plot on x-axis
         y_scale : {'log', 'linear'}
@@ -187,8 +187,8 @@ class ProgModel:
         plotting.set_ax_legend(ax=ax, legend=legend)
         self._set_ax_title(ax=ax, title=title)
 
-        ax.plot(self.table[x_var],
-                self.table[y_var],
+        ax.plot(self.profile[x_var],
+                self.profile[y_var],
                 ls=linestyle,
                 marker=marker,
                 label=label)

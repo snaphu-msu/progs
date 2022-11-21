@@ -61,32 +61,32 @@ def load_raw(mass,
     return raw
 
 
-def add_derived_columns(table, 
+def add_derived_columns(profile,
                         config):
-    """Add derived column variables to table
+    """Add derived column variables to profile
     
     parameters
     ----------
-    table : pd.DataFrame
+    profile : pd.DataFrame
     config : {}
     """
     derived_cols = config['load']['derived_columns']
 
     if 'compactness' in derived_cols:
-        add_compactness(table)
+        add_compactness(profile)
 
 
-def add_compactness(table):
-    """Adds compactness column to prog table
+def add_compactness(profile):
+    """Adds compactness column to profile
 
     parameters
     ----------
-    table : pd.DataFrame
+    profile : pd.DataFrame
     """
-    if ('radius' not in table) or ('mass' not in table):
+    if ('radius' not in profile) or ('mass' not in profile):
         raise ValueError(f'Need radius and mass columns to calculate compactness')
 
-    table['compactness'] = (table['mass'] * g_to_msun) / (table['radius'] * cm_to_1k_km)
+    profile['compactness'] = (profile['mass'] * g_to_msun) / (profile['radius'] * cm_to_1k_km)
 
 
 def find_progs(set_name,
