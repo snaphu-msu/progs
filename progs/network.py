@@ -32,20 +32,20 @@ def get_sums(composition, network):
         profile of isotopes to sum over, as returned by load_net().
         isotope labels must match the column names in `composition`
     """
-    sums = {}
+    sums_dict = {}
     n_zones = len(composition)
 
     for key in ['sumx', 'sumy', 'ye']:
-        sums[key] = np.zeros(n_zones)
+        sums_dict[key] = np.zeros(n_zones)
 
     for _, isotope in network.iterrows():
         x = np.array(composition[isotope['isotope']], dtype=float)
 
-        sums['sumx'] += x
-        sums['sumy'] += x / isotope['A']
-        sums['ye'] += x * (isotope['Z'] / isotope['A'])
+        sums_dict['sumx'] += x
+        sums_dict['sumy'] += x / isotope['A']
+        sums_dict['ye'] += x * (isotope['Z'] / isotope['A'])
 
-    sums['abar'] = 1 / sums['sumy']
-    table = pd.DataFrame(sums)
+    sums_dict['abar'] = 1 / sums_dict['sumy']
+    sums = pd.DataFrame(sums_dict)
 
-    return table
+    return sums
