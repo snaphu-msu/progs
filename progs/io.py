@@ -28,6 +28,8 @@ def load_prog(mass,
     for key, idx in config['columns'].items():
         prog[key] = pd.to_numeric(raw[idx], errors='ignore')
 
+    prog['mass'] = prog['mass'] * g_to_msun
+
     add_derived_columns(prog, config=config)
 
     return prog
@@ -86,7 +88,7 @@ def add_compactness(profile):
     if ('radius' not in profile) or ('mass' not in profile):
         raise ValueError(f'Need radius and mass columns to calculate compactness')
 
-    profile['compactness'] = (profile['mass'] * g_to_msun) / (profile['radius'] * cm_to_1k_km)
+    profile['compactness'] = profile['mass'] / (profile['radius'] * cm_to_1k_km)
 
 
 def find_progs(set_name,

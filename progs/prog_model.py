@@ -10,12 +10,6 @@ from . import network
 from . import plotting
 from . import tools
 
-msun_to_g = units.M_sun.to(units.g)
-
-"""
-Class for handling a given progenitor model
-"""
-
 
 class ProgModel:
     """
@@ -82,9 +76,9 @@ class ProgModel:
         mass : float
             mass parameter [Msun], typically 1.75 or 2.5
         """
-        cm_to_1k_km = units.cm.to(1000 * units.km)
+        cm_to_1k_km = units.cm.to(1e3 * units.km)
 
-        idx = tools.find_nearest_idx(self.profile['mass'], mass * msun_to_g)
+        idx = tools.find_nearest_idx(self.profile['mass'], mass)
         radius = self.profile['radius'][idx]
 
         xi = mass / (radius * cm_to_1k_km)
