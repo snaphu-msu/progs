@@ -1,5 +1,4 @@
 import os
-
 import pandas as pd
 
 # progs
@@ -16,7 +15,7 @@ def load_prog(mass,
     ----------
     mass : float/int
     set_name : str
-    config : dict
+    config : {}
     """
     config = configuration.check_config(config, set_name=set_name)
     raw = load_raw(mass, set_name, config=config)
@@ -37,7 +36,7 @@ def load_raw(mass,
     ----------
     mass : float/int
     set_name : str
-    config : dict
+    config : {}
     """
     config = configuration.check_config(config, set_name=set_name)
     filepath = paths.prog_filepath(mass, set_name)
@@ -54,6 +53,18 @@ def load_raw(mass,
     return raw.replace(missing_char, 0.0)
 
 
+def add_derived_columns(table, 
+                        config):
+    """Add derived column variables to table
+    
+    parameters
+    ----------
+    table : pd.DataFrame
+    config : {}
+    """
+    pass
+
+
 def find_progs(set_name,
                config=None):
     """Find all available progenitor models in a set
@@ -64,7 +75,7 @@ def find_progs(set_name,
     parameters
     ----------
     set_name : str
-    config : dict
+    config : {}
     """
     config = configuration.check_config(config=config, set_name=set_name)
     path = paths.set_path(set_name)
