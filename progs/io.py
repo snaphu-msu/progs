@@ -1,9 +1,13 @@
 import os
 import pandas as pd
+from astropy import units
 
 # progs
 from . import paths
 from . import configuration
+
+g_to_msun = units.g.to(units.M_sun)
+cm_to_1k_km = units.cm.to(1e3 * units.km)
 
 
 def load_prog(mass,
@@ -63,6 +67,19 @@ def add_derived_columns(table,
     config : {}
     """
     pass
+
+
+def add_compactness(table):
+    """Adds compactness column to prog table
+
+    parameters
+    ----------
+    table : pd.DataFrame
+    """
+    if ('radius' not in table) or ('mass' not in table):
+        raise ValueError(f'Need radius and mass columns to calculate compactness')
+
+    table['compactness'] = (table['mass'] * g_to_msun) / (table['radius'] * cm_to_1k_km)
 
 
 def find_progs(set_name,
