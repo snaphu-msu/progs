@@ -6,7 +6,10 @@ from . import network
 from . import tools
 from . import plotting
 
+from .prog_model import ProgModel
+
 __all__ = ['prog_model',
+           'ProgModel',
            'paths',
            'io',
            'configuration',
