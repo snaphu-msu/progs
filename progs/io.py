@@ -21,12 +21,14 @@ def load_prog(mass,
     set_name : str
     config : {}
     """
-    config = configuration.check_config(config, set_name=set_name)
+    config = configuration.check_config(config=config, set_name=set_name)
     raw = load_raw(mass, set_name, config=config)
     prog = pd.DataFrame()
 
     for key, idx in config['columns'].items():
         prog[key] = pd.to_numeric(raw[idx], errors='ignore')
+
+    add_derived_columns(prog, config=config)
 
     return prog
 
@@ -54,7 +56,9 @@ def load_raw(mass,
                       skiprows=skiprows,
                       header=None)
 
-    return raw.replace(missing_char, 0.0)
+    raw = raw.replace(missing_char, 0.0)
+
+    return raw
 
 
 def add_derived_columns(table, 
@@ -66,7 +70,10 @@ def add_derived_columns(table,
     table : pd.DataFrame
     config : {}
     """
-    pass
+    derived_cols = config['load']['derived_columns']
+
+    if 'compactness' in derived_cols:
+        add_compactness(table)
 
 
 def add_compactness(table):
