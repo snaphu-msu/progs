@@ -10,9 +10,9 @@ g_to_msun = units.g.to(units.M_sun)
 cm_to_1k_km = units.cm.to(1e3 * units.km)
 
 
-def load_prog(mass,
-              set_name,
-              config=None):
+def load_profile(mass,
+                 set_name,
+                 config=None):
     """Load progenitor model from file
 
     parameters
@@ -23,16 +23,16 @@ def load_prog(mass,
     """
     config = configuration.check_config(config=config, set_name=set_name)
     raw = load_raw(mass, set_name, config=config)
-    prog = pd.DataFrame()
+    profile = pd.DataFrame()
 
     for key, idx in config['columns'].items():
-        prog[key] = pd.to_numeric(raw[idx], errors='ignore')
+        profile[key] = pd.to_numeric(raw[idx], errors='ignore')
 
-    prog['mass'] = prog['mass'] * g_to_msun
+    profile['mass'] = profile['mass'] * g_to_msun
 
-    add_derived_columns(prog, config=config)
+    add_derived_columns(profile, config=config)
 
-    return prog
+    return profile
 
 
 def load_raw(mass,

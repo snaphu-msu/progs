@@ -58,7 +58,7 @@ class ProgModel:
         self.filepath = paths.prog_filepath(mass, set_name=set_name)
         self.config = configuration.load_config(set_name)
 
-        self.profile = io.load_prog(mass, set_name, config=self.config)
+        self.profile = io.load_profile(mass, set_name, config=self.config)
 
         network_name = self.config['network']['name']
         self.network = network.load_network(network_name)
