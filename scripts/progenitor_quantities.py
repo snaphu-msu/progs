@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from astropy import units
 
-from progs.prog_model import ProgModel
+from progs import ProgModel
 
 # Constants
 Msun = units.M_sun.to(units.g)
@@ -17,17 +17,17 @@ prog = ProgModel(model, 's16')
 
 # compute compactness xi_2.5 = 2.5 / R( m = 2.5Msun )
 xi_2p5 = prog.get_compactness(2.5)
-print( f"xi_2.5 = {xi_2p5}")
+print(f"xi_2.5 = {xi_2p5}")
 
 # === Progenitor final mass, radius ===
 # Progs stors data as pandas dataframes. 
 # Most quantities such as mass, density, temperature, mass fractions are in prog.table
 # You can do println(prog.table), and print(prog.network) to learn more
-n = len(prog.table['mass'])-1
+n = len(prog.table['mass']) - 1
 M_preSN = prog.table["mass"][n] / Msun
 R_preSN = prog.table["radius"][n] / Rsun
-print( f"R_presn = {R_preSN}" )
-print( f"M_presn = {M_preSN}" )
+print(f"R_presn = {R_preSN}")
+print(f"M_presn = {M_preSN}")
 # Note that the final mass is different from the ZAMS mass (15.2),
 # due to mass loss from stellar winds.
 
@@ -37,10 +37,10 @@ print( f"M_presn = {M_preSN}" )
 # where the H mass fraction is "sufficiently high." 0.15 works, but in general 
 # this requires some tuning when working with lots of models to make sure it works for all.
 tol = 0.15
-ind = np.min( np.where( prog.table['h1'] > tol  ) )
+ind = np.min(np.where(prog.table['h1'] > tol))
 # M_env = total mass - mass under envelope
-M_env = (prog.table['mass'][n] - prog.table['mass'][ind])/Msun
-print( f"M_env = {M_env}" )
+M_env = (prog.table['mass'][n] - prog.table['mass'][ind]) / Msun
+print(f"M_env = {M_env}")
 
 # Helium core
 # Here we maximum mass corrdinate where the helium mass fraction he4 is above
@@ -49,16 +49,16 @@ print( f"M_env = {M_env}" )
 
 # Note that this defines the Helium Core, e.g., everything below the envelope.
 # How would you modify this to get the helium Shell mass? See the plot produced.
-M_He_core = np.max( (prog.table['mass'][ prog.table['he4'] > 0.6])) / Msun
-print( f"M_He = {M_He_core}" )
+M_He_core = np.max((prog.table['mass'][prog.table['he4'] > 0.6])) / Msun
+print(f"M_He = {M_He_core}")
 
 # Carbon-Oxygen core
-M_CO_core = np.max(prog.table['mass'][ prog.table['c12'] > 0.05]) / Msun
-print( f"M_CO = {M_CO_core}" )
+M_CO_core = np.max(prog.table['mass'][prog.table['c12'] > 0.05]) / Msun
+print(f"M_CO = {M_CO_core}")
 
 # Iron Core
-M_Fe_core = np.min(prog.table['mass'][ prog.table['si28'] > 0.2]) / Msun
-print( f"M_Fe = {M_Fe_core}" )
+M_Fe_core = np.min(prog.table['mass'][prog.table['si28'] > 0.2]) / Msun
+print(f"M_Fe = {M_Fe_core}")
 
 # To get a feel for the process, we'll plot the He mass fraction along with our
 # threshold to see how we determine the core mass
@@ -66,7 +66,7 @@ print( f"M_Fe = {M_Fe_core}" )
 fig, ax = plt.subplots()
 M = prog.table["mass"] / Msun
 X_He = prog.table["he4"]
-ax.plot( M, X_He )
-ax.axvline( M_He_core, color="black", ls="--", lw=1.5 )
-ax.set( ylabel=r"X$_{He}$", xlabel=r"Mass [M$_{\odot}$]" )
+ax.plot(M, X_He)
+ax.axvline(M_He_core, color="black", ls="--", lw=1.5)
+ax.set(ylabel=r"X$_{He}$", xlabel=r"Mass [M$_{\odot}$]")
 plt.show()
