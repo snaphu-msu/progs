@@ -13,7 +13,7 @@ Rsun = units.R_sun.to(units.cm)
 # Extract data for 15.2 solar mass model.
 # In theory we could do a loop over all models here and fill an array/list
 model = "15.2"
-prog = progs.prog.Prog(model, 's16')
+prog = progs.prog_model.Prog(model, 's16')
 
 # compute compactness xi_2.5 = 2.5 / R( m = 2.5Msun )
 xi_2p5 = prog.get_compactness(2.5)
