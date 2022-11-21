@@ -11,14 +11,14 @@ def top_path():
     return path
 
 
-def config_filepath(series):
+def config_filepath(set_name):
     """Return path to config file
 
     parameters
     ----------
-    series : str
+    set_name : str
     """
-    filepath = os.path.join(top_path(), 'progs', 'config', f'{series}.ini')
+    filepath = os.path.join(top_path(), 'progs', 'config', f'{set_name}.ini')
 
     return filepath
 
@@ -39,48 +39,47 @@ def network_filepath(network):
 # ===============================================================
 #                      Progenitors
 # ===============================================================
-def prog_filename(mass, series):
+def prog_filename(mass, set_name):
     """Return filename of progenitor
 
     parameters
     ----------
     mass : float/int
-    series : str
+    set_name : str
     """
     filenames = {
         'sukhbold_2016': f's{mass}_presn',
         'wh_02': f's{mass}_presn',
     }
 
-    filename = filenames.get(series)
+    filename = filenames.get(set_name)
 
     if filename is None:
-        raise ValueError('Progenitor series not defined')
+        raise ValueError(f"Progenitor set '{set_name}' not defined")
 
     return filename
 
 
-def prog_filepath(mass, series):
+def prog_filepath(mass, set_name):
     """Return filepath to progenitor model
 
     parameters
     ----------
     mass : float/int
-    series : str
+    set_name : str
     """
-    filename = prog_filename(mass, series=series)
-    filepath = os.path.join(series_path(series), filename)
+    filename = prog_filename(mass, set_name=set_name)
+    filepath = os.path.join(set_path(set_name), filename)
 
     return filepath
 
 
-def series_path(series):
-    """Return path to progenitor series directory
+def set_path(set_name):
+    """Return path to progenitor set directory
 
     parameters
     ----------
-    series : str
+    set_name : str
     """
-    series_dir = os.path.join(top_path(), 'progenitor_sets', series)
-
-    return series_dir
+    path = os.path.join(top_path(), 'progenitor_sets', set_name)
+    return path

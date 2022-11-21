@@ -2,9 +2,9 @@
 
 Put data for progenitor model sets here.
 
-The directory name must match the `series` name defined in `progs/config/`.
+The directory name must match the `set_name` defined in `progs/config/`.
 
-For example, the Sukhbold 2016 set (`series='sukhbold_2016'`) should look as follows:
+For example, the Sukhbold 2016 set (`set_name='sukhbold_2016'`) should look as follows:
 
 ```
 progenitor_sets

@@ -8,18 +8,18 @@ from . import configuration
 
 
 def load_prog(mass,
-              series,
+              set_name,
               config=None):
     """Load progenitor model from file
 
     parameters
     ----------
     mass : float/int
-    series : str
+    set_name : str
     config : dict
     """
-    config = configuration.check_config(config, series=series)
-    raw = load_raw(mass, series, config=config)
+    config = configuration.check_config(config, set_name=set_name)
+    raw = load_raw(mass, set_name, config=config)
     prog = pd.DataFrame()
 
     for key, idx in config['columns'].items():
@@ -29,18 +29,18 @@ def load_prog(mass,
 
 
 def load_raw(mass,
-             series,
+             set_name,
              config=None):
     """Load raw progenitor model from file
 
     parameters
     ----------
     mass : float/int
-    series : str
+    set_name : str
     config : dict
     """
-    config = configuration.check_config(config, series=series)
-    filepath = paths.prog_filepath(mass, series)
+    config = configuration.check_config(config, set_name=set_name)
+    filepath = paths.prog_filepath(mass, set_name)
 
     delim_whitespace = config['load']['delim_whitespace']
     skiprows = config['load']['skiprows']
@@ -54,7 +54,7 @@ def load_raw(mass,
     return raw.replace(missing_char, 0.0)
 
 
-def find_progs(series,
+def find_progs(set_name,
                config=None):
     """Find all available progenitor models in a set
 
@@ -63,11 +63,11 @@ def find_progs(series,
 
     parameters
     ----------
-    series : str
+    set_name : str
     config : dict
     """
-    config = configuration.check_config(config=config, series=series)
-    path = paths.series_path(series)
+    config = configuration.check_config(config=config, set_name=set_name)
+    path = paths.set_path(set_name)
 
     progs = []
     filelist = os.listdir(path)

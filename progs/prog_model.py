@@ -26,7 +26,7 @@ class ProgModel:
     composition : pd.DataFrame
         subset of table containing only network species abundances (mass fraction)
     config : dict
-        Progenitor-specific parameters loaded from 'config/[series].ini'
+        Progenitor-specific parameters loaded from 'config/<set_name>.ini'
     filename : str
         Name of raw progenitor file
     filepath : str
@@ -35,8 +35,8 @@ class ProgModel:
         Stellar mass (in Msun) of progenitor model.
     network : [str]
         table of network isotopes used
-    series : str
-        Name of progenitor series/set, e.g. 'sukhbold_2016'.
+    set_name : str
+        Name of progenitor set, e.g. 'sukhbold_2016'.
     sums : dict
         summed composition quantities (e.g. sumx, sumy, ye)
     table : pd.DataFrame
@@ -45,7 +45,7 @@ class ProgModel:
 
     def __init__(self,
                  mass,
-                 series):
+                 set_name):
         """
         parameters
         ----------
@@ -54,17 +54,17 @@ class ProgModel:
             Precision needs to match the file label
                 e.g. mass=12.1 for 's12.1_presn',
                      mass=60 for 's60_presn'
-        series : str
-            Name of progenitor series/set, e.g. 'sukhbold_2016'
+        set_name : str
+            Name of progenitor set, e.g. 'sukhbold_2016'
         """
         self.mass = mass
-        self.series = series
+        self.set_name = set_name
 
-        self.filename = paths.prog_filename(mass, series=series)
-        self.filepath = paths.prog_filepath(mass, series=series)
-        self.config = configuration.load_config(series)
+        self.filename = paths.prog_filename(mass, set_name=set_name)
+        self.filepath = paths.prog_filepath(mass, set_name=set_name)
+        self.config = configuration.load_config(set_name)
 
-        self.table = io.load_prog(mass, series, config=self.config)
+        self.table = io.load_prog(mass, set_name, config=self.config)
 
         network_name = self.config['network']['name']
         self.network = network.load_network(network_name)
@@ -204,5 +204,5 @@ class ProgModel:
         title : bool
         """
         if title:
-            string = f'{self.series}: {self.filename}'
+            string = f'{self.set_name}: {self.filename}'
             plotting.set_ax_title(ax=ax, string=string, title=title)
