@@ -25,12 +25,12 @@ class ProgModel:
         Name of raw progenitor file
     filepath : str
         Path to raw progenitor file
-    mass : int or float
-        Stellar mass (in Msun) of progenitor model.
+    mass : str
+        Stellar mass (in Msun) of progenitor model
     network : [str]
         table of network isotopes used
     set_name : str
-        Name of progenitor set, e.g. 'sukhbold_2016'.
+        Name of progenitor set, e.g. 'sukhbold_2016'
     sums : dict
         summed composition quantities (e.g. sumx, sumy, ye)
     profile : pd.DataFrame
@@ -43,11 +43,11 @@ class ProgModel:
         """
         parameters
         ----------
-        mass : float/int
+        mass : str
             Stellar mass (in Msun) of progenitor model.
-            Precision needs to match the file label
-                e.g. mass=12.1 for 's12.1_presn',
-                     mass=60 for 's60_presn'
+            Needs to match filename e.g.:
+                - mass='12.1' for 's12.1_presn',
+                - mass='60' for 's60_presn'
         set_name : str
             Name of progenitor set, e.g. 'sukhbold_2016'
         """

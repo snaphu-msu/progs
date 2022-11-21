@@ -44,7 +44,7 @@ def prog_filename(mass, set_name):
 
     parameters
     ----------
-    mass : float/int
+    mass : str
     set_name : str
     """
     filenames = {
@@ -65,7 +65,7 @@ def prog_filepath(mass, set_name):
 
     parameters
     ----------
-    mass : float/int
+    mass : str
     set_name : str
     """
     filename = prog_filename(mass, set_name=set_name)

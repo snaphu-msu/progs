@@ -17,7 +17,7 @@ def load_profile(mass,
 
     parameters
     ----------
-    mass : float/int
+    mass : str
     set_name : str
     config : {}
     """
@@ -42,7 +42,7 @@ def load_raw_table(mass,
 
     parameters
     ----------
-    mass : float/int
+    mass : str
     set_name : str
     config : {}
     """
