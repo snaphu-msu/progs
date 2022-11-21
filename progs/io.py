@@ -22,7 +22,7 @@ def load_profile(mass,
     config : {}
     """
     config = configuration.check_config(config=config, set_name=set_name)
-    raw = load_raw(mass, set_name, config=config)
+    raw = load_raw_table(mass, set_name, config=config)
     profile = pd.DataFrame()
 
     for key, idx in config['columns'].items():
@@ -35,9 +35,9 @@ def load_profile(mass,
     return profile
 
 
-def load_raw(mass,
-             set_name,
-             config=None):
+def load_raw_table(mass,
+                   set_name,
+                   config=None):
     """Load raw progenitor model from file
 
     parameters
