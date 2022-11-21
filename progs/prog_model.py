@@ -17,9 +17,9 @@ Class for handling a given progenitor model
 """
 
 
-class Prog:
-    """Prog
-    Object representing a particular core-collapse progenitor model
+class ProgModel:
+    """
+    Object representing a core-collapse progenitor model
 
     attributes
     ----------

@@ -41,7 +41,7 @@ progenitor_sets
 Then to load a progenitor model in python:
 
 ```
-from progs.prog import Prog
+from progs.prog_model import ProgModel
 
-model = Prog(mass='9.0', series='sukhbold_2016')
+model = ProgModel(mass='9.0', series='sukhbold_2016')
 ```
