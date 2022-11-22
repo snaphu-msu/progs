@@ -69,21 +69,16 @@ class ProgModel:
     #                      Quantities
     # =======================================================    
     def get_compactness(self, mass=2.5):
-        """Compute the compactness xi = (M/Msun) / (R(M) / 1000km)
+        """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
 
         parameters
         ----------
         mass : float
             mass parameter [Msun], typically 1.75 or 2.5
         """
-        cm_to_1k_km = units.cm.to(1e3 * units.km)
+        xi = self.interpolate_profile(x=mass, y_var='compactness', x_var='mass', )
 
-        idx = tools.find_nearest_idx(self.profile['mass'], mass)
-        radius = self.profile['radius'][idx]
-
-        xi = mass / (radius * cm_to_1k_km)
-
-        return xi
+        return float(xi)
 
     def get_luminosity(self):
         """Return 4piR^2 sigma_sb T^4
