@@ -3,22 +3,29 @@ import pandas as pd
 
 # progs
 from . import paths
+from . import configuration
 
 """
 Functions for handling nuclear network information
 """
 
 
-def load_network(network_name):
+def load_network(set_name,
+                 config=None):
     """Load network profile from file
 
     parameters
     ----------
-    network_name : str
-        name of network, e.g. 'net19'
+    set_name : str
+    config : {}
     """
+    config = configuration.check_config(config=config, set_name=set_name)
+    network_name = config['network']['name']
+
     filepath = paths.network_filepath(network_name)
-    return pd.read_csv(filepath, delim_whitespace=True)
+    network = pd.read_csv(filepath, delim_whitespace=True)
+
+    return network
 
 
 def get_sums(composition, network):

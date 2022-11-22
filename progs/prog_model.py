@@ -60,8 +60,7 @@ class ProgModel:
 
         self.profile = io.load_profile(mass, set_name, config=self.config)
 
-        network_name = self.config['network']['name']
-        self.network = network.load_network(network_name)
+        self.network = network.load_network(set_name, config=self.config)
         self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 
