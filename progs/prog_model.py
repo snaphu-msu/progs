@@ -1,7 +1,5 @@
 import numpy as np
 from astropy import constants as const
-from astropy import units
-from scipy.interpolate import interp1d
 
 # progs
 from . import paths
@@ -107,8 +105,7 @@ class ProgModel:
         if x_var not in ['mass', 'radius']:
             raise ValueError("interpolation x_var must be 'mass' or 'radius'")
 
-        func = interp1d(self.profile[x_var], self.profile[y_var], assume_sorted=True)
-        y = func(x)
+        y = np.interp(x, self.profile[x_var], self.profile[y_var])
 
         return y
 
