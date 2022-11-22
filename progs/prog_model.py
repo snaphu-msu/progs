@@ -143,7 +143,7 @@ class ProgModel:
 
     def plot(self,
              y_var,
-             x_var='radius',
+             x_var='mass',
              y_scale=None,
              x_scale=None,
              ax=None,
