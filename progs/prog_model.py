@@ -68,6 +68,8 @@ class ProgModel:
     def get_compactness(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
 
+        Returns : float
+
         parameters
         ----------
         mass : float
@@ -82,6 +84,8 @@ class ProgModel:
                             y_var,
                             x_var='mass'):
         """Interpolate profile quanitity at given mass/radius coordinate
+
+        Returns : float
 
         parameters
         ----------
@@ -108,6 +112,8 @@ class ProgModel:
                    sub_figsize=(8, 6),
                    legend=False):
         """Plot one or more profile variables
+
+        Returns : fig
 
         parameters
         ----------
@@ -155,6 +161,8 @@ class ProgModel:
              linestyle='-',
              marker=''):
         """Plot given profile variable
+
+        Returns : fig
 
         parameters
         ----------

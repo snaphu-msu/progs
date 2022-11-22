@@ -13,7 +13,9 @@ Functions for handling nuclear network information
 def load_network(set_name,
                  config=None):
     """Load network profile from file
-
+    
+    Returns : pd.DataFrame
+    
     parameters
     ----------
     set_name : str
@@ -30,7 +32,9 @@ def load_network(set_name,
 
 def get_sums(composition, network):
     """Calculate summed quantities from isotope composition
-
+    
+    Returns : pd.DataFrame
+    
     parameters
     ----------
     composition : pd.DataFrame

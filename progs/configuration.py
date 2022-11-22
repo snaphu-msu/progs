@@ -13,6 +13,8 @@ Module for handling configs for each progenitor set_name
 def load_config(set_name):
     """Load .ini config file and return as dict
 
+    Returns : {}
+
     parameters
     ----------
     set_name : str
@@ -36,6 +38,8 @@ def load_config(set_name):
 
 def check_config(config, set_name):
     """Check if config provided, load if not
+
+    Returns : {}
 
     parameters
     ----------

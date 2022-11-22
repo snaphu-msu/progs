@@ -6,6 +6,8 @@ import os
 # ===============================================================
 def top_path():
     """Return path to top-level repo directory
+
+    Returns : str
     """
     path = os.path.join(os.path.dirname(__file__), '..')
     return path
@@ -13,6 +15,8 @@ def top_path():
 
 def config_filepath(set_name):
     """Return path to config file
+
+    Returns : str
 
     parameters
     ----------
@@ -25,6 +29,8 @@ def config_filepath(set_name):
 
 def network_filepath(network):
     """Return path to profile of given network
+
+    Returns : str
 
     parameters
     ----------
@@ -41,6 +47,8 @@ def network_filepath(network):
 # ===============================================================
 def prog_filename(mass, set_name):
     """Return filename of progenitor
+
+    Returns : str
 
     parameters
     ----------
@@ -63,6 +71,8 @@ def prog_filename(mass, set_name):
 def prog_filepath(mass, set_name):
     """Return filepath to progenitor model
 
+    Returns : str
+
     parameters
     ----------
     mass : str
@@ -76,6 +86,8 @@ def prog_filepath(mass, set_name):
 
 def set_path(set_name):
     """Return path to progenitor set directory
+
+    Returns : str
 
     parameters
     ----------

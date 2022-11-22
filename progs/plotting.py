@@ -12,7 +12,7 @@ def setup_subplots(n_sub,
                    **kwargs):
     """Constructs fig for given number of subplots
 
-    returns : fig, ax
+    Returns : fig, ax
 
     parameters
     ----------
@@ -34,6 +34,8 @@ def setup_subplots(n_sub,
 
 def check_ax(ax, figsize):
     """Setup fig, ax if ax is not provided
+
+    Returns : fig, ax
 
     parameters
     ----------

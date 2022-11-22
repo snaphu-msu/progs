@@ -16,7 +16,9 @@ def load_profile(mass,
                  set_name,
                  config=None):
     """Load progenitor model from file
-
+    
+    Returns : pd.DataFrame
+    
     parameters
     ----------
     mass : str
@@ -40,8 +42,10 @@ def load_profile(mass,
 def load_raw_table(mass,
                    set_name,
                    config=None):
-    """Load raw progenitor model from file
+    """Load unformatted progenitor model from file
 
+    Returns : pd.DataFrame
+    
     parameters
     ----------
     mass : str
@@ -115,7 +119,7 @@ def add_luminosity(profile):
 def find_progs(set_name,
                config=None):
     """Find all available progenitor models in a set
-
+    
     Returns : [str]
         list of masses
 

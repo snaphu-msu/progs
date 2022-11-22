@@ -9,6 +9,8 @@ def ensure_sequence(x):
     """Ensure given object is in the form of a sequence.
     If object is scalar, return as length-1 list.
 
+    Returns : []
+
     parameters
     ----------
     x : 1D-array or scalar
@@ -24,6 +26,8 @@ def find_nearest_idx(array, value):
 
     Note: array assumed to be monotonically increasing (not enforced),
           will use the first element that exceeds the given value
+
+    Returns : int
 
     parameters
     ----------
