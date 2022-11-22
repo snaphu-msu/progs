@@ -1,6 +1,8 @@
 import os
+import numpy as np
 import pandas as pd
 from astropy import units
+from astropy import constants as const
 
 # progs
 from . import paths
@@ -76,10 +78,12 @@ def add_derived_columns(profile,
 
     if 'compactness' in derived_cols:
         add_compactness(profile)
+    if 'luminosity' in derived_cols:
+        add_luminosity(profile)
 
 
 def add_compactness(profile):
-    """Adds compactness column to profile
+    """Add compactness column to profile
 
     parameters
     ----------
@@ -89,6 +93,23 @@ def add_compactness(profile):
         raise ValueError(f'Need radius and mass columns to calculate compactness')
 
     profile['compactness'] = profile['mass'] / (profile['radius'] * cm_to_1k_km)
+
+
+def add_luminosity(profile):
+    """Add blackbody luminosity column to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    if ('radius' not in profile) or ('temperature' not in profile):
+        raise ValueError(f'Need radius and temperature columns to calculate luminosity')
+
+    sb = const.sigma_sb.cgs.value
+    radius = profile['radius']
+    temp = profile['temperature']
+
+    profile['luminosity'] = 4.0 * np.pi * sb * radius**2 * temp**4
 
 
 def find_progs(set_name,
