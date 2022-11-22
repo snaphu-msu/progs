@@ -6,4 +6,5 @@ dependencies:
   - matplotlib=3.5
   - numpy=1.23
   - pandas=1.4
+  - scipy=1.9
   - xarray=0.20
