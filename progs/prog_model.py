@@ -1,6 +1,7 @@
 import numpy as np
 from astropy import constants as const
 from astropy import units
+from scipy.interpolate import interp1d
 
 # progs
 from . import paths
@@ -95,6 +96,26 @@ class ProgModel:
         lum = 4.0 * np.pi * radius**2 * sb * temperature**4
 
         return lum
+
+    def interpolate_profile(self,
+                            x,
+                            y_var,
+                            x_var='mass'):
+        """Interpolate profile quanitity at given mass/radius coordinate
+
+        parameters
+        ----------
+        x : float or [float]
+        y_var : str
+        x_var : 'mass' or 'radius'
+        """
+        if x_var not in ['mass', 'radius']:
+            raise ValueError("interpolation x_var must be 'mass' or 'radius'")
+
+        func = interp1d(self.profile[x_var], self.profile[y_var], assume_sorted=True)
+        y = func(x)
+
+        return y
 
     # =======================================================
     #                      Plotting
