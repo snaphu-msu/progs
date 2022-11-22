@@ -1,5 +1,4 @@
 import numpy as np
-from astropy import constants as const
 
 # progs
 from . import paths
@@ -77,18 +76,6 @@ class ProgModel:
         xi = self.interpolate_profile(x=mass, y_var='compactness', x_var='mass', )
 
         return float(xi)
-
-    def get_luminosity(self):
-        """Return 4piR^2 sigma_sb T^4
-        """
-        sb = const.sigma_sb.cgs.value
-
-        radius = self.profile['radius'].iloc[-1]
-        temperature = self.profile['temperature'].iloc[-1]
-
-        lum = 4.0 * np.pi * radius**2 * sb * temperature**4
-
-        return lum
 
     def interpolate_profile(self,
                             x,
