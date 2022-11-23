@@ -22,3 +22,16 @@ class ProgSet:
         self.set_name = set_name
         self.config = configuration.load_config(set_name)
         self.masses = io.find_progs(set_name)
+
+        self.progs = {}
+        self.load_progs()
+
+    def load_progs(self):
+        """Load all progenitor models
+        """
+        for mass in self.masses:
+            print(f'\rLoading mass: {mass}  ', end='')
+
+            self.progs[mass] = ProgModel(mass=mass,
+                                         set_name=self.set_name,
+                                         config=self.config)
