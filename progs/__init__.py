@@ -6,8 +6,10 @@ from . import tools
 from . import plotting
 
 from .prog_model import ProgModel
+from .prog_set import ProgSet
 
 __all__ = ['ProgModel',
+           'ProgSet',
            'paths',
            'io',
            'configuration',
