@@ -37,7 +37,9 @@ class ProgModel:
 
     def __init__(self,
                  mass,
-                 set_name):
+                 set_name,
+                 config=None,
+                 ):
         """
         parameters
         ----------
@@ -48,13 +50,14 @@ class ProgModel:
                 - mass='60' for 's60_presn'
         set_name : str
             Name of progenitor set, e.g. 'sukhbold_2016'
+        config : {}
         """
         self.mass = mass
         self.set_name = set_name
 
         self.filename = paths.prog_filename(mass, set_name=set_name)
         self.filepath = paths.prog_filepath(mass, set_name=set_name)
-        self.config = configuration.load_config(set_name)
+        self.config = configuration.check_config(config=config, set_name=set_name)
 
         self.profile = io.load_profile(mass, set_name, config=self.config)
 
