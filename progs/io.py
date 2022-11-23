@@ -12,7 +12,7 @@ g_to_msun = units.g.to(units.M_sun)
 cm_to_1k_km = units.cm.to(1e3 * units.km)
 
 
-def load_profile(mass,
+def load_profile(zams,
                  set_name,
                  config=None):
     """Load progenitor model from file
@@ -21,12 +21,12 @@ def load_profile(mass,
     
     parameters
     ----------
-    mass : str
+    zams : str
     set_name : str
     config : {}
     """
     config = configuration.check_config(config=config, set_name=set_name)
-    raw = load_raw_table(mass, set_name, config=config)
+    raw = load_raw_table(zams, set_name, config=config)
     profile = pd.DataFrame()
 
     for key, idx in config['columns'].items():
@@ -39,7 +39,7 @@ def load_profile(mass,
     return profile
 
 
-def load_raw_table(mass,
+def load_raw_table(zams,
                    set_name,
                    config=None):
     """Load unformatted progenitor model from file
@@ -48,12 +48,12 @@ def load_raw_table(mass,
     
     parameters
     ----------
-    mass : str
+    zams : str
     set_name : str
     config : {}
     """
     config = configuration.check_config(config, set_name=set_name)
-    filepath = paths.prog_filepath(mass, set_name)
+    filepath = paths.prog_filepath(zams, set_name)
 
     delim_whitespace = config['load']['delim_whitespace']
     skiprows = config['load']['skiprows']
@@ -121,7 +121,7 @@ def find_progs(set_name,
     """Find all available progenitor models in a set
     
     Returns : [str]
-        list of masses
+        list of ZAMS masses
 
     parameters
     ----------
@@ -136,8 +136,8 @@ def find_progs(set_name,
 
     for filename in filelist:
         if config['load']['match_str'] in filename:
-            mass = filename.strip(config['load']['strip'])
-            progs += [mass]
+            zams = filename.strip(config['load']['strip'])
+            progs += [zams]
 
     progs = sorted(progs, key=float)
 

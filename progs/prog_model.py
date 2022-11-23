@@ -23,8 +23,8 @@ class ProgModel:
         Name of raw progenitor file
     filepath : str
         Path to raw progenitor file
-    mass : str
-        Stellar mass (in Msun) of progenitor model
+    zams : str
+        ZAMS mass [Msun] of progenitor model
     network : [str]
         table of network isotopes used
     set_name : str
@@ -36,30 +36,30 @@ class ProgModel:
     """
 
     def __init__(self,
-                 mass,
+                 zams,
                  set_name,
                  config=None,
                  ):
         """
         parameters
         ----------
-        mass : str
-            Stellar mass (in Msun) of progenitor model.
+        zams : str
+            ZAMS mass [Msun] of progenitor model.
             Needs to match filename e.g.:
-                - mass='12.1' for 's12.1_presn',
-                - mass='60' for 's60_presn'
+                - zams='12.1' for 's12.1_presn',
+                - zams='60' for 's60_presn'
         set_name : str
             Name of progenitor set, e.g. 'sukhbold_2016'
         config : {}
         """
-        self.mass = mass
+        self.zams = zams
         self.set_name = set_name
 
-        self.filename = paths.prog_filename(mass, set_name=set_name)
-        self.filepath = paths.prog_filepath(mass, set_name=set_name)
+        self.filename = paths.prog_filename(zams, set_name=set_name)
+        self.filepath = paths.prog_filepath(zams, set_name=set_name)
         self.config = configuration.check_config(config=config, set_name=set_name)
 
-        self.profile = io.load_profile(mass, set_name, config=self.config)
+        self.profile = io.load_profile(zams, set_name, config=self.config)
 
         self.network = network.load_network(set_name, config=self.config)
         self.composition = self.profile[self.network.isotope]
@@ -76,7 +76,7 @@ class ProgModel:
         parameters
         ----------
         mass : float
-            mass parameter [Msun], typically 1.75 or 2.5
+            Mass coordinate [Msun], typically 1.75 or 2.5
         """
         xi = self.interpolate_profile(x=mass, y_var='compactness', x_var='mass', )
 

@@ -45,19 +45,19 @@ def network_filepath(network):
 # ===============================================================
 #                      Progenitors
 # ===============================================================
-def prog_filename(mass, set_name):
+def prog_filename(zams, set_name):
     """Return filename of progenitor
 
     Returns : str
 
     parameters
     ----------
-    mass : str
+    zams : str
     set_name : str
     """
     filenames = {
-        'sukhbold_2016': f's{mass}_presn',
-        'wh_02': f's{mass}_presn',
+        'sukhbold_2016': f's{zams}_presn',
+        'wh_02': f's{zams}_presn',
     }
 
     filename = filenames.get(set_name)
@@ -68,17 +68,17 @@ def prog_filename(mass, set_name):
     return filename
 
 
-def prog_filepath(mass, set_name):
+def prog_filepath(zams, set_name):
     """Return filepath to progenitor model
 
     Returns : str
 
     parameters
     ----------
-    mass : str
+    zams : str
     set_name : str
     """
-    filename = prog_filename(mass, set_name=set_name)
+    filename = prog_filename(zams, set_name=set_name)
     filepath = os.path.join(set_path(set_name), filename)
 
     return filepath
