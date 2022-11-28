@@ -65,9 +65,23 @@ class ProgModel:
         self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 
+        self.scalars = {}
+        self.get_scalars()
+
     # =======================================================
     #                      Quantities
-    # =======================================================    
+    # =======================================================
+    def get_scalars(self):
+        """Get scalar variables
+        """
+        surface = self.profile.iloc[-1]
+        self.scalars['presn_mass'] = surface['mass']
+        self.scalars['presn_radius'] = surface['radius']
+        self.scalars['presn_luminosity'] = surface['luminosity']
+
+        self.scalars['xi_1.75'] = self.get_compactness(mass=1.75)
+        self.scalars['xi_2.5'] = self.get_compactness(mass=2.5)
+
     def get_compactness(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
 
