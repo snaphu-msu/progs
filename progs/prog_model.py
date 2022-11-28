@@ -159,7 +159,6 @@ class ProgModel:
         fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
-        plotting.set_ax_legend(ax=ax, legend=legend)
         self._set_ax_title(ax=ax, title=title)
 
         ax.plot(self.profile[x_var],
@@ -167,6 +166,60 @@ class ProgModel:
                 ls=linestyle,
                 marker=marker,
                 label=label)
+
+        plotting.set_ax_legend(ax=ax, legend=legend)
+
+        return fig
+
+    def plot_composition(self,
+                         isotopes=None,
+                         x_var='mass',
+                         y_scale='log',
+                         x_scale=None,
+                         ax=None,
+                         legend=True,
+                         title=True,
+                         ylims=(1e-4, 1.1),
+                         xlims=None,
+                         figsize=(8, 6),
+                         linestyle='-',
+                         marker=''):
+        """Plot isotopic composition
+
+        Returns : fig
+
+        parameters
+        ----------
+        isotopes : [str]
+        x_var : str
+            variable to plot on x-axis
+        y_scale : {'log', 'linear'}
+        x_scale : {'log', 'linear'}
+        ax : Axes
+        legend : bool
+        title : bool
+        ylims : [min, max]
+        xlims : [min, max]
+        figsize : [width, height]
+        linestyle : str
+        marker : str
+        """
+        fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
+        plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
+        plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
+        self._set_ax_title(ax=ax, title=title)
+
+        if isotopes is None:
+            isotopes = self.network['isotope']
+
+        for isotope in isotopes:
+            ax.plot(self.profile[x_var],
+                    self.composition[isotope],
+                    ls=linestyle,
+                    marker=marker,
+                    label=isotope)
+
+        plotting.set_ax_legend(ax=ax, legend=legend)
 
         return fig
 
