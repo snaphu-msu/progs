@@ -279,5 +279,5 @@ class ProgModel:
         title : bool
         """
         if title:
-            string = f'{self.set_name}: {self.filename}'
+            string = f'{self.set_name}: {self.zams} Msun'
             plotting.set_ax_title(ax=ax, string=string, title=title)
