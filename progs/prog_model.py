@@ -120,49 +120,6 @@ class ProgModel:
     # =======================================================
     #                      Plotting
     # =======================================================
-    def plot_multi(self,
-                   y_vars,
-                   x_var='radius',
-                   y_scale=None,
-                   x_scale=None,
-                   max_cols=1,
-                   sub_figsize=(8, 6),
-                   legend=False):
-        """Plot one or more profile variables
-
-        Returns : fig
-
-        parameters
-        ----------
-        y_vars : str or [str]
-            column(s) from self.profile to plot on y-axis
-        x_var : str
-            variable to plot on x-axis
-        y_scale : {'log', 'linear'}
-        x_scale : {'log', 'linear'}
-        legend : bool
-        max_cols : bool
-        sub_figsize : tuple
-        """
-        y_vars = tools.ensure_sequence(y_vars)
-        n_var = len(y_vars)
-        fig, ax = plotting.setup_subplots(n_var,
-                                          max_cols=max_cols,
-                                          sub_figsize=sub_figsize,
-                                          squeeze=False)
-
-        for i, y_var in enumerate(y_vars):
-            row = int(np.floor(i / max_cols))
-            col = i % max_cols
-
-            self.plot(y_var=y_var,
-                      x_var=x_var,
-                      y_scale=y_scale,
-                      x_scale=x_scale,
-                      ax=ax[row, col],
-                      legend=legend if i == 0 else False)
-        return fig
-
     def plot(self,
              y_var,
              x_var='mass',
@@ -211,6 +168,49 @@ class ProgModel:
                 marker=marker,
                 label=label)
 
+        return fig
+
+    def plot_multi(self,
+                   y_vars,
+                   x_var='radius',
+                   y_scale=None,
+                   x_scale=None,
+                   max_cols=1,
+                   sub_figsize=(8, 6),
+                   legend=False):
+        """Plot one or more profile variables
+
+        Returns : fig
+
+        parameters
+        ----------
+        y_vars : str or [str]
+            column(s) from self.profile to plot on y-axis
+        x_var : str
+            variable to plot on x-axis
+        y_scale : {'log', 'linear'}
+        x_scale : {'log', 'linear'}
+        legend : bool
+        max_cols : bool
+        sub_figsize : tuple
+        """
+        y_vars = tools.ensure_sequence(y_vars)
+        n_var = len(y_vars)
+        fig, ax = plotting.setup_subplots(n_var,
+                                          max_cols=max_cols,
+                                          sub_figsize=sub_figsize,
+                                          squeeze=False)
+
+        for i, y_var in enumerate(y_vars):
+            row = int(np.floor(i / max_cols))
+            col = i % max_cols
+
+            self.plot(y_var=y_var,
+                      x_var=x_var,
+                      y_scale=y_scale,
+                      x_scale=x_scale,
+                      ax=ax[row, col],
+                      legend=legend if i == 0 else False)
         return fig
 
     def _set_ax_title(self, ax, title):
