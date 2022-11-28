@@ -174,7 +174,7 @@ class ProgModel:
     def plot_composition(self,
                          isotopes=None,
                          x_var='mass',
-                         y_scale='log',
+                         y_scale='linear',
                          x_scale=None,
                          ax=None,
                          legend=True,
@@ -190,7 +190,9 @@ class ProgModel:
 
         parameters
         ----------
-        isotopes : [str]
+        isotopes : [str] or 'all'
+            defaults to isotopes sepecified in config.network.plot
+            'all' plots every isotope in the network
         x_var : str
             variable to plot on x-axis
         y_scale : {'log', 'linear'}
@@ -210,6 +212,8 @@ class ProgModel:
         self._set_ax_title(ax=ax, title=title)
 
         if isotopes is None:
+            isotopes = self.config['network']['plot']
+        elif isotopes == 'all':
             isotopes = self.network['isotope']
 
         for isotope in isotopes:
