@@ -43,5 +43,5 @@ Then to load a progenitor model in python:
 ```
 from progs import ProgModel
 
-model = ProgModel(zams='9.0', set_name='sukhbold_2016')
+model = ProgModel(zams='9.0', progset_name='sukhbold_2016')
 ```

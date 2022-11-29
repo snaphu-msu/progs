@@ -10,7 +10,7 @@ Functions for handling nuclear network information
 """
 
 
-def load_network(set_name,
+def load_network(progset_name,
                  config=None):
     """Load network profile from file
     
@@ -18,10 +18,10 @@ def load_network(set_name,
     
     parameters
     ----------
-    set_name : str
+    progset_name : str
     config : {}
     """
-    config = configuration.check_config(config=config, set_name=set_name)
+    config = configuration.check_config(config=config, progset_name=progset_name)
     network_name = config['network']['name']
 
     filepath = paths.network_filepath(network_name)

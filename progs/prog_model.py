@@ -18,7 +18,7 @@ class ProgModel:
     composition : pd.DataFrame
         subset of profile containing only network species abundances (mass fraction)
     config : dict
-        Progenitor-specific parameters loaded from 'config/<set_name>.ini'
+        Progenitor-specific parameters loaded from 'config/<progset_name>.ini'
     filename : str
         Name of raw progenitor file
     filepath : str
@@ -27,7 +27,7 @@ class ProgModel:
         ZAMS mass [Msun] of progenitor model
     network : [str]
         table of network isotopes used
-    set_name : str
+    progset_name : str
         Name of progenitor set, e.g. 'sukhbold_2016'
     sums : dict
         summed composition quantities (e.g. sumx, sumy, ye)
@@ -37,7 +37,7 @@ class ProgModel:
 
     def __init__(self,
                  zams,
-                 set_name,
+                 progset_name,
                  config=None,
                  ):
         """
@@ -48,20 +48,22 @@ class ProgModel:
             Needs to match filename e.g.:
                 - zams='12.1' for 's12.1_presn',
                 - zams='60' for 's60_presn'
-        set_name : str
+        progset_name : str
             Name of progenitor set, e.g. 'sukhbold_2016'
         config : {}
         """
         self.zams = zams
-        self.set_name = set_name
+        self.progset_name = progset_name
 
-        self.filename = paths.prog_filename(zams, set_name=set_name)
-        self.filepath = paths.prog_filepath(zams, set_name=set_name)
-        self.config = configuration.check_config(config=config, set_name=set_name)
+        self.filename = paths.prog_filename(zams, progset_name=progset_name)
+        self.filepath = paths.prog_filepath(zams, progset_name=progset_name)
 
-        self.profile = io.load_profile(zams, set_name, config=self.config)
+        self.config = configuration.check_config(config=config,
+                                                 progset_name=progset_name)
 
-        self.network = network.load_network(set_name, config=self.config)
+        self.profile = io.load_profile(zams, progset_name, config=self.config)
+
+        self.network = network.load_network(progset_name, config=self.config)
         self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 
@@ -279,5 +281,5 @@ class ProgModel:
         title : bool
         """
         if title:
-            string = f'{self.set_name}: {self.zams} Msun'
+            string = f'{self.progset_name}: {self.zams} Msun'
             plotting.set_ax_title(ax=ax, string=string, title=title)

@@ -13,7 +13,7 @@ cm_to_1k_km = units.cm.to(1e3 * units.km)
 
 
 def load_profile(zams,
-                 set_name,
+                 progset_name,
                  config=None):
     """Load progenitor model from file
     
@@ -22,11 +22,11 @@ def load_profile(zams,
     parameters
     ----------
     zams : str
-    set_name : str
+    progset_name : str
     config : {}
     """
-    config = configuration.check_config(config=config, set_name=set_name)
-    raw = load_raw_table(zams, set_name, config=config)
+    config = configuration.check_config(config=config, progset_name=progset_name)
+    raw = load_raw_table(zams, progset_name, config=config)
     profile = pd.DataFrame()
 
     for key, idx in config['columns'].items():
@@ -40,7 +40,7 @@ def load_profile(zams,
 
 
 def load_raw_table(zams,
-                   set_name,
+                   progset_name,
                    config=None):
     """Load unformatted progenitor model from file
 
@@ -49,11 +49,11 @@ def load_raw_table(zams,
     parameters
     ----------
     zams : str
-    set_name : str
+    progset_name : str
     config : {}
     """
-    config = configuration.check_config(config, set_name=set_name)
-    filepath = paths.prog_filepath(zams, set_name)
+    config = configuration.check_config(config, progset_name=progset_name)
+    filepath = paths.prog_filepath(zams, progset_name)
 
     delim_whitespace = config['load']['delim_whitespace']
     skiprows = config['load']['skiprows']
@@ -116,7 +116,7 @@ def add_luminosity(profile):
     profile['luminosity'] = 4.0 * np.pi * sb * radius**2 * temp**4
 
 
-def find_progs(set_name,
+def find_progs(progset_name,
                config=None):
     """Find all available progenitor models in a set
     
@@ -125,11 +125,11 @@ def find_progs(set_name,
 
     parameters
     ----------
-    set_name : str
+    progset_name : str
     config : {}
     """
-    config = configuration.check_config(config=config, set_name=set_name)
-    path = paths.set_path(set_name)
+    config = configuration.check_config(config=config, progset_name=progset_name)
+    path = paths.set_path(progset_name)
 
     progs = []
     filelist = os.listdir(path)

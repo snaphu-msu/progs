@@ -6,20 +6,20 @@ import ast
 from . import paths
 
 """
-Module for handling configs for each progenitor set_name
+Module for handling config files for each progenitor set
 """
 
 
-def load_config(set_name):
+def load_config(progset_name):
     """Load .ini config file and return as dict
 
     Returns : {}
 
     parameters
     ----------
-    set_name : str
+    progset_name : str
     """
-    filepath = paths.config_filepath(set_name)
+    filepath = paths.config_filepath(progset_name)
 
     if not os.path.exists(filepath):
         raise FileNotFoundError(f'Config file not found: {filepath}')
@@ -36,7 +36,7 @@ def load_config(set_name):
     return config
 
 
-def check_config(config, set_name):
+def check_config(config, progset_name):
     """Check if config provided, load if not
 
     Returns : {}
@@ -44,9 +44,9 @@ def check_config(config, set_name):
     parameters
     ----------
     config : dict or None
-    set_name : str
+    progset_name : str
     """
     if config is None:
-        config = load_config(set_name)
+        config = load_config(progset_name)
 
     return config

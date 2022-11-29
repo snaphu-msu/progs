@@ -15,14 +15,14 @@ class ProgSet:
     """
 
     def __init__(self,
-                 set_name):
+                 progset_name):
         """
         parameters
         ----------
-        set_name : str
+        progset_name : str
         """
-        self.set_name = set_name
-        self.config = configuration.load_config(set_name)
+        self.progset_name = progset_name
+        self.config = configuration.load_config(progset_name)
 
         self.zams = None
         self.progs = {}
@@ -34,15 +34,16 @@ class ProgSet:
     def load_progs(self):
         """Load all progenitor models
         """
-        zams_list = io.find_progs(self.set_name)
-        self.zams = [float(x) for x in zams_list]
+        zams_list = io.find_progs(self.progset_name)
 
         for zams in zams_list:
             print(f'\rLoading progenitor: {zams} Msun    ', end='')
 
             self.progs[float(zams)] = ProgModel(zams=zams,
-                                                set_name=self.set_name,
+                                                progset_name=self.progset_name,
                                                 config=self.config)
+
+        self.zams = [float(x) for x in zams_list]
         print()
 
     def get_scalars(self):

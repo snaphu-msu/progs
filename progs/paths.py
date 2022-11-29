@@ -13,16 +13,16 @@ def top_path():
     return path
 
 
-def config_filepath(set_name):
+def config_filepath(progset_name):
     """Return path to config file
 
     Returns : str
 
     parameters
     ----------
-    set_name : str
+    progset_name : str
     """
-    filepath = os.path.join(top_path(), 'progs', 'config', f'{set_name}.ini')
+    filepath = os.path.join(top_path(), 'progs', 'config', f'{progset_name}.ini')
 
     return filepath
 
@@ -45,7 +45,7 @@ def network_filepath(network):
 # ===============================================================
 #                      Progenitors
 # ===============================================================
-def prog_filename(zams, set_name):
+def prog_filename(zams, progset_name):
     """Return filename of progenitor
 
     Returns : str
@@ -53,22 +53,22 @@ def prog_filename(zams, set_name):
     parameters
     ----------
     zams : str
-    set_name : str
+    progset_name : str
     """
     filenames = {
         'sukhbold_2016': f's{zams}_presn',
         'wh_02': f's{zams}_presn',
     }
 
-    filename = filenames.get(set_name)
+    filename = filenames.get(progset_name)
 
     if filename is None:
-        raise ValueError(f"Progenitor set '{set_name}' not defined")
+        raise ValueError(f"Progenitor set '{progset_name}' not defined")
 
     return filename
 
 
-def prog_filepath(zams, set_name):
+def prog_filepath(zams, progset_name):
     """Return filepath to progenitor model
 
     Returns : str
@@ -76,22 +76,22 @@ def prog_filepath(zams, set_name):
     parameters
     ----------
     zams : str
-    set_name : str
+    progset_name : str
     """
-    filename = prog_filename(zams, set_name=set_name)
-    filepath = os.path.join(set_path(set_name), filename)
+    filename = prog_filename(zams, progset_name=progset_name)
+    filepath = os.path.join(set_path(progset_name), filename)
 
     return filepath
 
 
-def set_path(set_name):
+def set_path(progset_name):
     """Return path to progenitor set directory
 
     Returns : str
 
     parameters
     ----------
-    set_name : str
+    progset_name : str
     """
-    path = os.path.join(top_path(), 'progenitor_sets', set_name)
+    path = os.path.join(top_path(), 'progenitor_sets', progset_name)
     return path
