@@ -3,6 +3,7 @@ import pandas as pd
 
 from . import io
 from . import configuration
+from . import plotting
 from .prog_model import ProgModel
 
 
@@ -59,3 +60,57 @@ class ProgSet:
 
         for key, scalar in scalars.items():
             self.scalars[key] = scalar
+
+    # =======================================================
+    #                      Plotting
+    # =======================================================
+    def plot(self,
+             y_var,
+             x_var='zams',
+             y_scale=None,
+             x_scale=None,
+             ax=None,
+             legend=False,
+             title=True,
+             ylims=None,
+             xlims=None,
+             figsize=(8, 6),
+             label=None,
+             linestyle='none',
+             marker='.'):
+        """Plot given scalar variable over full progenitor set
+
+        Returns : fig
+
+        parameters
+        ----------
+        y_var : str
+            variable to plot on y-axis (from Simulation.profile)
+        x_var : str
+            variable to plot on x-axis
+        y_scale : {'log', 'linear'}
+        x_scale : {'log', 'linear'}
+        ax : Axes
+        legend : bool
+        title : bool
+        ylims : [min, max]
+        xlims : [min, max]
+        figsize : [width, height]
+        label : str
+        linestyle : str
+        marker : str
+        """
+        fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
+        plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
+        plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
+        plotting.set_ax_title(ax=ax, string=self.progset_name, title=title)
+
+        ax.plot(self.scalars[x_var],
+                self.scalars[y_var],
+                ls=linestyle,
+                marker=marker,
+                label=label)
+
+        plotting.set_ax_legend(ax=ax, legend=legend)
+
+        return fig
