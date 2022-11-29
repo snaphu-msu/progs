@@ -26,10 +26,10 @@ class ProgSet:
 
         self.zams = None
         self.progs = {}
-        self.table = pd.DataFrame()
+        self.scalars = pd.DataFrame()
 
         self.load_progs()
-        self.get_table()
+        self.get_scalars()
 
     def load_progs(self):
         """Load all progenitor models
@@ -40,15 +40,15 @@ class ProgSet:
         for zams in zams_list:
             print(f'\rLoading progenitor: {zams} Msun    ', end='')
 
-            self.progs[zams] = ProgModel(zams=zams,
-                                         set_name=self.set_name,
-                                         config=self.config)
+            self.progs[float(zams)] = ProgModel(zams=zams,
+                                                set_name=self.set_name,
+                                                config=self.config)
         print()
 
-    def get_table(self):
-        """Extract table of progenitor properties
+    def get_scalars(self):
+        """Extract table of progenitor scalars
         """
-        self.table['zams'] = self.zams
+        self.scalars['zams'] = self.zams
 
         scalars = {key: [] for key in self.config['load']['scalars']}
 
@@ -57,4 +57,4 @@ class ProgSet:
                 scalars[key] += [prog.scalars[key]]
 
         for key, scalar in scalars.items():
-            self.table[key] = scalar
+            self.scalars[key] = scalar
