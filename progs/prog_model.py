@@ -54,6 +54,7 @@ class ProgModel:
         """
         self.zams = zams
         self.progset_name = progset_name
+        self.label = f'{progset_name}: {zams} Msun'
 
         self.filename = paths.prog_filename(zams, progset_name=progset_name)
         self.filepath = paths.prog_filepath(zams, progset_name=progset_name)
@@ -161,7 +162,7 @@ class ProgModel:
         fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
-        self._set_ax_title(ax=ax, title=title)
+        plotting.set_ax_title(ax=ax, string=self.label, title=title)
 
         ax.plot(self.profile[x_var],
                 self.profile[y_var],
@@ -211,7 +212,7 @@ class ProgModel:
         fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
-        self._set_ax_title(ax=ax, title=title)
+        plotting.set_ax_title(ax=ax, string=self.label, title=title)
 
         if isotopes is None:
             isotopes = self.config['network']['plot']
@@ -271,15 +272,3 @@ class ProgModel:
                       ax=ax[row, col],
                       legend=legend if i == 0 else False)
         return fig
-
-    def _set_ax_title(self, ax, title):
-        """Add title to axis if title==True
-
-        parameters
-        ----------
-        ax : Axis
-        title : bool
-        """
-        if title:
-            string = f'{self.progset_name}: {self.zams} Msun'
-            plotting.set_ax_title(ax=ax, string=string, title=title)
