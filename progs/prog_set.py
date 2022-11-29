@@ -1,4 +1,6 @@
 # progs
+import pandas as pd
+
 from . import io
 from . import configuration
 from .prog_model import ProgModel
@@ -21,15 +23,19 @@ class ProgSet:
         """
         self.set_name = set_name
         self.config = configuration.load_config(set_name)
-        self.zams_list = io.find_progs(set_name)
 
         self.progs = {}
+        self.table = pd.DataFrame()
+
         self.load_progs()
 
     def load_progs(self):
         """Load all progenitor models
         """
-        for zams in self.zams_list:
+        zams_list = io.find_progs(self.set_name)
+        self.table['zams'] = [float(x) for x in zams_list]
+
+        for zams in zams_list:
             print(f'\rLoading progenitor: {zams} Msun    ', end='')
 
             self.progs[zams] = ProgModel(zams=zams,
