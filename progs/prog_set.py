@@ -66,20 +66,20 @@ class ProgSet:
     # =======================================================
     #                      Plotting
     # =======================================================
-    def plot(self,
-             y_var,
-             x_var='zams',
-             y_scale=None,
-             x_scale=None,
-             ax=None,
-             legend=False,
-             title=True,
-             ylims=None,
-             xlims=None,
-             figsize=(8, 6),
-             label=None,
-             linestyle='none',
-             marker='.'):
+    def plot_scalars(self,
+                     y_var,
+                     x_var='zams',
+                     y_scale=None,
+                     x_scale=None,
+                     ax=None,
+                     legend=False,
+                     title=True,
+                     ylims=None,
+                     xlims=None,
+                     figsize=(8, 6),
+                     label=None,
+                     linestyle='none',
+                     marker='.'):
         """Plot given scalar variable over full progenitor set
 
         Returns : fig
@@ -131,7 +131,7 @@ class ProgSet:
                       marker='',
                       colormap='viridis',
                       ):
-        """Plot given scalar variable over full progenitor set
+        """Plot stellar profiles over full progenitor set
 
         Returns : fig
 
