@@ -1,6 +1,8 @@
-# progs
+import numpy as np
 import pandas as pd
+from matplotlib import colormaps as cm
 
+# progs
 from . import io
 from . import configuration
 from . import plotting
@@ -112,5 +114,57 @@ class ProgSet:
                 label=label)
 
         plotting.set_ax_legend(ax=ax, legend=legend)
+
+        return fig
+
+    def plot_profiles(self,
+                      y_var,
+                      x_var='mass',
+                      y_scale=None,
+                      x_scale=None,
+                      ax=None,
+                      title=True,
+                      ylims=None,
+                      xlims=None,
+                      figsize=(8, 6),
+                      linestyle='-',
+                      marker='',
+                      colormap='viridis',
+                      ):
+        """Plot given scalar variable over full progenitor set
+
+        Returns : fig
+
+        parameters
+        ----------
+        y_var : str
+            variable to plot on y-axis (from Simulation.profile)
+        x_var : str
+            variable to plot on x-axis
+        y_scale : {'log', 'linear'}
+        x_scale : {'log', 'linear'}
+        ax : Axes
+        title : bool
+        ylims : [min, max]
+        xlims : [min, max]
+        figsize : [width, height]
+        linestyle : str
+        marker : str
+        colormap : str
+        """
+        fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
+        plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
+        plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
+        plotting.set_ax_title(ax=ax, string=self.progset_name, title=title)
+
+        for zams, prog in self.progs.items():
+            color_scale = (zams - np.min(self.zams)) / np.ptp(self.zams)
+            color = cm[colormap](color_scale)
+
+            ax.plot(prog.profile[x_var],
+                    prog.profile[y_var],
+                    ls=linestyle,
+                    marker=marker,
+                    color=color)
 
         return fig
