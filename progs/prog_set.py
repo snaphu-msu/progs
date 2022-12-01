@@ -129,7 +129,8 @@ class ProgSet:
                       figsize=(8, 6),
                       linestyle='-',
                       marker='',
-                      colormap='viridis',
+                      colormap='inferno',
+                      alpha=1,
                       ):
         """Plot stellar profiles over full progenitor set
 
@@ -151,6 +152,7 @@ class ProgSet:
         linestyle : str
         marker : str
         colormap : str
+        alpha : float
         """
         fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
@@ -158,8 +160,9 @@ class ProgSet:
         plotting.set_ax_title(ax=ax, string=self.progset_name, title=title)
 
         for zams, prog in self.progs.items():
-            color_scale = (zams - np.min(self.zams)) / np.ptp(self.zams)
-            color = cm[colormap](color_scale)
+            # color_scale = (zams - np.min(self.zams)) / np.ptp(self.zams)
+            color_scale = zams / np.ptp(self.zams)
+            color = cm[colormap](color_scale, alpha=alpha)
 
             ax.plot(prog.profile[x_var],
                     prog.profile[y_var],
