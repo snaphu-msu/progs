@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import xarray as xr
 from matplotlib import colormaps as cm
 
 # progs
@@ -32,10 +33,12 @@ class ProgSet:
         self.zams = None
         self.progs = {}
         self.scalars = pd.DataFrame()
+        self.xi = None
         self.network = network.load_network(progset_name, config=self.config)
 
         self.load_progs()
         self.get_scalars()
+        self.get_compactness()
 
     def load_progs(self):
         """Load all progenitor models
@@ -52,6 +55,9 @@ class ProgSet:
         self.zams = [float(x) for x in zams_list]
         print()
 
+    # =======================================================
+    #                      Quantities
+    # =======================================================
     def get_scalars(self):
         """Extract table of progenitor scalars
         """
@@ -65,6 +71,22 @@ class ProgSet:
 
         for key, scalar in scalars.items():
             self.scalars[key] = scalar
+
+    def get_compactness(self):
+        """Get table of compactness values
+        """
+        mass_grid = np.linspace(0.005, 5, 1000)
+        xi_set = {}
+
+        for zams, prog in self.progs.items():
+            prog_xi = xr.Dataset()
+            prog_xi['xi'] = ('mass', prog.get_compactness(mass=mass_grid))
+            prog_xi.coords['mass'] = mass_grid
+
+            xi_set[zams] = prog_xi
+
+        self.xi = xr.concat(xi_set.values(), dim='zams')
+        self.xi.coords['zams'] = self.zams
 
     # =======================================================
     #                      Plotting

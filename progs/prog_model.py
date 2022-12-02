@@ -104,9 +104,8 @@ class ProgModel:
         mass : float
             Mass coordinate [Msun], typically 1.75 or 2.5
         """
-        xi = self.interpolate_profile(x=mass, y_var='compactness', x_var='mass', )
-
-        return float(xi)
+        xi = self.interpolate_profile(x=mass, y_var='compactness', x_var='mass')
+        return xi
 
     def interpolate_profile(self,
                             x,
