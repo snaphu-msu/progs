@@ -106,6 +106,7 @@ class ProgSet:
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
         plotting.set_ax_title(ax=ax, string=self.progset_name, title=title)
+        plotting.set_ax_labels(ax=ax, x_var=x_var, y_var=y_var)
 
         ax.plot(self.scalars[x_var],
                 self.scalars[y_var],
@@ -158,6 +159,7 @@ class ProgSet:
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
         plotting.set_ax_title(ax=ax, string=self.progset_name, title=title)
+        plotting.set_ax_labels(ax=ax, x_var=x_var, y_var=y_var)
 
         for zams, prog in self.progs.items():
             # color_scale = (zams - np.min(self.zams)) / np.ptp(self.zams)

@@ -89,6 +89,21 @@ def set_ax_title(ax, string, title):
         ax.set_title(string)
 
 
+def set_ax_labels(ax,
+                  y_var=None,
+                  x_var=None):
+    """Set axis scales (linear, log)
+
+    parameters
+    ----------
+    ax : Axes
+    y_var : str
+    x_var : str
+    """
+    ax.set_xlabel(x_var)
+    ax.set_ylabel(y_var)
+
+
 def set_ax_lims(ax, xlims=None, ylims=None):
     """Set x and y axis limits
 

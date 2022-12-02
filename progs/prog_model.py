@@ -163,6 +163,7 @@ class ProgModel:
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
         plotting.set_ax_title(ax=ax, string=self.label, title=title)
+        plotting.set_ax_labels(ax=ax, x_var=x_var, y_var=y_var)
 
         ax.plot(self.profile[x_var],
                 self.profile[y_var],
@@ -213,6 +214,7 @@ class ProgModel:
         plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
         plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
         plotting.set_ax_title(ax=ax, string=self.label, title=title)
+        plotting.set_ax_labels(ax=ax, x_var=x_var, y_var='$X_i$')
 
         if isotopes is None:
             isotopes = self.config['network']['plot']
@@ -232,7 +234,7 @@ class ProgModel:
 
     def plot_multi(self,
                    y_vars,
-                   x_var='radius',
+                   x_var='mass',
                    y_scale=None,
                    x_scale=None,
                    max_cols=1,
