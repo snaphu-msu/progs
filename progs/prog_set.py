@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
 import xarray as xr
+import matplotlib.pyplot as plt
 from matplotlib import colormaps as cm
+from matplotlib.widgets import Slider
 
 # progs
 from . import io
@@ -75,7 +77,7 @@ class ProgSet:
     def get_compactness(self):
         """Get table of compactness values
         """
-        mass_grid = np.linspace(0.005, 5, 1000)
+        mass_grid = np.linspace(1.5, 3, 31)
         xi_set = {}
 
         for zams, prog in self.progs.items():
@@ -211,3 +213,38 @@ class ProgSet:
         plotting.set_ax_legend(ax=ax, legend=legend)
 
         return fig
+
+    def plot_xi_slider(self,
+                       y_var,
+                       xi_0=2.5,
+                       ):
+        """Plot slider over compactness parameter
+        """
+        def update_slider(mass):
+            xi = self.xi.sel(mass=mass)
+            ax.lines[0].set_xdata(xi['xi'])
+            fig.canvas.draw_idle()
+
+        mass_grid = self.xi['mass'].values
+
+        fig = plt.figure()
+        ax = fig.add_axes([0.1, 0.2, 0.8, 0.65])
+        slider_ax = fig.add_axes([0.1, 0.05, 0.8, 0.05])
+
+        slider = Slider(slider_ax,
+                        'M',
+                        mass_grid[0],
+                        mass_grid[-1],
+                        valinit=xi_0,
+                        valstep=0.05)
+
+        ax.set_xlim([self.xi['xi'].min()-0.1, self.xi['xi'].max()+0.1])
+
+        ax.plot(self.xi.sel(mass=xi_0)['xi'],
+                self.scalars[y_var],
+                marker='.',
+                ls='none')
+
+        slider.on_changed(update_slider)
+
+        return slider
