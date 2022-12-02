@@ -85,6 +85,15 @@ class ProgModel:
         self.scalars['xi_1.75'] = self.get_compactness(mass=1.75)
         self.scalars['xi_2.5'] = self.get_compactness(mass=2.5)
 
+        self.get_core_masses()
+
+    def get_core_masses(self):
+        """Get core masses from composition profiles
+        """
+        si_shell = self.profile[self.profile['si28'] > 0.2]
+
+        self.scalars['coremass_fe'] = si_shell['mass'].min()
+
     def get_compactness(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
 
