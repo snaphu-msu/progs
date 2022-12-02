@@ -7,6 +7,7 @@ from . import io
 from . import configuration
 from . import plotting
 from . import tools
+from . import network
 from .prog_model import ProgModel
 
 
@@ -31,6 +32,7 @@ class ProgSet:
         self.zams = None
         self.progs = {}
         self.scalars = pd.DataFrame()
+        self.network = network.load_network(progset_name, config=self.config)
 
         self.load_progs()
         self.get_scalars()
@@ -132,7 +134,7 @@ class ProgSet:
                       figsize=(8, 6),
                       linestyle='-',
                       marker='',
-                      colormap='inferno',
+                      colormap='viridis',
                       alpha=1,
                       legend=False,
                       ):
