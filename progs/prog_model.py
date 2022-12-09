@@ -68,6 +68,9 @@ class ProgModel:
         self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 
+        self.shells = {}
+        self.get_shells()
+
         self.scalars = {}
         self.get_scalars()
 
@@ -85,14 +88,16 @@ class ProgModel:
         self.scalars['xi_1.75'] = self.get_compactness(mass=1.75)
         self.scalars['xi_2.5'] = self.get_compactness(mass=2.5)
 
-        self.get_core_masses()
-
-    def get_core_masses(self):
-        """Get core masses from composition profiles
+    def get_shells(self):
+        """Get shell profile subsets
         """
-        si_shell = self.profile[self.profile['si28'] > 0.2]
+        thresholds = {'h1': 0.5,
+                      'he4': 0.5,
+                      'si28': 0.2,
+                      }
 
-        self.scalars['coremass_fe'] = si_shell['mass'].min()
+        for iso, thresh in thresholds.items():
+            self.shells[iso] = self.profile[self.profile[iso] > thresh]
 
     def get_compactness(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
