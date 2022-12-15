@@ -121,8 +121,8 @@ def add_derived_columns(profile,
         add_compactness(profile)
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
-    if 'iron_group' in derived_cols:
-        add_iron_group(profile, isotopes=config['network']['iron_group'])
+    if 'shells' in derived_cols:
+        add_shells(profile, shell_isotopes=config['load']['shells'])
 
 
 def add_compactness(profile):
@@ -155,18 +155,19 @@ def add_luminosity(profile):
     profile['luminosity'] = 4 * np.pi * sb * radius**2 * temp**4
 
 
-def add_iron_group(profile, isotopes):
-    """Add Combined iron group composition to profile
+def add_shells(profile, shell_isotopes):
+    """Add combined shell compositions to profile
 
     parameters
     ----------
     profile : pd.DataFrame
-    isotopes : [str]
-        iron group isotopes to combine
+    shell_isotopes : {name: [str]}
+        grouped shell isotopes to combine
     """
-    iron = np.zeros(len(profile))
+    for shell_name, isotopes in shell_isotopes.items():
+        shell = np.zeros(len(profile))
 
-    for iso in isotopes:
-        iron += profile[iso]
+        for iso in isotopes:
+            shell += profile[iso]
 
-    profile['iron_group'] = iron
+        profile[shell_name] = shell

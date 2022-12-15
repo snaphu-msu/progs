@@ -93,25 +93,21 @@ class ProgModel:
     def get_shells(self):
         """Get shell profile subsets
         """
-        thresholds = {'he4': 0.5,
-                      'o16': 0.5,
-                      'fe54': 0.5,
-                      'iron_group': 0.5,
-                      }
+        thresholds = self.config['load']['shell_thresh']
 
-        for iso, thresh in thresholds.items():
-            self.shells[iso] = self.profile[self.profile[iso] > thresh]
+        for name, threshold in thresholds.items():
+            self.shells[name] = self.profile[self.profile[name] > threshold]
 
     def get_core_masses(self):
         """Get core masses from shell profiles
         """
-        for iso, shell in self.shells.items():
+        for name, shell in self.shells.items():
             if len(shell) == 0:
                 mass = None
             else:
                 mass = shell.iloc[-1]['mass']
 
-            self.scalars[f'coremass_{iso}'] = mass
+            self.scalars[f'coremass_{name}'] = mass
 
     def get_compactness(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
