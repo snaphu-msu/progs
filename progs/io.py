@@ -121,6 +121,8 @@ def add_derived_columns(profile,
         add_compactness(profile)
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
+    if 'iron_group' in derived_cols:
+        add_iron_group(profile, isotopes=config['network']['iron_group'])
 
 
 def add_compactness(profile):
@@ -150,4 +152,21 @@ def add_luminosity(profile):
     radius = profile['radius']
     temp = profile['temperature']
 
-    profile['luminosity'] = 4.0 * np.pi * sb * radius**2 * temp**4
+    profile['luminosity'] = 4 * np.pi * sb * radius**2 * temp**4
+
+
+def add_iron_group(profile, isotopes):
+    """Add Combined iron group composition to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    isotopes : [str]
+        iron group isotopes to combine
+    """
+    iron = np.zeros(len(profile))
+
+    for iso in isotopes:
+        iron += profile[iso]
+
+    profile['iron_group'] = iron
