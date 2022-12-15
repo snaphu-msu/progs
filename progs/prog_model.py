@@ -96,6 +96,7 @@ class ProgModel:
         thresholds = {'he4': 0.5,
                       'o16': 0.5,
                       'fe54': 0.5,
+                      'iron_group': 0.5,
                       }
 
         for iso, thresh in thresholds.items():
@@ -249,7 +250,7 @@ class ProgModel:
 
         for isotope in isotopes:
             ax.plot(self.profile[x_var],
-                    self.composition[isotope],
+                    self.profile[isotope],
                     ls=linestyle,
                     marker=marker,
                     label=isotope)
