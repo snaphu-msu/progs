@@ -12,6 +12,40 @@ g_to_msun = units.g.to(units.M_sun)
 cm_to_1k_km = units.cm.to(1e3 * units.km)
 
 
+# =======================================================
+#                 Files
+# =======================================================
+def find_progs(progset_name,
+               config=None):
+    """Find all available progenitor models in a set
+
+    Returns : [str]
+        list of ZAMS masses
+
+    parameters
+    ----------
+    progset_name : str
+    config : {}
+    """
+    config = configuration.check_config(config=config, progset_name=progset_name)
+    path = paths.set_path(progset_name)
+
+    progs = []
+    filelist = os.listdir(path)
+
+    for filename in filelist:
+        if config['load']['match_str'] in filename:
+            zams = filename.strip(config['load']['strip'])
+            progs += [zams]
+
+    progs = sorted(progs, key=float)
+
+    return progs
+
+
+# =======================================================
+#                 Loading tables
+# =======================================================
 def load_profile(zams,
                  progset_name,
                  config=None):
@@ -69,6 +103,9 @@ def load_raw_table(zams,
     return raw
 
 
+# =======================================================
+#                  Derived columns
+# =======================================================
 def add_derived_columns(profile,
                         config):
     """Add derived column variables to profile
@@ -114,31 +151,3 @@ def add_luminosity(profile):
     temp = profile['temperature']
 
     profile['luminosity'] = 4.0 * np.pi * sb * radius**2 * temp**4
-
-
-def find_progs(progset_name,
-               config=None):
-    """Find all available progenitor models in a set
-    
-    Returns : [str]
-        list of ZAMS masses
-
-    parameters
-    ----------
-    progset_name : str
-    config : {}
-    """
-    config = configuration.check_config(config=config, progset_name=progset_name)
-    path = paths.set_path(progset_name)
-
-    progs = []
-    filelist = os.listdir(path)
-
-    for filename in filelist:
-        if config['load']['match_str'] in filename:
-            zams = filename.strip(config['load']['strip'])
-            progs += [zams]
-
-    progs = sorted(progs, key=float)
-
-    return progs
