@@ -65,7 +65,8 @@ class ProgSet:
         """
         self.scalars['zams'] = self.zams
 
-        scalars = {key: [] for key in self.config['load']['scalars']}
+        prog_0 = self.progs[self.zams[0]]
+        scalars = {key: [] for key in prog_0.scalars}
 
         for prog in self.progs.values():
             for key in scalars:
