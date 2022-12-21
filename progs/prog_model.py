@@ -211,6 +211,7 @@ class ProgModel:
                          title=True,
                          ylims=(1e-4, 1.1),
                          xlims=None,
+                         core_masses=True,
                          figsize=(8, 6),
                          linestyle='-',
                          marker=''):
@@ -232,6 +233,7 @@ class ProgModel:
         title : bool
         ylims : [min, max]
         xlims : [min, max]
+        core_masses : bool
         figsize : [width, height]
         linestyle : str
         marker : str
@@ -253,6 +255,15 @@ class ProgModel:
                     ls=linestyle,
                     marker=marker,
                     label=isotope)
+
+        if core_masses:
+            for i, core in enumerate(self.config['load']['core_thresh']):
+                ax.vlines(x=self.scalars[f'coremass_{core}'],
+                          ymin=0,
+                          ymax=1.2,
+                          linestyle='--',
+                          color=f'C{i}',
+                          label=f'{core} core')
 
         plotting.set_ax_legend(ax=ax, legend=legend, loc=1)
 
