@@ -54,13 +54,13 @@ class ProgModel:
         self.progset_name = progset_name
         self.label = f'{progset_name}: {zams} Msun'
 
-        self.filename = io.prog_filename(zams, progset_name=progset_name)
         self.filepath = io.prog_filepath(zams, progset_name=progset_name)
+        self.config = io.check_config(config=config, progset_name=progset_name)
 
-        self.config = io.check_config(config=config,
-                                                 progset_name=progset_name)
-
-        self.profile = io.load_profile(zams, progset_name, config=self.config)
+        self.profile = io.load_profile(zams,
+                                       progset_name,
+                                       filepath=self.filepath,
+                                       config=self.config)
 
         self.network = network.load_network(progset_name, config=self.config)
         self.composition = self.profile[self.network.isotope]

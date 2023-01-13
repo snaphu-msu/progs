@@ -114,6 +114,7 @@ def check_config(config, progset_name):
 # =======================================================
 def load_profile(zams,
                  progset_name,
+                 filepath=None,
                  config=None):
     """Load progenitor model from file
     
@@ -123,10 +124,11 @@ def load_profile(zams,
     ----------
     zams : str
     progset_name : str
+    filepath : str
     config : {}
     """
     config = check_config(config=config, progset_name=progset_name)
-    raw = load_raw_table(zams, progset_name, config=config)
+    raw = load_raw_table(zams, progset_name, filepath=filepath, config=config)
     profile = pd.DataFrame()
 
     for key, idx in config['columns'].items():
@@ -141,6 +143,7 @@ def load_profile(zams,
 
 def load_raw_table(zams,
                    progset_name,
+                   filepath=None,
                    config=None):
     """Load unformatted progenitor model from file
 
@@ -150,10 +153,13 @@ def load_raw_table(zams,
     ----------
     zams : str
     progset_name : str
+    filepath : str
     config : {}
     """
     config = check_config(config, progset_name=progset_name)
-    filepath = prog_filepath(zams, progset_name)
+
+    if filepath is None:
+        filepath = prog_filepath(zams, progset_name)
 
     delim_whitespace = config['load']['delim_whitespace']
     skiprows = config['load']['skiprows']
