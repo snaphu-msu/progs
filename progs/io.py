@@ -26,20 +26,42 @@ def find_progs(progset_name,
     progset_name : str
     config : {}
     """
-    config = check_config(config=config, progset_name=progset_name)
-    path = progset_path(progset_name)
-
     progs = []
-    filelist = os.listdir(path)
+    config = check_config(config=config, progset_name=progset_name)
+    progfiles = find_prog_files(progset_name, config=config)
 
-    for filename in filelist:
-        if config['load']['match_str'] in filename:
-            zams = filename.strip(config['load']['strip'])
-            progs += [zams]
+    for filename in progfiles:
+        zams = filename.strip(config['load']['strip'])
+        progs += [zams]
 
     progs = sorted(progs, key=float)
 
     return progs
+
+
+def find_prog_files(progset_name,
+                    config=None):
+    """Find all available progenitor model files in a set
+
+    Returns : [str]
+        list of progenitor filenames
+
+    parameters
+    ----------
+    progset_name : str
+    config : {}
+    """
+    config = check_config(config=config, progset_name=progset_name)
+    path = progset_path(progset_name)
+
+    progfiles = []
+    filelist = os.listdir(path)
+
+    for filename in filelist:
+        if config['load']['match_str'] in filename:
+            progfiles += [filename]
+
+    return progfiles
 
 
 # =======================================================
