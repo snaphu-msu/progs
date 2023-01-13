@@ -189,12 +189,37 @@ def add_derived_columns(profile,
     """
     derived_cols = config['load']['derived_columns']
 
+    if 'mass' in derived_cols:
+        add_enclosed_mass(profile)
+
     if 'compactness' in derived_cols:
         add_compactness(profile)
+
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
+
     if 'shells' in derived_cols:
         add_shells(profile, shell_isotopes=config['load']['shells'])
+
+
+def add_enclosed_mass(profile):
+    """Add enclosed mass column to profile
+        Assumes existing 'mass' column is zone mass
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    if 'mass' not in profile:
+        raise ValueError(f'Need mass column to calculate enclosed mass')
+
+    zone_mass = np.array(profile['mass'])
+    mass = [zone_mass[0]]
+
+    for zm in zone_mass[1:]:
+        mass += [mass[-1] + zm]
+
+    profile['mass'] = mass
 
 
 def add_compactness(profile):
