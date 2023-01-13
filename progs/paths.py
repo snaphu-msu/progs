@@ -57,7 +57,6 @@ def prog_filename(zams, progset_name):
     """
     filenames = {
         'sukhbold_2016': f's{zams}_presn',
-        'wh_02': f's{zams}_presn',
     }
 
     filename = filenames.get(progset_name)
