@@ -7,7 +7,6 @@ from matplotlib.widgets import Slider
 
 # progs
 from . import io
-from . import configuration
 from . import plotting
 from . import tools
 from . import network
@@ -30,7 +29,7 @@ class ProgSet:
         progset_name : str
         """
         self.progset_name = progset_name
-        self.config = configuration.load_config(progset_name)
+        self.config = io.load_config(progset_name)
 
         self.zams = None
         self.progs = {}

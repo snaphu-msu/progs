@@ -1,9 +1,7 @@
 import numpy as np
 
 # progs
-from . import paths
 from . import io
-from . import configuration
 from . import network
 from . import plotting
 from . import tools
@@ -56,10 +54,10 @@ class ProgModel:
         self.progset_name = progset_name
         self.label = f'{progset_name}: {zams} Msun'
 
-        self.filename = paths.prog_filename(zams, progset_name=progset_name)
-        self.filepath = paths.prog_filepath(zams, progset_name=progset_name)
+        self.filename = io.prog_filename(zams, progset_name=progset_name)
+        self.filepath = io.prog_filepath(zams, progset_name=progset_name)
 
-        self.config = configuration.check_config(config=config,
+        self.config = io.check_config(config=config,
                                                  progset_name=progset_name)
 
         self.profile = io.load_profile(zams, progset_name, config=self.config)

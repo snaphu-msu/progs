@@ -2,8 +2,7 @@ import numpy as np
 import pandas as pd
 
 # progs
-from . import paths
-from . import configuration
+from . import io
 
 """
 Functions for handling nuclear network information
@@ -21,10 +20,10 @@ def load_network(progset_name,
     progset_name : str
     config : {}
     """
-    config = configuration.check_config(config=config, progset_name=progset_name)
+    config = io.check_config(config=config, progset_name=progset_name)
     network_name = config['network']['name']
 
-    filepath = paths.network_filepath(network_name)
+    filepath = io.network_filepath(network_name)
     network = pd.read_csv(filepath, delim_whitespace=True)
 
     return network

@@ -3,10 +3,9 @@ import numpy as np
 import pandas as pd
 from astropy import units
 from astropy import constants as const
+from configparser import ConfigParser
+import ast
 
-# progs
-from . import paths
-from . import configuration
 
 g_to_msun = units.g.to(units.M_sun)
 cm_to_1k_km = units.cm.to(1e3 * units.km)
@@ -27,8 +26,8 @@ def find_progs(progset_name,
     progset_name : str
     config : {}
     """
-    config = configuration.check_config(config=config, progset_name=progset_name)
-    path = paths.progset_path(progset_name)
+    config = check_config(config=config, progset_name=progset_name)
+    path = progset_path(progset_name)
 
     progs = []
     filelist = os.listdir(path)
@@ -41,6 +40,51 @@ def find_progs(progset_name,
     progs = sorted(progs, key=float)
 
     return progs
+
+
+# =======================================================
+#                 Config files
+# =======================================================
+def load_config(progset_name):
+    """Load .ini config file and return as dict
+
+    Returns : {}
+
+    parameters
+    ----------
+    progset_name : str
+    """
+    filepath = config_filepath(progset_name)
+
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f'Config file not found: {filepath}')
+
+    ini = ConfigParser()
+    ini.read(filepath)
+
+    config = {}
+    for section in ini.sections():
+        config[section] = {}
+        for option in ini.options(section):
+            config[section][option] = ast.literal_eval(ini.get(section, option))
+
+    return config
+
+
+def check_config(config, progset_name):
+    """Check if config provided, load if not
+
+    Returns : {}
+
+    parameters
+    ----------
+    config : dict or None
+    progset_name : str
+    """
+    if config is None:
+        config = load_config(progset_name)
+
+    return config
 
 
 # =======================================================
@@ -59,7 +103,7 @@ def load_profile(zams,
     progset_name : str
     config : {}
     """
-    config = configuration.check_config(config=config, progset_name=progset_name)
+    config = check_config(config=config, progset_name=progset_name)
     raw = load_raw_table(zams, progset_name, config=config)
     profile = pd.DataFrame()
 
@@ -86,8 +130,8 @@ def load_raw_table(zams,
     progset_name : str
     config : {}
     """
-    config = configuration.check_config(config, progset_name=progset_name)
-    filepath = paths.prog_filepath(zams, progset_name)
+    config = check_config(config, progset_name=progset_name)
+    filepath = prog_filepath(zams, progset_name)
 
     delim_whitespace = config['load']['delim_whitespace']
     skiprows = config['load']['skiprows']
@@ -171,3 +215,95 @@ def add_shells(profile, shell_isotopes):
             shell += profile[iso]
 
         profile[shell_name] = shell
+
+
+# ===============================================================
+#                      Paths
+# ===============================================================
+def top_path():
+    """Return path to top-level repo directory
+
+    Returns : str
+    """
+    path = os.path.join(os.path.dirname(__file__), '..')
+    return path
+
+
+def config_filepath(progset_name):
+    """Return path to config file
+
+    Returns : str
+
+    parameters
+    ----------
+    progset_name : str
+    """
+    filepath = os.path.join(top_path(), 'progs', 'config', f'{progset_name}.ini')
+
+    return filepath
+
+
+def network_filepath(network):
+    """Return path to profile of given network
+
+    Returns : str
+
+    parameters
+    ----------
+    network : str
+    """
+    filename = f'{network}.txt'
+    filepath = os.path.join(top_path(), 'progs', 'networks', filename)
+
+    return filepath
+
+
+def prog_filename(zams, progset_name):
+    """Return filename of progenitor
+
+    Returns : str
+
+    parameters
+    ----------
+    zams : str
+    progset_name : str
+    """
+    filenames = {
+        'sukhbold_2016': f's{zams}_presn',
+    }
+
+    filename = filenames.get(progset_name)
+
+    if filename is None:
+        raise ValueError(f"Progenitor set '{progset_name}' not defined")
+
+    return filename
+
+
+def prog_filepath(zams, progset_name):
+    """Return filepath to progenitor model
+
+    Returns : str
+
+    parameters
+    ----------
+    zams : str
+    progset_name : str
+    """
+    filename = prog_filename(zams, progset_name=progset_name)
+    filepath = os.path.join(progset_path(progset_name), filename)
+
+    return filepath
+
+
+def progset_path(progset_name):
+    """Return path to progenitor set directory
+
+    Returns : str
+
+    parameters
+    ----------
+    progset_name : str
+    """
+    path = os.path.join(top_path(), 'progenitor_sets', progset_name)
+    return path
