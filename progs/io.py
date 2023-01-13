@@ -28,7 +28,7 @@ def find_progs(progset_name,
     config : {}
     """
     config = configuration.check_config(config=config, progset_name=progset_name)
-    path = paths.set_path(progset_name)
+    path = paths.progset_path(progset_name)
 
     progs = []
     filelist = os.listdir(path)

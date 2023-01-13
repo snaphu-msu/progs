@@ -79,12 +79,12 @@ def prog_filepath(zams, progset_name):
     progset_name : str
     """
     filename = prog_filename(zams, progset_name=progset_name)
-    filepath = os.path.join(set_path(progset_name), filename)
+    filepath = os.path.join(progset_path(progset_name), filename)
 
     return filepath
 
 
-def set_path(progset_name):
+def progset_path(progset_name):
     """Return path to progenitor set directory
 
     Returns : str
