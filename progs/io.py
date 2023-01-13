@@ -261,6 +261,7 @@ def config_filepath(progset_name):
     progset_name : str
     """
     filepath = os.path.join(top_path(), 'progs', 'config', f'{progset_name}.ini')
+    filepath = os.path.abspath(filepath)
 
     return filepath
 
@@ -290,14 +291,17 @@ def prog_filename(zams, progset_name):
     zams : str
     progset_name : str
     """
-    filenames = {
-        'sukhbold_2016': f's{zams}_presn',
-    }
+    config = load_config(progset_name)
+    progfiles = find_prog_files(progset_name)
 
-    filename = filenames.get(progset_name)
+    filename = None
+
+    for file in progfiles:
+        if file.strip(config['load']['strip']) == zams:
+            filename = file
 
     if filename is None:
-        raise ValueError(f"Progenitor set '{progset_name}' not defined")
+        raise ValueError(f"zams='{zams}' not found in progset '{progset_name}'")
 
     return filename
 
