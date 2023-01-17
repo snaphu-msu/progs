@@ -19,6 +19,22 @@ class ProgSet:
 
     attributes
     ----------
+    config : {}
+        Progenitor-specific parameters loaded from 'config/<progset_name>.ini'
+    network : [str]
+        table of network isotopes used
+    progs : {zams: ProgModel}
+        Full set of progenitor model objects
+    progset_name : str
+        Name of progenitor set, e.g. 'sukhbold_2016'
+    reload : bool
+        Force reload of profiles, instead of loading cached tables
+    scalars : pd.DataFrame
+        Table of scalar values for all models
+    xi : xr.Dataset
+        Compactness parameter extracted over whole set
+    zams : [flt]
+        list of ZAMS masses
     """
 
     def __init__(self,
