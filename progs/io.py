@@ -1,9 +1,10 @@
 import os
+import subprocess
 import numpy as np
 import pandas as pd
+import ast
 from astropy import units
 from configparser import ConfigParser
-import ast
 
 # progs
 from . import quantities
@@ -110,7 +111,7 @@ def check_config(config, progset_name):
 
 
 # =======================================================
-#                 Loading tables
+#                 Profile files
 # =======================================================
 def load_profile(zams,
                  progset_name,
@@ -173,6 +174,24 @@ def load_raw_table(zams,
     raw = raw.replace(missing_char, 0.0)
 
     return raw
+
+
+def save_profile_cache(profile,
+                       zams,
+                       progset_name):
+    """Save profile table to cached file
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    zams : str
+    progset_name : str
+    """
+    filepath = profile_cache_filepath(zams, progset_name)
+    path = os.path.split(filepath)[0]
+    check_mkdir(path)
+
+    profile.to_pickle(filepath, compression=None)
 
 
 # =======================================================
@@ -271,6 +290,8 @@ def top_path():
     Returns : str
     """
     path = os.path.join(os.path.dirname(__file__), '..')
+    path = os.path.abspath(path)
+
     return path
 
 
@@ -356,3 +377,30 @@ def progset_path(progset_name):
     """
     path = os.path.join(top_path(), 'progenitor_sets', progset_name)
     return path
+
+
+def profile_cache_filepath(zams, progset_name):
+    """Return filepath to cached profile table
+
+    Returns : str
+
+    parameters
+    ----------
+    zams : str
+    progset_name : str
+    """
+    filename = f'profile_{progset_name}_{zams}.pickle'
+    filepath = os.path.join(top_path(), 'temp', 'profile', filename)
+
+    return filepath
+
+
+def check_mkdir(path):
+    """Create path directory(s) if not present
+
+    parameters
+    ----------
+    path : str
+    """
+    if not os.path.exists(path):
+        subprocess.run(['mkdir', '-p', path], check=True)
