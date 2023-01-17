@@ -128,6 +128,29 @@ def load_profile(zams,
     filepath : str
     config : {}
     """
+    profile = extract_profile(zams=zams,
+                              progset_name=progset_name,
+                              filepath=filepath,
+                              config=config)
+
+    return profile
+
+
+def extract_profile(zams,
+                    progset_name,
+                    filepath=None,
+                    config=None):
+    """Extract progenitor profile from file
+
+    Returns : pd.DataFrame
+
+    parameters
+    ----------
+    zams : str
+    progset_name : str
+    filepath : str
+    config : {}
+    """
     config = check_config(config=config, progset_name=progset_name)
     raw = load_raw_table(zams, progset_name, filepath=filepath, config=config)
     profile = pd.DataFrame()
@@ -136,7 +159,6 @@ def load_profile(zams,
         profile[key] = pd.to_numeric(raw[idx], errors='ignore')
 
     profile['mass'] = profile['mass'] * g_to_msun
-
     add_derived_columns(profile, config=config)
 
     return profile
@@ -208,7 +230,7 @@ def load_profile_cache(zams,
 
     return profile
 
-    
+
 # =======================================================
 #                  Derived columns
 # =======================================================
