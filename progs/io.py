@@ -116,7 +116,9 @@ def check_config(config, progset_name):
 def load_profile(zams,
                  progset_name,
                  filepath=None,
-                 config=None):
+                 config=None,
+                 reload=False,
+                 ):
     """Load progenitor model from file
     
     Returns : pd.DataFrame
@@ -127,11 +129,23 @@ def load_profile(zams,
     progset_name : str
     filepath : str
     config : {}
+    reload : bool
     """
-    profile = extract_profile(zams=zams,
-                              progset_name=progset_name,
-                              filepath=filepath,
-                              config=config)
+    profile = None
+
+    if not reload:
+        try:
+            profile = load_profile_cache(zams=zams, progset_name=progset_name)
+        except FileNotFoundError:
+            pass
+
+    if profile is None:
+        profile = extract_profile(zams=zams,
+                                  progset_name=progset_name,
+                                  filepath=filepath,
+                                  config=config)
+
+        save_profile_cache(profile, zams=zams, progset_name=progset_name)
 
     return profile
 
@@ -427,7 +441,7 @@ def profile_cache_filepath(zams, progset_name):
     progset_name : str
     """
     filename = f'profile_{progset_name}_{zams}.pickle'
-    filepath = os.path.join(top_path(), 'temp', 'profile', filename)
+    filepath = os.path.join(top_path(), '.temp', progset_name, 'profile', filename)
 
     return filepath
 

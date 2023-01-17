@@ -1,4 +1,5 @@
 # progs
+.temp/
 temp/
 progenitor_sets/
 !progenitor_sets/README.md
