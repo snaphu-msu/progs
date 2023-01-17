@@ -22,14 +22,18 @@ class ProgSet:
     """
 
     def __init__(self,
-                 progset_name):
+                 progset_name,
+                 reload=False,
+                 ):
         """
         parameters
         ----------
         progset_name : str
+        reload : bool
         """
         self.progset_name = progset_name
         self.config = io.load_config(progset_name)
+        self.reload = reload
 
         self.zams = None
         self.progs = {}
@@ -51,7 +55,8 @@ class ProgSet:
 
             self.progs[float(zams)] = ProgModel(zams=zams,
                                                 progset_name=self.progset_name,
-                                                config=self.config)
+                                                config=self.config,
+                                                reload=self.reload)
 
         self.zams = [float(x) for x in zams_list]
         print()

@@ -17,8 +17,6 @@ class ProgModel:
         subset of profile containing only network species abundances (mass fraction)
     config : dict
         Progenitor-specific parameters loaded from 'config/<progset_name>.ini'
-    filename : str
-        Name of raw progenitor file
     filepath : str
         Path to raw progenitor file
     zams : str
@@ -37,6 +35,7 @@ class ProgModel:
                  zams,
                  progset_name,
                  config=None,
+                 reload=False,
                  ):
         """
         parameters
@@ -49,6 +48,8 @@ class ProgModel:
         progset_name : str
             Name of progenitor set, e.g. 'sukhbold_2016'
         config : {}
+        reload : bool
+            force reload of profile, instead of loading cached table
         """
         self.zams = zams
         self.progset_name = progset_name
@@ -60,7 +61,8 @@ class ProgModel:
         self.profile = io.load_profile(zams,
                                        progset_name,
                                        filepath=self.filepath,
-                                       config=self.config)
+                                       config=self.config,
+                                       reload=reload)
 
         self.network = network.load_network(progset_name, config=self.config)
         self.composition = self.profile[self.network.isotope]
