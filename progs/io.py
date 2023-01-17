@@ -194,6 +194,21 @@ def save_profile_cache(profile,
     profile.to_pickle(filepath, compression=None)
 
 
+def load_profile_cache(zams,
+                       progset_name):
+    """Save profile table to cached file
+
+    parameters
+    ----------
+    zams : str
+    progset_name : str
+    """
+    filepath = profile_cache_filepath(zams, progset_name)
+    profile = pd.read_pickle(filepath)
+
+    return profile
+
+    
 # =======================================================
 #                  Derived columns
 # =======================================================
