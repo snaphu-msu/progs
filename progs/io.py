@@ -2,7 +2,6 @@ import os
 import numpy as np
 import pandas as pd
 from astropy import units
-from astropy import constants as const
 from configparser import ConfigParser
 import ast
 
@@ -241,11 +240,8 @@ def add_luminosity(profile):
     if ('radius' not in profile) or ('temperature' not in profile):
         raise ValueError(f'Need radius and temperature columns to calculate luminosity')
 
-    sb = const.sigma_sb.cgs.value
-    radius = profile['radius']
-    temp = profile['temperature']
-
-    profile['luminosity'] = 4 * np.pi * sb * radius**2 * temp**4
+    profile['luminosity'] = quantities.get_luminosity(radius=profile['radius'],
+                                                      temperature=profile['temperature'])
 
 
 def add_shells(profile, shell_isotopes):
