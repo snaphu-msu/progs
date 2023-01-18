@@ -6,9 +6,10 @@ from astropy import constants as const
 from configparser import ConfigParser
 import ast
 
+# progs
+from . import quantities
 
 g_to_msun = units.g.to(units.M_sun)
-cm_to_1k_km = units.cm.to(1e3 * units.km)
 
 
 # =======================================================
@@ -213,13 +214,7 @@ def add_enclosed_mass(profile):
     if 'mass' not in profile:
         raise ValueError(f'Need mass column to calculate enclosed mass')
 
-    zone_mass = np.array(profile['mass'])
-    mass = [zone_mass[0]]
-
-    for zm in zone_mass[1:]:
-        mass += [mass[-1] + zm]
-
-    profile['mass'] = mass
+    profile['mass'] = quantities.get_enclosed_mass(zone_mass=profile['mass'])
 
 
 def add_compactness(profile):
@@ -232,7 +227,8 @@ def add_compactness(profile):
     if ('radius' not in profile) or ('mass' not in profile):
         raise ValueError(f'Need radius and mass columns to calculate compactness')
 
-    profile['compactness'] = profile['mass'] / (profile['radius'] * cm_to_1k_km)
+    profile['compactness'] = quantities.get_compactness(mass=profile['mass'],
+                                                        radius=profile['radius'])
 
 
 def add_luminosity(profile):
