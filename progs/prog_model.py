@@ -68,9 +68,6 @@ class ProgModel:
         self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 
-        self.shells = {}
-        self.get_shells()
-
         self.scalars = {}
         self.get_scalars()
 
@@ -90,14 +87,6 @@ class ProgModel:
         self.scalars['xi_2.5'] = self.get_compactness(mass=2.5)
 
         self.get_core_masses()
-
-    def get_shells(self):
-        """Get shell profile subsets
-        """
-        thresholds = self.config['load']['shell_thresh']
-
-        for name, threshold in thresholds.items():
-            self.shells[name] = self.profile[self.profile[name] > threshold]
 
     def get_core_masses(self):
         """Get core masses from shell profiles
