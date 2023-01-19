@@ -35,7 +35,8 @@ def find_progs(progset_name,
         zams = filename.strip(config['load']['strip'])
         progs += [zams]
 
-    progs = sorted(progs, key=float)
+    sort_key = {'str': str, 'float': float}
+    progs = sorted(progs, key=sort_key[config['load']['sort_key']])
 
     return progs
 
