@@ -1,8 +1,8 @@
 # progs
 .temp/
 temp/
-progenitor_sets/
-!progenitor_sets/README.md
+data/
+!data/README.md
 
 # misc.
 *.code-workspace

@@ -27,10 +27,10 @@ conda activate progs
 
 
 # Getting Started
-Download the Sukhbold 2016 set linked above and extract the contents into the `progenitor_sets` directory under a folder named `sukhbold_2016`:
+Download the Sukhbold 2016 set linked above and extract the contents into the `data` directory under a folder named `sukhbold_2016`:
 
 ```
-progenitor_sets
+data
 │
 └───sukhbold_2016
 |   |   s9.0_presn

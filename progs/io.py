@@ -426,7 +426,7 @@ def progset_path(progset_name):
     ----------
     progset_name : str
     """
-    path = os.path.join(top_path(), 'progenitor_sets', progset_name)
+    path = os.path.join(top_path(), 'data', progset_name)
     return path
 
 
