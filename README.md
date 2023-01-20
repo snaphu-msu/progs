@@ -19,7 +19,7 @@ Supported progenitor sets:
 * pandas
 * xarray
 
-Use the included `environment.yml` file to easily set up a working [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands) environment:
+Use the included `environment.yml` file to set up a working [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands) environment:
 
 ```
 conda env create -f environment.yml
@@ -39,10 +39,15 @@ data
 |   │   ...
 ```
 
-Then to load a progenitor model in python:
+Then load a progenitor model:
 
 ```
 from progs import ProgModel
-
 model = ProgModel(zams='9.0', progset_name='sukhbold_2016')
+```
+
+Or the full progenitor set:
+```
+from progs import ProgSet
+pset = ProgSet(progset_name='sukhbold_2016')
 ```
