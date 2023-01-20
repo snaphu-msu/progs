@@ -6,8 +6,9 @@ These models are provided in a variety of formats, so I'd like to be able to eas
 
 Supported progenitor sets:
 
-- [`sukhbold_2016`](https://wwwmpa.mpa-garching.mpg.de/ccsnarchive/data/SEWBJ_2015/data/progenitor_models.tar.gz)
-- Woosley & Heger 2002
+- [`sukhbold_2016`](https://wwwmpa.mpa-garching.mpg.de/ccsnarchive/data/SEWBJ_2015/data/progenitor_models.tar.gz) - [Sukhbold et al. (2016)](https://ui.adsabs.harvard.edu/abs/2018ApJ...860...93S/abstract)
+- [`sukhbold_2018`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOEXDE) - [Sukhbold et al. (2018)](https://ui.adsabs.harvard.edu/abs/2016ApJ...821...38S/abstract)
+- [`sn1987a`](https://2sn.org/SN1987A/87A_presn/) - [Menon & Heger (2017)](https://ui.adsabs.harvard.edu/abs/2017MNRAS.469.4649M/abstract)
 
 
 # Python Dependencies
