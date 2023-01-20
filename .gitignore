@@ -1,13 +1,3 @@
-# progs
 .temp/
-temp/
 data/*
 !data/README.md
-
-# misc.
-*.code-workspace
-.vscode/
-.DS_Store
-.idea
-__pycache__
-*.pyc
