@@ -1,7 +1,7 @@
 # progs
 .temp/
 temp/
-data/
+data/*
 !data/README.md
 
 # misc.
