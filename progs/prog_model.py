@@ -91,8 +91,8 @@ class ProgModel:
     def get_core_masses(self):
         """Get core masses from shell profiles
         """
-        for name, iso in self.config['load']['core_transition'].items():
-            threshold = self.config['load']['core_thresh'][name]
+        for name, iso in self.config['scalars']['core_transition'].items():
+            threshold = self.config['scalars']['core_thresh'][name]
             shell = self.profile[self.profile[iso] > threshold]
 
             if len(shell) == 0:
@@ -247,7 +247,7 @@ class ProgModel:
                     label=isotope)
 
         if core_masses:
-            for i, core in enumerate(self.config['load']['core_thresh']):
+            for i, core in enumerate(self.config['scalars']['core_thresh']):
                 ax.vlines(x=self.scalars[f'coremass_{core}'],
                           ymin=0,
                           ymax=1.2,
