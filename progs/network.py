@@ -37,3 +37,23 @@ def get_sums(composition, network):
     sums = pd.DataFrame(sums_dict)
 
     return sums
+
+
+def get_iso_group(composition, isotopes):
+    """Sum isotope abundances into a combined group
+
+    Returns : np.array
+
+    parameters
+    ----------
+    composition : pd.DataFrame
+            profile of isotope mass fractions
+    isotopes : [str]
+        isotopes to sum, e.g.: ['c12', 'o16']
+    """
+    group = np.zeros(len(composition))
+
+    for iso in isotopes:
+        group += composition[iso]
+
+    return group

@@ -8,6 +8,7 @@ from configparser import ConfigParser
 
 # progs
 from . import quantities
+from . import network
 
 g_to_msun = units.g.to(units.M_sun)
 
@@ -347,12 +348,8 @@ def add_iso_groups(profile, iso_groups):
         isotopes to group, e.g.: {'CO': ['c12', 'o16']}
     """
     for group_name, isotopes in iso_groups.items():
-        shell = np.zeros(len(profile))
-
-        for iso in isotopes:
-            shell += profile[iso]
-
-        profile[group_name] = shell
+        profile[group_name] = network.get_iso_group(composition=profile,
+                                                    isotopes=isotopes)
 
 
 # ===============================================================
