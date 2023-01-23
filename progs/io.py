@@ -269,8 +269,7 @@ def add_derived_columns(profile,
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
 
-    if 'shells' in derived_cols:
-        add_shells(profile, shell_isotopes=config['load']['shells'])
+    add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
 def add_enclosed_mass(profile):
@@ -315,22 +314,22 @@ def add_luminosity(profile):
                                                       temperature=profile['temperature'])
 
 
-def add_shells(profile, shell_isotopes):
-    """Add combined shell compositions to profile
+def add_iso_groups(profile, iso_groups):
+    """Add combined isotope compositions to profile
 
     parameters
     ----------
     profile : pd.DataFrame
-    shell_isotopes : {name: [str]}
-        grouped shell isotopes to combine
+    iso_groups : {group_name: [isotopes]}
+        isotopes to group, e.g.: {'CO': ['c12', 'o16']}
     """
-    for shell_name, isotopes in shell_isotopes.items():
+    for group_name, isotopes in iso_groups.items():
         shell = np.zeros(len(profile))
 
         for iso in isotopes:
             shell += profile[iso]
 
-        profile[shell_name] = shell
+        profile[group_name] = shell
 
 
 # ===============================================================
