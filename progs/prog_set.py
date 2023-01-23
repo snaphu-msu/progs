@@ -9,7 +9,6 @@ from matplotlib.widgets import Slider
 from . import io
 from . import plotting
 from . import tools
-from . import network
 from .prog_model import ProgModel
 
 
@@ -55,7 +54,7 @@ class ProgSet:
         self.progs = {}
         self.scalars = pd.DataFrame()
         self.xi = None
-        self.network = network.load_network(progset_name, config=self.config)
+        self.network = io.load_network(progset_name, config=self.config)
 
         self.load_progs()
         self.get_scalars()

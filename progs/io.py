@@ -112,7 +112,30 @@ def check_config(config, progset_name):
 
 
 # =======================================================
-#                 Profile files
+#                 Nuclear network
+# =======================================================
+def load_network(progset_name,
+                 config=None):
+    """Load network profile from file
+
+    Returns : pd.DataFrame
+
+    parameters
+    ----------
+    progset_name : str
+    config : {}
+    """
+    config = check_config(config=config, progset_name=progset_name)
+    network_name = config['network']['name']
+
+    filepath = network_filepath(network_name)
+    network = pd.read_csv(filepath, delim_whitespace=True)
+
+    return network
+
+
+# =======================================================
+#                 Profiles
 # =======================================================
 def load_profile(zams,
                  progset_name,

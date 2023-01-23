@@ -1,32 +1,10 @@
 import numpy as np
 import pandas as pd
 
-# progs
-from . import io
 
 """
-Functions for handling nuclear network information
+Handle nuclear network information
 """
-
-
-def load_network(progset_name,
-                 config=None):
-    """Load network profile from file
-    
-    Returns : pd.DataFrame
-    
-    parameters
-    ----------
-    progset_name : str
-    config : {}
-    """
-    config = io.check_config(config=config, progset_name=progset_name)
-    network_name = config['network']['name']
-
-    filepath = io.network_filepath(network_name)
-    network = pd.read_csv(filepath, delim_whitespace=True)
-
-    return network
 
 
 def get_sums(composition, network):
