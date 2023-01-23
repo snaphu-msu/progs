@@ -27,7 +27,7 @@ def get_enclosed_mass(zone_mass):
     return enc_mass
 
 
-def get_compactness(mass, radius):
+def get_xi(mass, radius):
     """Calculate compactness parameter
 
     Returns: np.array
@@ -42,9 +42,9 @@ def get_compactness(mass, radius):
     mass = np.array(mass)
     radius = np.array(radius)
 
-    compactness = mass / (radius * cm_to_1k_km)
+    xi = mass / (radius * cm_to_1k_km)
 
-    return compactness
+    return xi
 
 
 def get_luminosity(radius, temperature):

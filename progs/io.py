@@ -287,8 +287,8 @@ def add_derived_columns(profile,
     if 'mass' in derived_cols:
         add_enclosed_mass(profile)
 
-    if 'compactness' in derived_cols:
-        add_compactness(profile)
+    if 'xi' in derived_cols:
+        add_xi(profile)
 
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
@@ -310,7 +310,7 @@ def add_enclosed_mass(profile):
     profile['mass'] = quantities.get_enclosed_mass(zone_mass=profile['mass'])
 
 
-def add_compactness(profile):
+def add_xi(profile):
     """Add compactness column to profile
 
     parameters
@@ -318,10 +318,10 @@ def add_compactness(profile):
     profile : pd.DataFrame
     """
     if ('radius' not in profile) or ('mass' not in profile):
-        raise ValueError(f'Need radius and mass columns to calculate compactness')
+        raise ValueError(f'Need radius and mass columns to calculate xi')
 
-    profile['compactness'] = quantities.get_compactness(mass=profile['mass'],
-                                                        radius=profile['radius'])
+    profile['xi'] = quantities.get_xi(mass=profile['mass'],
+                                      radius=profile['radius'])
 
 
 def add_luminosity(profile):

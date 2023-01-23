@@ -58,7 +58,7 @@ class ProgSet:
 
         self.load_progs()
         self.get_scalars()
-        self.get_compactness()
+        self.get_xi()
 
     def load_progs(self):
         """Load all progenitor models
@@ -94,7 +94,7 @@ class ProgSet:
         for key, scalar in scalars.items():
             self.scalars[key] = scalar
 
-    def get_compactness(self):
+    def get_xi(self):
         """Get table of compactness values
         """
         mass_grid = np.linspace(1.5, 3, 31)
@@ -102,7 +102,7 @@ class ProgSet:
 
         for zams, prog in self.progs.items():
             prog_xi = xr.Dataset()
-            prog_xi['xi'] = ('mass', prog.get_compactness(mass=mass_grid))
+            prog_xi['xi'] = ('mass', prog.get_xi(mass=mass_grid))
             prog_xi.coords['mass'] = mass_grid
 
             xi_set[zams] = prog_xi

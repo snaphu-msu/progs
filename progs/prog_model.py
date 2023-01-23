@@ -83,8 +83,8 @@ class ProgModel:
         self.scalars['presn_temperature'] = surface['temperature']
         self.scalars['presn_luminosity'] = surface['luminosity']
 
-        self.scalars['xi_1.75'] = self.get_compactness(mass=1.75)
-        self.scalars['xi_2.5'] = self.get_compactness(mass=2.5)
+        self.scalars['xi_1.75'] = self.get_xi(mass=1.75)
+        self.scalars['xi_2.5'] = self.get_xi(mass=2.5)
 
         self.get_core_masses()
 
@@ -102,7 +102,7 @@ class ProgModel:
 
             self.scalars[f'coremass_{name}'] = mass
 
-    def get_compactness(self, mass=2.5):
+    def get_xi(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
 
         Returns : float
@@ -112,7 +112,7 @@ class ProgModel:
         mass : float
             Mass coordinate [Msun], typically 1.75 or 2.5
         """
-        xi = self.interpolate_profile(x=mass, y_var='compactness', x_var='mass')
+        xi = self.interpolate_profile(x=mass, y_var='xi', x_var='mass')
         return xi
 
     def interpolate_profile(self,
