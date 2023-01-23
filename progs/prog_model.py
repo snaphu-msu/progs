@@ -83,8 +83,8 @@ class ProgModel:
         self.scalars['presn_temperature'] = surface['temperature']
         self.scalars['presn_luminosity'] = surface['luminosity']
 
-        self.scalars['xi_1.75'] = self.get_xi(mass=1.75)
-        self.scalars['xi_2.5'] = self.get_xi(mass=2.5)
+        for xi_mass in self.config['scalars']['xi']:
+            self.scalars[f'xi_{xi_mass}'] = self.get_xi(mass=xi_mass)
 
         self.get_core_masses()
 
