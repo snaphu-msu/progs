@@ -475,3 +475,22 @@ def check_mkdir(path):
     """
     if not os.path.exists(path):
         subprocess.run(['mkdir', '-p', path], check=True)
+
+
+# ===============================================================
+#                      FLASH
+# ===============================================================
+def write_flash_prog(profile, filepath):
+    """Write progenitor input file in FLASH format
+    """
+    columns = ['radius', 'mass', 'density', 'temperature', 'pressure',
+               'energy', 'entropy', 'velocity', 'velz', 'ye']
+
+    profile = profile.copy()
+    profile['mass'] *= units.M_sun.to(units.g)
+    profile['velz'] = 0
+    
+    profile.to_csv(filepath,
+                   sep=' ',
+                   columns=columns,
+                   index=False)
