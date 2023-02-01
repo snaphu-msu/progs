@@ -94,10 +94,14 @@ class ProgSet:
         for key, scalar in scalars.items():
             self.scalars[key] = scalar
 
-    def get_xi(self):
+    def get_xi(self,
+               xi_min=1.5,
+               xi_max=3.5,
+               xi_step=0.05):
         """Get table of compactness values
         """
-        mass_grid = np.linspace(1.5, 3, 31)
+        n = int((xi_max - xi_min) / xi_step) + 1
+        mass_grid = np.linspace(xi_min, xi_max, n)
         xi_set = {}
 
         for zams, prog in self.progs.items():
@@ -237,6 +241,7 @@ class ProgSet:
     def plot_xi_slider(self,
                        y_var,
                        xi_0=2.5,
+                       xi_step=0.05,
                        ):
         """Plot slider over compactness parameter
         """
@@ -256,8 +261,10 @@ class ProgSet:
                         mass_grid[0],
                         mass_grid[-1],
                         valinit=xi_0,
-                        valstep=0.05)
+                        valstep=xi_step)
 
+        ax.set_xlabel(r'$\xi_M$')
+        ax.set_ylabel(y_var)
         ax.set_xlim([self.xi['xi'].min()-0.1, self.xi['xi'].max()+0.1])
 
         ax.plot(self.xi.sel(mass=xi_0)['xi'],
