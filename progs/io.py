@@ -480,17 +480,37 @@ def check_mkdir(path):
 # ===============================================================
 #                      FLASH
 # ===============================================================
-def write_flash_prog(profile, filepath):
+def write_flash_prog(profile,
+                     filepath,
+                     comment='# Progenitor version <X> from set <X>'):
     """Write progenitor input file in FLASH format
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+        prog profile table to write
+    filepath : str
+        filepath to write to
+    comment : str
+        descriptive first line comment
     """
+    header_lines = ['number of variables = 9', 'mass', 'dens', 'temp',
+                    'pres', 'eint', 'entr', 'velx', 'velz', 'ye']
+
     columns = ['radius', 'mass', 'density', 'temperature', 'pressure',
                'energy', 'entropy', 'velocity', 'velz', 'ye']
 
     profile = profile.copy()
     profile['mass'] *= units.M_sun.to(units.g)
     profile['velz'] = 0
-    
-    profile.to_csv(filepath,
-                   sep=' ',
-                   columns=columns,
-                   index=False)
+
+    csv_str = profile.to_csv(sep=' ', columns=columns, header=False, index=False)
+
+    with open(filepath, 'w') as f:
+        f.write(f'{comment}\n')
+
+        for line in header_lines:
+            f.write(f'{line}\n')
+
+        f.write(csv_str)
+
