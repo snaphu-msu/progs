@@ -498,7 +498,7 @@ def write_flash_prog(profile,
                     'pres', 'eint', 'entr', 'velx', 'velz', 'ye']
 
     columns = ['radius', 'mass', 'density', 'temperature', 'pressure',
-               'energy', 'entropy', 'velocity', 'velz', 'ye']
+               'energy', 'entropy', 'velocity', 'ang_velocity', 'ye']
 
     profile = profile.copy()
     profile['mass'] *= units.M_sun.to(units.g)
