@@ -502,7 +502,11 @@ def write_flash_prog(profile,
 
     profile = profile.copy()
     profile['mass'] *= units.M_sun.to(units.g)
-    profile['velz'] = 0
+
+    # convert to cell-centered radius
+    dr = np.array(profile['radius'])
+    dr[1:] = np.diff(dr)
+    profile['radius'] = profile['radius'] - 0.5*dr
 
     csv_str = profile.to_csv(sep=' ', columns=columns, header=False, index=False)
 
