@@ -293,6 +293,9 @@ def add_derived_columns(profile,
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
 
+    if 'velz' in derived_cols:
+        add_velz(profile)
+
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
@@ -336,6 +339,20 @@ def add_luminosity(profile):
 
     profile['luminosity'] = quantities.get_luminosity(radius=profile['radius'],
                                                       temperature=profile['temperature'])
+
+
+def add_velz(profile):
+    """Add tangential velocity column from angular velocity
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    if ('radius' not in profile) or ('ang_velocity' not in profile):
+        raise ValueError('Need radius and angular velocity columns to calculate velz')
+
+    profile['velz'] = quantities.get_velz(radius=profile['radius'],
+                                          ang_velocity=profile['ang_velocity'])
 
 
 def add_iso_groups(profile, iso_groups):
