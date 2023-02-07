@@ -65,3 +65,24 @@ def get_luminosity(radius, temperature):
     lum = 4 * np.pi * sb * radius**2 * temp**4
 
     return lum
+
+
+def get_velz(radius, ang_velocity):
+    """Calculate tangential velocity (velz) from angular verlocity
+
+    Returns: np.array
+        tangential velocity [cm/s]
+
+    parameters
+    ----------
+    radius : []
+        radius coordinate (cm)
+    ang_velocity : []
+        angular velocity [rad/s]
+    """
+    radius = np.array(radius)
+    ang_velocity = np.array(ang_velocity)
+
+    velz = radius * ang_velocity
+
+    return velz
