@@ -299,6 +299,9 @@ def add_derived_columns(profile,
     if 'radius_center' in derived_cols:
         add_radius_center(profile)
 
+    if 'mass_center' in derived_cols:
+        add_mass_center(profile)
+
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
@@ -316,6 +319,26 @@ def add_enclosed_mass(profile):
     profile['mass'] = quantities.get_enclosed_mass(zone_mass=profile['mass'])
 
 
+def add_mass_center(profile):
+    """Add cell-centered enclosed mass column to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    required = ['mass', 'radius', 'radius_center', 'density']
+    for var in required:
+        if var not in profile:
+            raise ValueError(f'Need columns {required} '
+                             'to calculate cell-center enclosed mass')
+
+    profile['mass_center'] = quantities.get_centered_mass(
+                                              mass=profile['mass'],
+                                              radius_outer=profile['radius'],
+                                              radius_center=profile['radius_center'],
+                                              density=profile['density'])
+
+
 def add_radius_center(profile):
     """Add cell-centered radius column to profile
 
@@ -325,7 +348,7 @@ def add_radius_center(profile):
     """
     if 'radius' not in profile:
         raise ValueError(f'Need radius columns to calculate radius_center')
-    
+
     profile['radius_center'] = quantities.get_centered_radius(radius=profile['radius'])
 
 
