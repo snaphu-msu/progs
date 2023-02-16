@@ -27,15 +27,54 @@ def get_enclosed_mass(zone_mass):
     return enc_mass
 
 
+def get_centered_mass(mass,
+                      radius_outer,
+                      radius_center,
+                      density):
+    """Calculate cell-centered enclosed mass
+
+    Returns: np.array
+
+    parameters
+    ----------
+    mass : []
+        cell-outer enclosed mass (Msun)
+    radius_outer : []
+        cell-outer radius (cm)
+    radius_center : []
+        cell-center radius (cm)
+    density : []
+        cell-average density (g/cm^3)
+    """
+    mass = np.array(mass)
+    radius = np.array(radius_outer)
+
+    # cell-inner radius
+    radius_inner = np.zeros(len(radius))
+    radius_inner[1:] = radius[:-1]
+
+    # cell-inner enclosed mass
+    mass_inner = np.zeros(len(mass))
+    mass_inner[1:] = mass[:-1]
+
+    # left-half mass of cell
+    vol_lhalf = 4/3 * np.pi * (radius_center**3 - radius_inner**3)
+    mass_lhalf = vol_lhalf * density * g_to_msun
+
+    mass_center = mass_inner + mass_lhalf
+
+    return mass_center
+
+
 def get_centered_radius(radius):
-    """Calculate cell-centered radius from outer-cell radius
+    """Calculate cell-centered radius from cell-outer radius
 
     Returns: np.array
 
     parameters
     ----------
     radius : []
-        outer-edge cell radius
+        cell-outer radius
     """
     radius = np.array(radius)
 
