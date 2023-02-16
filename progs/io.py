@@ -296,6 +296,9 @@ def add_derived_columns(profile,
     if 'velz' in derived_cols:
         add_velz(profile)
 
+    if 'radius_center' in derived_cols:
+        add_radius_center(profile)
+
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
@@ -311,6 +314,19 @@ def add_enclosed_mass(profile):
         raise ValueError(f'Need mass column to calculate enclosed mass')
 
     profile['mass'] = quantities.get_enclosed_mass(zone_mass=profile['mass'])
+
+
+def add_radius_center(profile):
+    """Add cell-centered radius column to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    if 'radius' not in profile:
+        raise ValueError(f'Need radius columns to calculate radius_center')
+    
+    profile['radius_center'] = quantities.get_centered_radius(radius=profile['radius'])
 
 
 def add_xi(profile):
