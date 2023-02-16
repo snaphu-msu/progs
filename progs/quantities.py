@@ -27,6 +27,26 @@ def get_enclosed_mass(zone_mass):
     return enc_mass
 
 
+def get_centered_radius(radius):
+    """Calculate cell-centered radius from outer-cell radius
+
+    Returns: np.array
+
+    parameters
+    ----------
+    radius : []
+        outer-edge cell radius
+    """
+    radius = np.array(radius)
+
+    dr = np.array(radius)
+    dr[1:] = np.diff(dr)  # cell width
+
+    r_center = radius - (0.5 * dr)
+
+    return r_center
+
+
 def get_xi(mass, radius):
     """Calculate compactness parameter
 
