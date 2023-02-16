@@ -561,22 +561,7 @@ def write_flash_prog(profile,
                'velz', 'ye']
 
     profile = profile.copy()
-    profile['mass'] *= units.M_sun.to(units.g)
-
-    # convert to cell-centered radius
-    dr = np.array(profile['radius'])
-    dr[1:] = np.diff(dr)
-    profile['radius_center'] = profile['radius'] - 0.5*dr
-
-    # get mass of left cell halves
-    r_left = np.zeros(len(profile))
-    r_left[1:] = profile['radius'].iloc[:-1]
-
-    m_left = np.zeros(len(profile))
-    m_left[1:] = profile['mass'].iloc[:-1]
-
-    m_half = 4/3 * np.pi * (profile['radius_center']**3 - r_left**3) * profile['density']
-    profile['mass_center'] = m_left + m_half * units.g.to(units.M_sun)
+    profile['mass_center'] *= units.M_sun.to(units.g)
 
     csv_str = profile.to_csv(sep=' ', columns=columns, header=False, index=False)
 
