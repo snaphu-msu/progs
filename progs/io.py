@@ -301,6 +301,9 @@ def add_derived_columns(profile,
     if 'mass_center' in derived_cols:
         add_mass_center(profile)
 
+    if 'velocity_center' in derived_cols:
+        add_interp_center(profile, var='velocity')
+
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
@@ -349,6 +352,23 @@ def add_radius_center(profile):
         raise ValueError(f'Need radius columns to calculate radius_center')
 
     profile['radius_center'] = quantities.get_centered_radius(
+                                                radius_outer=profile['radius'])
+
+
+def add_interp_center(profile, var):
+    """Add interpolated cell-centered variable to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    var : str
+        name of variable to interpolate
+    """
+    if ('radius' not in profile) or (var not in profile):
+        raise ValueError(f'Need {var} and radius columns to interpolate cell-center')
+
+    profile[f'{var}_center'] = quantities.get_interp_center(
+                                                var_outer=profile[var],
                                                 radius_outer=profile['radius'])
 
 
