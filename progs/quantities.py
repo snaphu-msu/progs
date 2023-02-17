@@ -66,22 +66,22 @@ def get_centered_mass(mass,
     return mass_center
 
 
-def get_centered_radius(radius):
+def get_centered_radius(radius_outer):
     """Calculate cell-centered radius from cell-outer radius
 
     Returns: np.array
 
     parameters
     ----------
-    radius : []
+    radius_outer : []
         cell-outer radius
     """
-    radius = np.array(radius)
+    radius_outer = np.array(radius_outer)
 
-    dr = np.array(radius)
+    dr = np.array(radius_outer)
     dr[1:] = np.diff(dr)  # cell width
 
-    r_center = radius - (0.5 * dr)
+    r_center = radius_outer - (0.5 * dr)
 
     return r_center
 
@@ -94,7 +94,7 @@ def get_xi(mass, radius):
     parameters
     ----------
     mass : []
-        Enclosed mass (Msun)
+        Enclosed mass coordinate (Msun)
     radius : []
         radius coordinate (cm)
     """

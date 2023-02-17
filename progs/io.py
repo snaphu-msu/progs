@@ -1,6 +1,5 @@
 import os
 import subprocess
-import numpy as np
 import pandas as pd
 import ast
 from astropy import units
@@ -349,7 +348,8 @@ def add_radius_center(profile):
     if 'radius' not in profile:
         raise ValueError(f'Need radius columns to calculate radius_center')
 
-    profile['radius_center'] = quantities.get_centered_radius(radius=profile['radius'])
+    profile['radius_center'] = quantities.get_centered_radius(
+                                                radius_outer=profile['radius'])
 
 
 def add_xi(profile):
