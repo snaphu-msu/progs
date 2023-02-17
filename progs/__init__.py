@@ -2,6 +2,7 @@ from . import io
 from . import network
 from . import tools
 from . import plotting
+from . import quantities
 
 from .prog_model import ProgModel
 from .prog_set import ProgSet
@@ -12,4 +13,5 @@ __all__ = ['ProgModel',
            'network',
            'tools',
            'plotting',
+           'quantities',
            ]

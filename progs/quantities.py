@@ -86,6 +86,35 @@ def get_centered_radius(radius_outer):
     return r_center
 
 
+def get_interp_center(var_outer,
+                      radius_outer):
+    """Interpolate cell-outer quantity to cell-center
+
+    Returns: np.array
+
+    parameters
+    ----------
+    var_outer : []
+        cell-outer variable to interpolate
+    radius_outer : []
+        cell-outer radius
+    """
+    var_outer = np.array(var_outer)
+    radius_outer = np.array(radius_outer)
+    radius_center = get_centered_radius(radius_outer)
+
+    var_center = np.interp(x=radius_center,
+                           xp=radius_outer,
+                           fp=var_outer,
+                           left=0)
+
+    # linearly-extrapolate innermost cell-center
+    dv_dr = np.diff(var_outer[:2]) / np.diff(radius_outer[:2])
+    var_center[0] = var_outer[0] + dv_dr * (radius_center[0] - radius_outer[0])
+
+    return var_center
+
+
 def get_xi(mass, radius):
     """Calculate compactness parameter
 
