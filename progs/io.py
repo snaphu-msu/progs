@@ -577,7 +577,7 @@ def write_flash_prog(profile,
 
     columns = ['radius_center', 'mass_center',
                'density', 'temperature', 'pressure',
-               'energy', 'entropy', 'velocity',
+               'energy', 'entropy', 'velocity_center',
                'velz', 'ye']
 
     profile = profile.copy()
