@@ -583,6 +583,11 @@ def write_flash_prog(profile,
     profile = profile.copy()
     profile['mass_center'] *= units.M_sun.to(units.g)
 
+    for col in columns:
+        if col not in profile:
+            print(f'Not found, setting {col} = 0!')
+            profile[col] = 0
+
     csv_str = profile.to_csv(sep=' ', columns=columns, header=False, index=False)
 
     with open(filepath, 'w') as f:
