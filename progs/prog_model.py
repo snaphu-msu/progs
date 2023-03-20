@@ -1,7 +1,7 @@
 import numpy as np
 
 # progs
-from . import io
+from . import prog_io
 from . import network
 from . import plotting
 from . import tools
@@ -55,16 +55,16 @@ class ProgModel:
         self.progset_name = progset_name
         self.label = f'{progset_name}: {zams} Msun'
 
-        self.filepath = io.prog_filepath(zams, progset_name=progset_name)
-        self.config = io.check_config(config=config, progset_name=progset_name)
+        self.filepath = prog_io.prog_filepath(zams, progset_name=progset_name)
+        self.config = prog_io.check_config(config=config, progset_name=progset_name)
 
-        self.profile = io.load_profile(zams,
-                                       progset_name,
-                                       filepath=self.filepath,
-                                       config=self.config,
-                                       reload=reload)
+        self.profile = prog_io.load_profile(zams,
+                                            progset_name,
+                                            filepath=self.filepath,
+                                            config=self.config,
+                                            reload=reload)
 
-        self.network = io.load_network(progset_name, config=self.config)
+        self.network = prog_io.load_network(progset_name, config=self.config)
         self.composition = self.profile[self.network.isotope]
         self.sums = network.get_sums(self.composition, self.network)
 

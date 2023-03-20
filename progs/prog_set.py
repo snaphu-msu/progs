@@ -6,7 +6,7 @@ from matplotlib import colormaps as cm
 from matplotlib.widgets import Slider
 
 # progs
-from . import io
+from . import prog_io
 from . import plotting
 from . import tools
 from .prog_model import ProgModel
@@ -47,14 +47,14 @@ class ProgSet:
         reload : bool
         """
         self.progset_name = progset_name
-        self.config = io.load_config(progset_name)
+        self.config = prog_io.load_config(progset_name)
         self.reload = reload
 
         self.zams = None
         self.progs = {}
         self.scalars = pd.DataFrame()
         self.xi = None
-        self.network = io.load_network(progset_name, config=self.config)
+        self.network = prog_io.load_network(progset_name, config=self.config)
 
         self.load_progs()
         self.get_scalars()
@@ -63,7 +63,7 @@ class ProgSet:
     def load_progs(self):
         """Load all progenitor models
         """
-        zams_list = io.find_progs(self.progset_name)
+        zams_list = prog_io.find_progs(self.progset_name)
 
         for zams in zams_list:
             print(f'\rLoading progenitor: {zams} Msun    ', end='')
