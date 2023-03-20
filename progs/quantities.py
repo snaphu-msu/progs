@@ -27,10 +27,7 @@ def get_enclosed_mass(zone_mass):
     return enc_mass
 
 
-def get_centered_mass(mass,
-                      radius_outer,
-                      radius_center,
-                      density):
+def get_centered_mass(mass, radius_outer, radius_center, density):
     """Calculate cell-centered enclosed mass
 
     Returns: np.array
@@ -86,8 +83,7 @@ def get_centered_radius(radius_outer):
     return r_center
 
 
-def get_interp_center(var_outer,
-                      radius_outer):
+def get_interp_center(var_outer, radius_outer):
     """Interpolate cell-outer quantity to cell-center
 
     Returns: np.array

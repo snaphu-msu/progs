@@ -94,8 +94,7 @@ class ProgSet:
         for key, scalar in scalars.items():
             self.scalars[key] = scalar
 
-    def get_xi(self,
-               xi_min=1.5,
+    def get_xi(self, xi_min=1.5,
                xi_max=3.5,
                xi_step=0.05):
         """Get table of compactness values
@@ -238,11 +237,7 @@ class ProgSet:
 
         return fig
 
-    def plot_xi_slider(self,
-                       y_var,
-                       xi_0=2.5,
-                       xi_step=0.05,
-                       ):
+    def plot_xi_slider(self, y_var, xi_0=2.5, xi_step=0.05):
         """Plot slider over compactness parameter
         """
         def update_slider(mass):
