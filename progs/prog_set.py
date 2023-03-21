@@ -270,3 +270,51 @@ class ProgSet:
         slider.on_changed(update_slider)
 
         return slider
+
+    def plot_coremasses(self,
+                        x_var='zams',
+                        y_scale=None,
+                        x_scale=None,
+                        ylims=None,
+                        xlims=None,
+                        ax=None,
+                        legend=True,
+                        title=True,
+                        figsize=(8, 6),
+                        linestyle='',
+                        marker='.'):
+        """Plot coremasses
+
+        Returns : fig
+
+        parameters
+        ----------
+        x_var : str
+            variable to plot on x-axis
+        y_scale : {'log', 'linear'}
+        x_scale : {'log', 'linear'}
+        ylims : [min, max]
+        xlims : [min, max]
+        ax : Axes
+        legend : bool
+        title : bool
+        figsize : [width, height]
+        linestyle : str
+        marker : str
+        """
+        fig, ax = plotting.check_ax(ax=ax, figsize=figsize)
+        plotting.set_ax_lims(ax=ax, ylims=ylims, xlims=xlims)
+        plotting.set_ax_scales(ax=ax, y_scale=y_scale, x_scale=x_scale)
+        plotting.set_ax_title(ax=ax, string=self.progset_name, title=title)
+        plotting.set_ax_labels(ax=ax, x_var=x_var, y_var=r'$M_\mathrm{core}$ [$M_\odot$]')
+
+        for i, core in enumerate(self.config['scalars']['core_thresh']):
+            ax.plot(self.scalars[x_var],
+                    self.scalars[f'coremass_{core}'],
+                    ls=linestyle,
+                    marker=marker,
+                    label=f'{core} core')
+
+        plotting.set_ax_legend(ax=ax, legend=legend)
+
+        return fig
