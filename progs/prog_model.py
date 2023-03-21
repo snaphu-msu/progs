@@ -264,6 +264,7 @@ class ProgModel:
                    x_var='mass',
                    y_scale=None,
                    x_scale=None,
+                   marker=None,
                    max_cols=1,
                    sub_figsize=(8, 6),
                    legend=False):
@@ -279,6 +280,7 @@ class ProgModel:
             variable to plot on x-axis
         y_scale : {'log', 'linear'}
         x_scale : {'log', 'linear'}
+        marker : str
         legend : bool
         max_cols : bool
         sub_figsize : tuple
@@ -299,6 +301,7 @@ class ProgModel:
                       x_var=x_var,
                       y_scale=y_scale,
                       x_scale=x_scale,
+                      marker=marker,
                       ax=ax[row, col],
                       legend=legend if i == 0 else False)
         return fig
