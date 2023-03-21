@@ -288,6 +288,7 @@ class ProgModel:
         fig, ax = plotting.setup_subplots(n_var,
                                           max_cols=max_cols,
                                           sub_figsize=sub_figsize,
+                                          sharex=True,
                                           squeeze=False)
 
         for i, y_var in enumerate(y_vars):
