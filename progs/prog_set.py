@@ -68,12 +68,14 @@ class ProgSet:
         for zams in zams_list:
             print(f'\rLoading progenitor: {zams} Msun    ', end='')
 
-            self.progs[float(zams)] = ProgModel(zams=zams,
-                                                progset_name=self.progset_name,
-                                                config=self.config,
-                                                reload=self.reload)
+            # self.progs[float(zams)] = ProgModel(zams=zams,
+            self.progs[zams] = ProgModel(zams=zams,
+                                         progset_name=self.progset_name,
+                                         config=self.config,
+                                         reload=self.reload)
 
-        self.zams = [float(x) for x in zams_list]
+        # self.zams = [float(x) for x in zams_list]
+        self.zams = zams_list
         print()
 
     # =======================================================
