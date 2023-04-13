@@ -78,8 +78,8 @@ class ProgModel:
         """Get scalar variables
         """
         surface = self.profile.iloc[-1]
-        self.scalars['presn_mass'] = surface['mass']
-        self.scalars['presn_radius'] = surface['radius']
+        self.scalars['presn_mass'] = surface['mass_edge']
+        self.scalars['presn_radius'] = surface['radius_edge']
         self.scalars['presn_temperature'] = surface['temperature']
         self.scalars['presn_luminosity'] = surface['luminosity']
 

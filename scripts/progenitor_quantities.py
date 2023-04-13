@@ -25,7 +25,7 @@ print(f"xi_2.5 = {xi_2p5}")
 # You can do println(prog.profile), and print(prog.network) to learn more
 n = len(prog.profile['mass']) - 1
 M_preSN = prog.profile["mass"][n] / Msun
-R_preSN = prog.profile["radius"][n] / Rsun
+R_preSN = prog.profile["radius_edge"][n] / Rsun
 print(f"R_presn = {R_preSN}")
 print(f"M_presn = {M_preSN}")
 # Note that the final mass is different from the ZAMS mass (15.2),

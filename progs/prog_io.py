@@ -196,7 +196,7 @@ def extract_profile(zams,
     for key, idx in config['columns'].items():
         profile[key] = pd.to_numeric(raw[idx], errors='ignore')
 
-    profile['mass'] = profile['mass'] * g_to_msun
+    profile['mass_edge'] = profile['mass_edge'] * g_to_msun
     add_derived_columns(profile, config=config)
 
     return profile
@@ -283,8 +283,14 @@ def add_derived_columns(profile,
     """
     derived_cols = config['load']['derived_columns']
 
-    if 'mass' in derived_cols:
+    if 'mass_edge' in derived_cols:
         add_enclosed_mass(profile)
+
+    if 'radius' in derived_cols:
+        add_radius_center(profile)
+
+    if 'mass' in derived_cols:
+        add_mass_center(profile)
 
     if 'xi' in derived_cols:
         add_xi(profile)
@@ -292,36 +298,30 @@ def add_derived_columns(profile,
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
 
-    if 'radius_center' in derived_cols:
-        add_radius_center(profile)
-
-    if 'mass_center' in derived_cols:
-        add_mass_center(profile)
-
-    if 'velx_center' in derived_cols:
+    if 'velx' in derived_cols:
         add_interp_center(profile, var='velx')
 
-    if 'velz' in derived_cols:
-        add_velz(profile, center=False)
+    if 'velz_edge' in derived_cols:
+        add_velz(profile, edge=True)
 
-    if 'velz_center' in derived_cols:
-        add_velz(profile, center=True)
+    if 'velz' in derived_cols:
+        add_velz(profile, edge=False)
 
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
 def add_enclosed_mass(profile):
     """Add enclosed mass column to profile
-        Assumes existing 'mass' column is zone mass
+    Requires 'zone_mass' column
 
     parameters
     ----------
     profile : pd.DataFrame
     """
-    if 'mass' not in profile:
-        raise ValueError(f'Need mass column to calculate enclosed mass')
+    if 'zone_mass' not in profile:
+        raise ValueError(f'Need zone_mass column to calculate enclosed mass')
 
-    profile['mass'] = quantities.get_enclosed_mass(zone_mass=profile['mass'])
+    profile['mass_edge'] = quantities.get_enclosed_mass(zone_mass=profile['zone_mass'])
 
 
 def add_mass_center(profile):
@@ -331,16 +331,16 @@ def add_mass_center(profile):
     ----------
     profile : pd.DataFrame
     """
-    required = ['mass', 'radius', 'radius_center', 'density']
+    required = ['mass_edge', 'radius_edge', 'radius', 'density']
     for var in required:
         if var not in profile:
             raise ValueError(f'Need columns {required} '
                              'to calculate cell-center enclosed mass')
 
-    profile['mass_center'] = quantities.get_centered_mass(
-                                              mass=profile['mass'],
-                                              radius_outer=profile['radius'],
-                                              radius_center=profile['radius_center'],
+    profile['mass'] = quantities.get_centered_mass(
+                                              mass_edge=profile['mass_edge'],
+                                              radius_edge=profile['radius_edge'],
+                                              radius_center=profile['radius'],
                                               density=profile['density'])
 
 
@@ -351,11 +351,11 @@ def add_radius_center(profile):
     ----------
     profile : pd.DataFrame
     """
-    if 'radius' not in profile:
-        raise ValueError(f'Need radius columns to calculate radius_center')
+    if 'radius_edge' not in profile:
+        raise ValueError(f'Need radius_edge column to calculate radius')
 
-    profile['radius_center'] = quantities.get_centered_radius(
-                                                radius_outer=profile['radius'])
+    profile['radius'] = quantities.get_centered_radius(
+                                                radius_edge=profile['radius_edge'])
 
 
 def add_interp_center(profile, var):
@@ -367,12 +367,12 @@ def add_interp_center(profile, var):
     var : str
         name of variable to interpolate
     """
-    if ('radius' not in profile) or (var not in profile):
-        raise ValueError(f'Need {var} and radius columns to interpolate cell-center')
+    var_edge = f'{var}_edge'
+    if ('radius_edge' not in profile) or (var_edge not in profile):
+        raise ValueError(f'Need {var_edge} and radius_edge columns to interpolate cell-center')
 
-    profile[f'{var}_center'] = quantities.get_interp_center(
-                                                var_outer=profile[var],
-                                                radius_outer=profile['radius'])
+    profile[f'{var}'] = quantities.get_interp_center(var_outer=profile[var_edge],
+                                                     radius_outer=profile['radius_edge'])
 
 
 def add_xi(profile):
@@ -403,26 +403,26 @@ def add_luminosity(profile):
                                                       temperature=profile['temperature'])
 
 
-def add_velz(profile, center=True):
+def add_velz(profile, edge=False):
     """Add tangential velocity column from angular velocity
 
     parameters
     ----------
     profile : pd.DataFrame
-    center : bool
+    edge : bool
     """
-    radius_var = 'radius'
-    velz_var = 'velz'
+    r_var = 'radius'
+    v_var = 'velz'
 
-    if center:
-        radius_var += '_center'
-        velz_var += '_center'
+    if edge:
+        r_var += '_edge'
+        v_var += '_edge'
 
-    if (radius_var not in profile) or ('ang_vel' not in profile):
-        raise ValueError(f'Need {radius_var} and ang_vel columns to calculate velz')
+    if (r_var not in profile) or ('ang_vel' not in profile):
+        raise ValueError(f'Need {r_var} and ang_vel columns to calculate velz')
 
-    profile[velz_var] = quantities.get_velz(radius=profile[radius_var],
-                                            ang_vel=profile['ang_vel'])
+    profile[v_var] = quantities.get_velz(radius=profile[r_var],
+                                         ang_vel=profile['ang_vel'])
 
 
 def add_iso_groups(profile, iso_groups):
@@ -586,13 +586,13 @@ def write_flash_prog(profile,
                     'pres', 'eint', 'entr',
                     'velx', 'velz', 'ye']
 
-    columns = ['radius_center', 'mass_center',
+    columns = ['radius', 'mass',
                'density', 'temperature', 'pressure',
-               'energy', 'entropy', 'velx_center',
-               'velz_center', 'ye']
+               'energy', 'entropy', 'velx',
+               'velz', 'ye']
 
     profile = profile.copy()
-    profile['mass_center'] *= units.M_sun.to(units.g)
+    profile['mass'] *= units.M_sun.to(units.g)
 
     for col in columns:
         if col not in profile:
