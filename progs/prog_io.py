@@ -292,17 +292,20 @@ def add_derived_columns(profile,
     if 'luminosity' in derived_cols:
         add_luminosity(profile)
 
-    if 'velz' in derived_cols:
-        add_velz(profile)
-
     if 'radius_center' in derived_cols:
         add_radius_center(profile)
 
     if 'mass_center' in derived_cols:
         add_mass_center(profile)
 
-    if 'velocity_center' in derived_cols:
-        add_interp_center(profile, var='velocity')
+    if 'velx_center' in derived_cols:
+        add_interp_center(profile, var='velx')
+
+    if 'velz' in derived_cols:
+        add_velz(profile, center=False)
+
+    if 'velz_center' in derived_cols:
+        add_velz(profile, center=True)
 
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
@@ -400,18 +403,26 @@ def add_luminosity(profile):
                                                       temperature=profile['temperature'])
 
 
-def add_velz(profile):
+def add_velz(profile, center=True):
     """Add tangential velocity column from angular velocity
 
     parameters
     ----------
     profile : pd.DataFrame
+    center : bool
     """
-    if ('radius' not in profile) or ('ang_velocity' not in profile):
-        raise ValueError('Need radius and angular velocity columns to calculate velz')
+    radius_var = 'radius'
+    velz_var = 'velz'
 
-    profile['velz'] = quantities.get_velz(radius=profile['radius'],
-                                          ang_velocity=profile['ang_velocity'])
+    if center:
+        radius_var += '_center'
+        velz_var += '_center'
+
+    if (radius_var not in profile) or ('ang_vel' not in profile):
+        raise ValueError(f'Need {radius_var} and ang_vel columns to calculate velz')
+
+    profile[velz_var] = quantities.get_velz(radius=profile[radius_var],
+                                            ang_vel=profile['ang_vel'])
 
 
 def add_iso_groups(profile, iso_groups):
