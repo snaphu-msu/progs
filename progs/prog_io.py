@@ -318,9 +318,6 @@ def add_enclosed_mass(profile):
     ----------
     profile : pd.DataFrame
     """
-    if 'zone_mass' not in profile:
-        raise ValueError(f'Need zone_mass column to calculate enclosed mass')
-
     profile['mass_edge'] = quantities.get_enclosed_mass(zone_mass=profile['zone_mass'])
 
 
@@ -331,12 +328,6 @@ def add_mass_center(profile):
     ----------
     profile : pd.DataFrame
     """
-    required = ['mass_edge', 'radius_edge', 'radius', 'density']
-    for var in required:
-        if var not in profile:
-            raise ValueError(f'Need columns {required} '
-                             'to calculate cell-center enclosed mass')
-
     profile['mass'] = quantities.get_centered_mass(
                                               mass_edge=profile['mass_edge'],
                                               radius_edge=profile['radius_edge'],
@@ -351,11 +342,7 @@ def add_radius_center(profile):
     ----------
     profile : pd.DataFrame
     """
-    if 'radius_edge' not in profile:
-        raise ValueError(f'Need radius_edge column to calculate radius')
-
-    profile['radius'] = quantities.get_centered_radius(
-                                                radius_edge=profile['radius_edge'])
+    profile['radius'] = quantities.get_centered_radius(radius_edge=profile['radius_edge'])
 
 
 def add_interp_center(profile, var):
@@ -367,11 +354,7 @@ def add_interp_center(profile, var):
     var : str
         name of variable to interpolate
     """
-    var_edge = f'{var}_edge'
-    if ('radius_edge' not in profile) or (var_edge not in profile):
-        raise ValueError(f'Need {var_edge} and radius_edge columns to interpolate cell-center')
-
-    profile[f'{var}'] = quantities.get_interp_center(var_outer=profile[var_edge],
+    profile[f'{var}'] = quantities.get_interp_center(var_outer=profile[f'{var}_edge'],
                                                      radius_outer=profile['radius_edge'])
 
 
@@ -382,9 +365,6 @@ def add_xi(profile):
     ----------
     profile : pd.DataFrame
     """
-    if ('radius' not in profile) or ('mass' not in profile):
-        raise ValueError(f'Need radius and mass columns to calculate xi')
-
     profile['xi'] = quantities.get_xi(mass=profile['mass'],
                                       radius=profile['radius'])
 
@@ -396,9 +376,6 @@ def add_luminosity(profile):
     ----------
     profile : pd.DataFrame
     """
-    if ('radius' not in profile) or ('temperature' not in profile):
-        raise ValueError(f'Need radius and temperature columns to calculate luminosity')
-
     profile['luminosity'] = quantities.get_luminosity(radius=profile['radius'],
                                                       temperature=profile['temperature'])
 
@@ -411,15 +388,12 @@ def add_velz(profile, edge=False):
     profile : pd.DataFrame
     edge : bool
     """
-    r_var = 'radius'
-    v_var = 'velz'
-
     if edge:
-        r_var += '_edge'
-        v_var += '_edge'
-
-    if (r_var not in profile) or ('ang_vel' not in profile):
-        raise ValueError(f'Need {r_var} and ang_vel columns to calculate velz')
+        r_var = 'radius_edge'
+        v_var = 'velz_edge'
+    else:
+        r_var = 'radius'
+        v_var = 'velz'
 
     profile[v_var] = quantities.get_velz(radius=profile[r_var],
                                          ang_vel=profile['ang_vel'])
