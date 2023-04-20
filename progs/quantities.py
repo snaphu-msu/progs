@@ -170,3 +170,25 @@ def get_velz(radius, ang_vel):
     velz = radius * ang_vel
 
     return velz
+
+
+def get_vkep(radius, mass):
+    """Calculate keplerian velocity
+
+    Returns: np.array
+        tangential velocity [cm/s]
+
+    parameters
+    ----------
+    radius : []
+        radius coordinate [cm]
+    mass : []
+        enclosed mass coordinate [Msun]
+    """
+    radius = np.array(radius)
+    mass = np.array(mass)
+    G = const.G.to(units.cm**3 / (units.M_sun * units.s**2))
+
+    vkep = np.sqrt(G * mass / radius)
+
+    return vkep
