@@ -191,4 +191,4 @@ def get_vkep(radius, mass):
 
     vkep = np.sqrt(G * mass / radius)
 
-    return vkep
+    return vkep.value

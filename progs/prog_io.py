@@ -307,6 +307,9 @@ def add_derived_columns(profile,
     if 'velz' in derived_cols:
         add_velz(profile, edge=False)
 
+    if 'vkep' in derived_cols:
+        add_vkep(profile)
+
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
@@ -397,6 +400,16 @@ def add_velz(profile, edge=False):
 
     profile[v_var] = quantities.get_velz(radius=profile[r_var],
                                          ang_vel=profile['ang_vel'])
+
+
+def add_vkep(profile):
+    """Add keplerian velocity column
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    profile['vkep'] = quantities.get_vkep(radius=profile['radius'], mass=profile['mass'])
 
 
 def add_iso_groups(profile, iso_groups):
@@ -565,8 +578,16 @@ def write_flash_prog(profile,
                'energy', 'entropy', 'velx',
                'velz', 'ye']
 
+    # columns = ['radius_edge', 'mass_edge',
+    #            'density', 'temperature', 'pressure',
+    #            'energy', 'entropy', 'velx_edge',
+    #            'velz_edge', 'ye']
+
     profile = profile.copy()
     profile['mass'] *= units.M_sun.to(units.g)
+
+    # profile['velz_edge'] = 0  # !!!
+    # profile['velz'] = 0  # !!!
 
     for col in columns:
         if col not in profile:
