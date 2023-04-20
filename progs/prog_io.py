@@ -7,7 +7,7 @@ from configparser import ConfigParser
 
 # progs
 from . import quantities
-from . import network
+from progs.network import get_iso_group
 
 g_to_msun = units.g.to(units.M_sun)
 
@@ -422,8 +422,7 @@ def add_iso_groups(profile, iso_groups):
         isotopes to group, e.g.: {'CO': ['c12', 'o16']}
     """
     for group_name, isotopes in iso_groups.items():
-        profile[group_name] = network.get_iso_group(composition=profile,
-                                                    isotopes=isotopes)
+        profile[group_name] = get_iso_group(composition=profile, isotopes=isotopes)
 
 
 # ===============================================================
@@ -603,4 +602,3 @@ def write_flash_prog(profile,
             f.write(f'{line}\n')
 
         f.write(csv_str)
-
