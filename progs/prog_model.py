@@ -86,10 +86,10 @@ class ProgModel:
         for xi_mass in self.config['scalars']['xi']:
             self.scalars[f'xi_{xi_mass}'] = self.get_xi(mass=xi_mass)
 
-        self.get_core_masses()
+        self.get_cores()
 
-    def get_core_masses(self):
-        """Get core masses from shell profiles
+    def get_cores(self):
+        """Get core masses/radii from shell profiles
         """
         for name, iso in self.config['scalars']['core_transition'].items():
             threshold = self.config['scalars']['core_thresh'][name]
@@ -97,10 +97,13 @@ class ProgModel:
 
             if len(shell) == 0:
                 mass = self.scalars['presn_mass']
+                radius = self.scalars['presn_radius']
             else:
                 mass = shell.iloc[0]['mass']
+                radius = shell.iloc[0]['radius']
 
             self.scalars[f'coremass_{name}'] = mass
+            self.scalars[f'corerad_{name}'] = radius
 
     def get_xi(self, mass=2.5):
         """Get the compactness parameter xi = (M/Msun) / (R(M) / 1000km)
