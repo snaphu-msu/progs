@@ -566,6 +566,22 @@ def profile_cache_filepath(zams, progset_name):
     return filepath
 
 
+def flash_prog_filepath(zams, progset_name):
+    """Return filepath to .FLASH file
+
+    Returns : str
+
+    parameters
+    ----------
+    zams : str
+    progset_name : str
+    """
+    filename = f'{progset_name}_{zams}.FLASH'
+    filepath = os.path.join(top_path(), '.temp', progset_name, 'flash', filename)
+
+    return filepath
+
+
 def check_mkdir(path):
     """Create path directory(s) if not present
 
@@ -604,6 +620,9 @@ def write_flash_prog(profile,
                'entropy': 'entr',
                'ang_vel': 'velz',
                }
+
+    path = os.path.split(filepath)[0]
+    check_mkdir(path)
 
     header_lines = [f'number of variables = {len(columns) - 1}']
     header_lines += [var_map.get(c, c) for c in columns[1:]]
