@@ -72,6 +72,21 @@ class ProgModel:
         self.scalars = {}
         self.get_scalars()
 
+    def write_flash_file(self, filepath=None, comment=None):
+        """Write .FLASH input progenitor file
+        """
+        if comment is None:
+            comment = f'Progenitor {self.zams} from {self.progset_name}'
+
+        if filepath is None:
+            filepath = prog_io.flash_prog_filepath(zams=self.zams,
+                                                   progset_name=self.progset_name)
+
+        prog_io.write_flash_prog(profile=self.profile,
+                                 filepath=filepath,
+                                 columns=self.config['load']['flash_columns'],
+                                 comment=comment)
+
     # =======================================================
     #                      Quantities
     # =======================================================
