@@ -582,7 +582,8 @@ def check_mkdir(path):
 # ===============================================================
 def write_flash_prog(profile,
                      filepath,
-                     comment='# Progenitor version <X> from set <X>'):
+                     columns,
+                     comment='# Progenitor <X> from set <X>'):
     """Write progenitor input file in FLASH format
 
     parameters
@@ -591,33 +592,28 @@ def write_flash_prog(profile,
         prog profile table to write
     filepath : str
         filepath to write to
+    columns : [str]
+        list of profile columns to write; must start with 'radius' or equivalent
     comment : str
         descriptive first line comment
     """
-    header_lines = ['number of variables = 9',
-                    'mass', 'dens', 'temp',
-                    'pres', 'eint', 'entr',
-                    'velx', 'velz', 'ye']
+    var_map = {'density': 'dens',
+               'temperature': 'temp',
+               'pressure': 'pres',
+               'energy': 'eint',
+               'entropy': 'entr',
+               'ang_vel': 'velz',
+               }
 
-    columns = ['radius', 'mass',
-               'density', 'temperature', 'pressure',
-               'energy', 'entropy', 'velx',
-               'velz', 'ye']
-
-    # columns = ['radius_edge', 'mass_edge',
-    #            'density', 'temperature', 'pressure',
-    #            'energy', 'entropy', 'velx_edge',
-    #            'velz_edge', 'ye']
+    header_lines = [f'number of variables = {len(columns) - 1}']
+    header_lines += [var_map.get(c, c) for c in columns[1:]]
 
     profile = profile.copy()
     profile['mass'] *= units.M_sun.to(units.g)
 
-    # profile['velz_edge'] = 0  # !!!
-    # profile['velz'] = 0  # !!!
-
     for col in columns:
         if col not in profile:
-            print(f'Not found, setting {col} = 0!')
+            print(f'{col} column not found! Setting to 0')
             profile[col] = 0
 
     csv_str = profile.to_csv(sep=' ', columns=columns, header=False, index=False)
