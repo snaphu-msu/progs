@@ -310,6 +310,12 @@ def add_derived_columns(profile,
     if 'vkep' in derived_cols:
         add_vkep(profile)
 
+    if 'sumy' in derived_cols:
+        add_sumy(profile)
+
+    if 'zbar' in derived_cols:
+        add_zbar(profile)
+
     add_iso_groups(profile, iso_groups=config['network']['iso_groups'])
 
 
@@ -368,8 +374,7 @@ def add_xi(profile):
     ----------
     profile : pd.DataFrame
     """
-    profile['xi'] = quantities.get_xi(mass=profile['mass'],
-                                      radius=profile['radius'])
+    profile['xi'] = quantities.get_xi(mass=profile['mass'], radius=profile['radius'])
 
 
 def add_luminosity(profile):
@@ -423,6 +428,26 @@ def add_iso_groups(profile, iso_groups):
     """
     for group_name, isotopes in iso_groups.items():
         profile[group_name] = get_iso_group(composition=profile, isotopes=isotopes)
+
+
+def add_sumy(profile):
+    """Add sumY column to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    profile['sumy'] = 1 / profile['abar']
+
+
+def add_zbar(profile):
+    """Add Zbar column to profile
+
+    parameters
+    ----------
+    profile : pd.DataFrame
+    """
+    profile['zbar'] = profile['ye'] * profile['abar']
 
 
 # ===============================================================
