@@ -196,7 +196,9 @@ def extract_profile(zams,
     for key, idx in config['columns'].items():
         profile[key] = pd.to_numeric(raw[idx], errors='ignore')
 
-    profile['mass_edge'] = profile['mass_edge'] * g_to_msun
+        if 'mass' in key:
+            profile[key] *= g_to_msun
+
     add_derived_columns(profile, config=config)
 
     return profile
