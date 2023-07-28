@@ -25,8 +25,9 @@ class ProgModel:
         table of network isotopes used
     progset_name : str
         Name of progenitor set, e.g. 'sukhbold_2016'
-    sums : dict
-        summed composition quantities (e.g. sumx, sumy, ye)
+    network_sums : dict
+        quantities calculated from the network composition (sumx, sumy, ye, abar)
+        NOTE: these can be inconsistent with the values in the progenitor file!
     profile : pd.DataFrame
         Table of all radial profile quantities, including composition
     """
@@ -66,7 +67,7 @@ class ProgModel:
 
         self.network = prog_io.load_network(progset_name, config=self.config)
         self.composition = self.profile[self.network.isotope]
-        self.sums = network.get_sums(self.composition, self.network)
+        self.network_sums = network.get_sums(self.composition, self.network)
 
         self.scalars = {}
         self.get_scalars()
