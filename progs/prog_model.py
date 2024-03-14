@@ -94,10 +94,16 @@ class ProgModel:
         """Get scalar variables
         """
         surface = self.profile.iloc[-1]
+        center = self.profile.iloc[0]
+
         self.scalars['presn_mass'] = surface['mass_edge']
         self.scalars['presn_radius'] = surface['radius_edge']
         self.scalars['presn_temperature'] = surface['temperature']
         self.scalars['presn_luminosity'] = surface['luminosity']
+
+        self.scalars['central_entropy'] = center['entropy']
+        self.scalars['central_ye'] = center['ye']
+        self.scalars['central_density'] = center['density']
 
         for xi_mass in self.config['scalars']['xi']:
             self.scalars[f'xi_{xi_mass}'] = self.get_xi(mass=xi_mass)
