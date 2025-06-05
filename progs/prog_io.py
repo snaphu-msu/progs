@@ -7,7 +7,7 @@ from configparser import ConfigParser
 
 # progs
 from . import quantities
-from progs.network import get_iso_group
+from .network import get_iso_group
 
 g_to_msun = units.g.to(units.M_sun)
 
@@ -512,7 +512,7 @@ def prog_filename(zams, progset_name):
     filename = None
 
     for file in progfiles:
-        if file.strip(config['load']['strip']) == zams:
+        if file.strip(config['load']['strip']) == str(zams):
             filename = file
 
     if filename is None:
